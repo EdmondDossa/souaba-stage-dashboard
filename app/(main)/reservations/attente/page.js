@@ -24,50 +24,51 @@ const data = [
 
 return (
     <div className="flex flex-col flex-1 bg-white p-8 rounded-lg shadow-sm overflow-hidden">
-            <h1 className=" flex justify-between items-center text-2xl font-semibold text-gray-800">
+
+    <div className="flex justify-between items-center mb-6">
+        <h1 className=" text-l font-semibold text-[#0D0E0D]">
             Liste des réservations en attente
-            </h1>
-    <div className="flex justify-end items-center mb-6">
+        </h1>
         <div className="flex items-center gap-4">
             {/* Recherche */}
-            <div className="flex items-center bg-gray-100 border-gray-100 rounded-md px-3 py-1.5 w-64">
-                <Search size={16} className="text-gray-400 mr-2" />
+            <div className="flex items-center bg-[#F8F8F8] border-gray-100 rounded-md h-10 px-3 py-1.5 w-64">
+                <Search size={16} className="text-[#6E6E6E] mr-2" />
                 <input
                     type="text"
                     placeholder="Rechercher un invité, un statut, etc."
-                    className="w-full text-sm outline-none"
+                    className="w-full text-xs text-[#A3A3A3] outline-none"
                 />
             </div>
 
             <div className="flex items-center gap-3">
             {/* Filtre statuts */}
-            <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-sm text-black font-medium bg-gray-100 border-gray-100 hover:bg-gray-100">
-                <Filter className="text-gray-400 h-5 w-5"/>
+            <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-sm text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
+                <Filter className="text-[#6E6E6E] h-5 w-5"/>
                 <span>Tous les statuts</span> 
                 <ChevronDown/>  
             </button>
 
             {/* Sélecteur de date */}
-            <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-sm text-black font-medium bg-gray-100 border-gray-100 hover:bg-gray-100">
-                <CalendarDays size={16} />
-                19 <span className="text-gray-600"> - </span> 24 Juin 2028
+            <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-sm text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
+                <CalendarDays size={16} className="text-[#6E6E6E]"/>
+                19 <span className="text-[#0D0E0D]"> - </span> 24 Juin 2028
                 <ChevronDown/>
             </button>
 
             {/* Toggle activé/désactivé */}
-                <div className="flex items-center gap-2 ml-2">
-                    <span className="text-sm text-gray-700">Désactivé</span>
+                <div className="col items-center gap-2 ml-2">
+                    <span className="text-sm text-[#000000">Désactivé</span>                    
+                    <span className="text-sm text-[#000000]">Activé</span>
                     <div
-                    className="relative w-11 h-5 bg-gray-200 rounded-full cursor-pointer"
+                    className="relative w-11 h-5 bg-[#EAEAEA] rounded-full cursor-pointer flex justify-center"
                     onClick={() => setActive(!active)}
                     >
                         <div
                             className={`absolute top-[2px] left-[2px] w-4 h-4 rounded-full transition-all ${
-                            active ? "translate-x-6 bg-indigo-500" : "bg-gray-400"
+                            active ? "translate-x-6 bg-[#8EA6F6]" : "bg-[#EAEAEA]"
                             }`}
                         ></div>
                     </div>
-                    <span className="text-sm text-gray-700">Activé</span>
                 </div>
             </div>
         </div>
@@ -76,64 +77,64 @@ return (
       {/* Tableau */}
     <div className="border border-gray-100 rounded-lg overflow-hidden">
         <table className="min-w-full text-sm text-center text-gray-700">
-        <thead className="bg-green-50 text-gray-400 text-left">
-            <tr>
-            <th className="p-3 font-medium bg-green-50">
+        <thead className="bg-[#F5FDF9] text-[#6E6E6E] text-center">
+            <tr className="border-b border-gray-100 text-xs">
+            <th className="p-3 font-medium bg-[#F5FDF9]">
                 <div className={"flex justify-center"}>
                     Invitée
-                    <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                    <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
                 </div>                
             </th>
-            <th className="p-3 font-medium bg-green-50">
+            <th className="p-3 font-medium bg-[#F5FDF9]">
                 <div className={"flex justify-center"}>
                     Numéro de réservation
-                    <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                    <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
                 </div>                
             </th>
-            <th className="p-3 font-medium bg-green-50">
+            <th className="p-3 font-medium bg-[#F5FDF9]">
                 <div className={"flex justify-center"}>
                     Type de chambre
-                    <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                    <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
                 </div>                
             </th>
-            <th className="p-3 font-medium bg-green-50">
+            <th className="p-3 font-medium bg-[#F5FDF9]">
                 <div className={"flex justify-center"}>
                     Numéro de chambre
-                    <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                    <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
                 </div>                
             </th>
-            <th className="p-3 font-medium bg-green-50">
+            <th className="p-3 font-medium bg-[#F5FDF9]">
                 <div className={"flex justify-center"}>
                     Check-In & Check-Out
-                    <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                    <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
                 </div>                
             </th>
-            <th className="p-3 font-medium text-center bg-green-50">
+            <th className="p-3 font-medium text-center bg-[#F5FDF9]">
                 <div className={"flex justify-center"}>
                     Action
-                    <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                    <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
                 </div>                
             </th>
             </tr>
         </thead>
-        <tbody className={` ${active ? "" : "hidden"}`}>
+        <tbody>
             {data.map((item, idx) => (
             <tr
                 key={idx}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
             >
-                <td className="p-3 text-black font-bold">{item.name}</td>
-                <td className=" text-black font-bold">{item.id}</td>
-                <td className="p-6 text-black font-bold">{item.type}</td>
-                <td className="p-6 text-black font-bold">{item.room}</td>
-                <td className="p-6 text-black font-bold">
+                <td className="p-3 text-[#0D0E0D] text-xs font-bold">{item.name}</td>
+                <td className=" text-[#0D0E0D] text-xs font-bold">{item.id}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-bold">{item.type}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-bold">{item.room}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-bold">
                 {item.checkIn} - {item.checkOut}
                 </td>
-                <td className="p-3 text-black font-bold flex justify-center gap-2">
-                <button className="bg-green-600 text-white text-xs px-3 py-1 rounded-md hover:bg-green-400">
+                <td className="p-3 text-[#0D0E0D] text-xs font-bold flex justify-center gap-2">
+                <button className="bg-[#29B06F] text-[#FFFFFF] text-xs px-3 py-1 rounded-md">
                     Validé
                 </button>
-                <button className="bg-red-500 text-white text-xs px-3 py-1 rounded-md hover:bg-red-400">
+                <button className="bg-[#C94C4C] text-[#FFFFFF] text-xs px-3 py-1 rounded-md">
                     Annuler
                 </button>
                 </td>
@@ -144,16 +145,24 @@ return (
     </div>
 
       {/* Pagination */}
-    <div className={`flex justify-between items-center text-sm text-gray-500 mt-4 ${active ? "" : "hidden"}`}>
-        <p>Showing 1-12 of 385</p>
-            <div className="flex items-center text-black gap-2">
-                <button className="px-3 py-1 bg-orange-400 text-white rounded-md text-l">1</button>
-                <button className="px-3 py-1 bg-gray-100 rounded-md text-l">2</button>
-                <button className="px-3 py-1 bg-gray-100 rounded-md text-l">3</button>
-                <span className="text-gray-400">…</span>
-                <button className="px-3 py-1 bg-gray-100 rounded-md text-l">8</button>
-                <ChevronRight className="w-6 h-6 rounded mt-1 bg-gray-100 justify-center" />            
-            </div>
+        <div className="flex justify-between items-center p-4 text-l text-gray-500 bg-[#FFFFFF]">
+            <span className="text-[#6E6E6E] text-xs">Showing 1-12 of 385</span>
+            <div className="flex gap-1 text-black justify-end">
+                {[1, 2, 3, "...", 8].map((num, i) => (
+                <button
+                key={i}
+                className={`px-3 py-1 m-1 text-xs rounded ${
+                    num === 1
+                    ? "bg-[#F8AA24] text-[#FFFFFF]"
+                    : "bg-[#F8F8F8] text-gray-700"
+                }`} 
+            >
+                {num}
+                </button>
+            ))}            
+            <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
+        </div>
+
         </div>
     </div>  
     );
