@@ -64,19 +64,19 @@ export default function ReservationPageValide ({ }) {
               className="w-full text-xs outline-none text-[#A3A3A3]"
             />
           </div>
-          <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-s text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
+          <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-xs text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
             <Filter className="text-[#6E6E6E] h-5 w-5"/>
               <span>Tous les statuts</span> 
             <ChevronDown/>  
           </button>
-          <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-s text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
+          <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-xs text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
             <CalendarDays size={16} />
             19 <span className="text-[#0D0E0D]"> - </span> 24 Juin 2028
             <ChevronDown/>
           </button>
           <button 
             onClick={() => setIsOpen(true)}
-            className="flex items-center gap-2 bg-[#F8AA24] text-[#0D0E0D] rounded-lg px-3 py-1.5 text-s ">
+            className="flex items-center gap-2 bg-[#F8AA24] text-[#0D0E0D] rounded-lg px-3 py-1.5 text-xs ">
             Ajouter une réservation
           </button>
            {/* Composant de la modale */}
