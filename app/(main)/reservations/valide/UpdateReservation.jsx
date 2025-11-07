@@ -153,8 +153,8 @@ return (
                         <h3 className="font-semibold text-center mb-4 text-[#0D0E0D]">
                             Informations de réservation
                         </h3>
-                        <div className="bg-[#F8AA2480] rounded-2xl text-sm mb-4 text-[#0D0E0D] font-semibold flex justify-center items-center">
-                            <Check size={16} color="#0D0E0D" className="h-5 w-5" />
+                        <div className="bg-[#F8AA2480] rounded-lg px-2 py-1 text-xs mb-4 text-[#0D0E0D] font-semibold flex justify-center items-center">
+                            <Check size={16} color="#0D0E0D" className="h-4 w-4" />
                                 Arrivé
                         </div>
                     </div>
