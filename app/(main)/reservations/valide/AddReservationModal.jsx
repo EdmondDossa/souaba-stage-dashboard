@@ -31,7 +31,6 @@ export default function AddReservationModal({ isOpen, onClose, onSave }) {
         if (onSave) {
             onSave(formData); // envoie les infos au parent
             }
-            onClose(); // ferme la modale actuelle   
         };
 
         
