@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, Filter} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import AddReservationModal from "./AddReservationModal";
+import UpdateReservationModal from "./UpdateReservation";
 
 export default function ReservationPageValide ({ }) {
 
@@ -76,7 +77,7 @@ export default function ReservationPageValide ({ }) {
           </button>
           <button 
             onClick={() => setIsOpen(true)}
-            className="flex items-center gap-2 bg-[#F8AA24] text-[#0D0E0D] rounded-lg px-3 py-1.5 text-xs ">
+            className="flex items-center gap-2 bg-[#F8AA24] text-[#0D0E0D] rounded-lg px-3 py-1.5 text-xs">
             Ajouter une réservation
           </button>
            {/* Composant de la modale */}
