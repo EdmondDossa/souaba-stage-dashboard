@@ -80,64 +80,65 @@ return (
                     </h3>
 
                     <div className="space-y-5 m-15">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="text-sm text-[#0D0E0D] flex justify-start">Nom </label>
+                        <div className="rows gap-4 flex justify-between">
+                            <div className="col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">Nom :</label>
                                 <input
                                     type="text"
-                                    className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
+                                    className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
                                     name="nom"
                                     value={formData.nom}
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div>
-                                <label className="text-sm text-[#0D0E0D] flex justify-start">Prénom </label>
+                            <div className="col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">Prénom :</label>
                                 <input
                                     type="text"
-                                    className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
+                                    className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
                                     name="prenom"
                                     value={formData.prenom}
                                     onChange={handleChange}
                                 />
                             </div>
                         </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="text-sm text-[#0D0E0D] flex justify-start">Email </label>
+                    <div className="rows gap-4 flex justify-between">
+                        <div className="col">
+                            <label className="text-sm text-[#0D0E0D] flex justify-start">Email :</label>
                             <input
                                 type="email"
-                                className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
+                                className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
                             />
                         </div>
-                        <div>
-                            <label className="text-sm text-[#0D0E0D] flex justify-start">Téléphone </label>
+                        <div className="col">
+                            <label className="text-sm text-[#0D0E0D] flex justify-start">Téléphone :</label>
                             <input
                                 type="text"
-                                className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
+                                className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
                                 name="telephone"
                                 value={formData.telephone}
                                 onChange={handleChange}
                             />
                         </div>
                     </div>
-
-                        <div className="">
-                                <label className="text-sm text-[#0D0E0D] flex justify-start">Genre </label>
-                                <select className="w-30 flex justify-start focus:outline-none focus:border-orange-400"
+                    <div className="rows gap-4 flex justify-between">
+                            <div className="col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">Genre :</label>
+                                <select className="w-30 flex justify-start text-sm focus:outline-none"
                                 name="genre"
                                 value={formData.genre}
                                 onChange={handleChange}
                                 >
-                                    <option>Masculin</option>
-                                    <option>Féminin</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Masculin</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Féminin</option>
                                 </select>
                         </div>
-                    </div>
+                    </div>  
                 </div>
+            </div>
 
             {/* Separator */}
             <div className="border-l border-black"></div>
@@ -149,87 +150,122 @@ return (
                     </h3>
 
                     <div className="space-y-5 space-x-5">
-                        <div className="grid grid-cols-3 gap-4">
-                            <div className="m-5">
-                                <label className="text-sm text-[#0D0E0D] flex justify-start">Check In </label>
+                        <div className="rows gap-4 flex justify-between">
+                            <div className="col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">Check In :</label>
                                 <input
                                     type="text"
-                                    className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
+                                    className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
                                     name="checkIn"
                                     value={formData.checkIn}
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="m-5">
+                            <div className="col">
                                 <label className="text-sm text-[#0D0E0D] flex justify-start">Check Out </label>
                                 <input
                                     type="text"
-                                    className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
+                                    className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
                                     name="checkOut"
                                     value={formData.checkOut}
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="m-5">
+                            <div className="col">
                                 <label className="text-sm text-[#0D0E0D] flex justify-start">Durée </label>
                                 <input
                                     type="text"
-                                    className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
+                                    className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
                                     name="duree"
                                     value={formData.duree}
                                     onChange={handleChange}
                                 />
                             </div>
-
-                            <div className="m-5">
+                        </div>
+                        <div className="rows flex justify-between">
+                            <div className="col">
                                 <label className="text-sm text-[#0D0E0D] flex justify-start">Invités </label>
                                 <input
                                     type="number"
-                                    className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
+                                    className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
                                     name="invites"
                                     value={formData.invites}
                                     onChange={handleChange}
                                 />
                             </div>
+                            <div className=" col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">
+                                    Mode de paiement 
+                                </label>
+                                <select className="w-30 focus:outline-none text-sm flex justify-start mt-3"
+                                    name="modePaiement"
+                                    value={formData.modePaiement}
+                                    onChange={handleChange}
+                                >
+                                    <option className="text-[#0D0E0D] flex justify-start ">Cash</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Mobile Money</option>
+                                </select>
+                            </div>
 
-                                <div className="block m-5 p-2">
-                                    <label className="text-sm text-[#0D0E0D] flex justify-start">
-                                        Mode de paiement 
-                                    </label>
-                                    <select className="w-30 focus:outline-none flex justify-start focus:border-orange-400 mt-2"
-                                        name="modePaiement"
-                                        value={formData.modePaiement}
-                                        onChange={handleChange}
-                                    >
-                                        <option className="text-[#0D0E0D] flex justify-start ">Cash</option>
-                                        <option className="text-[#0D0E0D] flex justify-start">Mobile Money</option>
-                                    </select>
-                                </div>
-
-                                <div className="block m-5 mt-7">
-                                    <label className="text-sm text-[#0D0E0D] flex justify-start">Réservation </label>
-                                    <select className="w-30 focus:outline-none flex justify-start focus:border-orange-400 mt-7"
-                                        name="reservation"
-                                        value={formData.reservation}
-                                        onChange={handleChange}
-                                    >
-                                        <option className="text-[#0D0E0D]">En présentiel</option>
-                                        <option className="text-[#0D0E0D]">En ligne</option>
-                                    </select>
-                                </div>
-
-                            <div className="m-5">
-                                    <label className="text-sm text-[#0D0E0D] flex justify-start">Prix </label>
-                                    <input
-                                        type="text"
-                                        defaultValue="900.000"
-                                        className="w-30 border-b border-gray-300 flex justify-start focus:outline-none focus:border-orange-400"
-                                        name="prix"
-                                        value={formData.prix}
-                                        onChange={handleChange}
-                                    />
+                            <div className="col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">Réservation </label>
+                                <select className="w-30 focus:outline-none text-sm flex justify-start mt-3"
+                                    name="reservation"
+                                    value={formData.reservation}
+                                    onChange={handleChange}
+                                >
+                                    <option className="text-[#0D0E0D] flex justify-start">En présentiel</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">En ligne</option>
+                                </select>
                             </div>
                         </div>
+                        <div className="rows flex justify-between">
+                            <div className="col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">Prix </label>
+                                <input
+                                    type="text"
+                                    defaultValue="900.000"
+                                    className="w-30 border-b border-gray-300 text-sm flex justify-start focus:outline-none"
+                                    name="prix"
+                                    value={formData.prix}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">Type de chambre </label>
+                                <select className="w-30 focus:outline-none text-sm flex justify-start mt-3"
+                                    name="reservation"
+                                    value={formData.reservation}
+                                    onChange={handleChange}
+                                >
+                                    <option className="text-[#0D0E0D] flex justify-start">Standart</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Deluxe</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Suite</option>
+                                </select>
+                            </div>
+                            <div className="col">
+                                <label className="text-sm text-[#0D0E0D] flex justify-start">Numero de chambre </label>
+                                <select className="w-30 focus:outline-none text-sm flex justify-start mt-3"
+                                    name="reservation"
+                                    value={formData.reservation}
+                                    onChange={handleChange}
+                                >
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 101</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 151</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 103</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 254</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 204</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 110</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 184</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 300</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 356</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 547</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 654</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Room 109</option>
+                                </select>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
