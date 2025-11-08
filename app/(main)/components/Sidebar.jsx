@@ -37,7 +37,6 @@ const dropDownReservation = [
 const dropDownFinance = [
     { label: "Facture", href: "/finances/facture" },
     { label: "Revenus", href: "/finances/revenus" },
-    { label: "Dépenses", href: "/finances/depenses" },
 ];
 
 export const Sidebar = () => {
