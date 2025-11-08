@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, Filter, ChevronLeft} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { Download, FileText, SlidersHorizontal, DownloadIcon } from "lucide-react";
+import FactureModal from "./FactureModal";
 
 export default function ReservationList() {
 const [statusFilter, setStatusFilter] = useState("Tous les statuts");
+const [showInvoice, setShowInvoice] = useState(false);
 
 const reservations = [
     { name: "Angus Copper", id: "LG-B00108", room: "Room 101", price: "700 000F", nights: 3, total: "2 100 000F", status: "Présent" },
@@ -22,37 +24,37 @@ const reservations = [
 
 const getStatusColor = (status) =>
     status === "Présent"
-    ? "bg-green-200 text-black border-green-200"
-    : "bg-gray-100 text-black border-gray-200";
+    ? "bg-[#D5F6E5] text-[#0D0E0D] border-[#D5F6E5]"
+    : "bg-[#E7E7E7] text-[#0D0E0D] border-[#E7E7E7]";
 
 return (
     <div className="flex-1 bg-white border-white p-7 rounded min-h-screen mt-3">
       {/* Header Filters */}
     <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-4">
-        <button className="flex items-center gap-2 border rounded-lg px-3 py-1.5 text-sm text-black font-medium bg-primary border-gray-100 hover:bg-gray-100">
-            <CalendarDays size={16} />
-            19 <span className="text-gray-600"> - </span> 24 Juin 2028
+        <button className="flex items-center gap-2 border rounded-lg px-3 py-1.5 text-sm text-[#0D0E0D] font-medium bg-[#F8AA24] border-gray-100">
+            <CalendarDays size={16} color="#0D0E0D" />
+            19 <span className="text-[#0D0E0D]"> - </span> 24 Juin 2028
             <ChevronDown/>
         </button>
 
-        <button className="flex items-center gap-2 border rounded-lg px-3 py-1.5 text-sm text-black font-medium bg-gray-100 border-gray-100 hover:bg-gray-100">
-            <Filter className="text-gray-400 h-5 w-5"/>
+        <button className="flex items-center gap-2 border rounded-lg px-3 py-1.5 text-sm text-[#0D0E0D] font-medium bg-[#F8F8F8] border-gray-100">
+            <Filter color="#0D0E0D" className="h-5 w-5"/>
                 <span>Tous les statuts</span>
-            <ChevronDown/>
+            <ChevronDown color="#0D0E0D"/>
         </button>
         </div>
 
         <div className="flex items-center gap-4">
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-md py-1.5 w-64">
-                <Search size={16} className="text-gray-400 mr-2 ml-2" />
+            <div className="flex items-center bg-[#F8F8F8] border border-gray-200 rounded-md py-1.5 w-64">
+                <Search size={16} className="text-[#6E6E6E] mr-2 ml-2" />
                 <input
                     type="text"
                     placeholder="Search name, room etc."
-                    className="w-full text-sm text-gray-600 outline-none flex justify-end"
+                    className="w-full text-xs text-[#A3A3A3] outline-none flex justify-end"
                 />
             </div>
-            <div className="bg-primary rounded-lg p-1.5">
+            <div className="bg-[#F8AA24] rounded-lg p-1.5">
                 <SlidersHorizontal size={22} />
             </div>
         </div>
@@ -61,74 +63,75 @@ return (
       {/* Table */}
     <div className="bg-white rounded-xl shadow-sm overflow-hidden border-none">
         <table className="w-full text-sm text-center">
-        <thead className="bg-gray-50 border-b text-gray-400 text-center">
+        <thead className="bg-[#F5FDF9] border-b text-[#6E6E6E] text-center">
             <tr className="border-b border-gray-100">
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium bg-[#F5FDF9]">
                     <div className={"flex justify-center"}>
                         Guest Name
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium bg-[#F5FDF9]">
                     <div className={"flex justify-center"}>
                         Booking ID
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium bg-[#F5FDF9]">
                     <div className={"flex justify-center"}>
                         Room
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium bg-[#F5FDF9]">
                     <div className={"flex justify-center"}>
                         Prix /nuit
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium bg-[#F5FDF9]">
                     <div className={"flex justify-center"}>
                         Durée
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium bg-[#F5FDF9]">
                     <div className={"flex justify-center"}>
                         Montant payé
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium bg-[#F5FDF9]">
                     <div className={"flex justify-center"}>
                         Statut
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium text-center bg-green-50">
+                <th className="p-3 font-medium text-center bg-[#F5FDF9]">
                     <div className={"flex justify-center"}>
                         Action
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
                 </th>
             </tr>
         </thead>
         <tbody>
             {reservations.map((r, i) => (
-            <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 py-10">
-                <td className="p-3 text-black font-medium">{r.name}</td>
-                <td className=" text-black font-medium">{r.id}</td>
-                <td className=" text-black font-medium">{r.room}</td>
-                <td className=" text-black font-medium">{r.price}</td>
-                <td className="p-6 text-black font-medium">{r.nights} nuits</td>
-                <td className="p-6 text-black font-medium">{r.total}</td>
-                <td className="p-6 text-black font-bold">
+            <tr key={i} className="border-b border-gray-100 bg-[#FFFFFF] py-10">
+                <td className="p-3 text-[#0D0E0D] text-xs font-medium">{r.name}</td>
+                <td className=" text-[#0D0E0D] text-xs font-medium">{r.id}</td>
+                <td className=" text-[#0D0E0D] text-xs font-medium">{r.room}</td>
+                <td className=" text-[#0D0E0D] text-xs font-medium">{r.price}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-medium">{r.nights} nuits</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-medium">{r.total}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-bold">
                 <span className={`px-2 py-0.5 text-xs rounded-md border ${getStatusColor(r.status)}`}>{r.status}</span>
                 </td>
                 <td className="px-4 py-3 flex justify-center">
-                <button className="flex items-center gap-1 text-xs bg-primary text-black px-2.5 py-2 rounded-md hover:bg-primary/80">
-                    <DownloadIcon size={12} /> Facture
+                <button className="flex items-center font-medium gap-1 text-xs bg-[#F8AA24] text-[#0D0E0D] px-2.5 py-2 rounded-md" onClick={() => setShowInvoice(true)}>
+                    <DownloadIcon size={12} color="#0D0E0D" /> Facture
                 </button>
+                <FactureModal  show={showInvoice} onClose={() => setShowInvoice(false)} data={r}/>
                 </td>
             </tr>
             ))}
@@ -137,31 +140,32 @@ return (
     </div>
 
       {/* Footer */}
-    <div className="flex justify-between items-center p-4 text-l text-gray-500 bg-gray-50">
-        <p>Showing 1-12 of 535</p>
-
-        <div className="flex gap-1 text-black justify-end">
-        <button className="flex items-center bg-primary text-black text-sm px-3 py-1.5 rounded-md hover:bg-primary/80">
-            <Download size={14} className="mr-2" /> Download
-        </button>
-                <ChevronLeft className="w-6 h-6 rounded mt-1 bg-gray-100 justify-center" />
-            <div className="flex gap-1 text-black justify-end">
-                {[1, 2, 3, "...", 8].map((num, i) => (
-                <button
-                    key={i}
-                    className={`px-3  m-1 text-black text-l rounded ${
-                        num === 1
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-700"
-                    }`}
-                >
-                    {num}
+        <div className="flex justify-between items-center p-4 text-l text-gray-500 bg-[#FFFFFF]">
+            <span className="text-[#6E6E6E] text-xs">Showing 1-12 of 385</span>
+            <div className="flex gap-2 text-black justify-end">
+                <button className="flex items-center bg-[#F8AA24] text-[#0D0E0D] text-xs px-2.5 py-2 rounded-md" onClick={() => setShowInvoice(true)}>
+                    <Download size={14} className="mr-2" /> Download
                 </button>
-                ))}
-                <ChevronRight className="w-6 h-6 rounded mt-1 bg-gray-100 justify-center" />
+                <FactureModal  show={showInvoice} onClose={() => setShowInvoice(false)} data={reservations[0]}/>
+                        <ChevronLeft className="w-6 h-6 rounded mt-1 bg-gray-100 justify-center" />
+
+                <div className="flex gap-1 text-black justify-end">
+                    {[1, 2, 3, "...", 8].map((num, i) => (
+                    <button
+                    key={i}
+                    className={`px-3 py-1 m-1 text-xs rounded ${
+                        num === 1
+                        ? "bg-[#F8AA24] text-[#FFFFFF]"
+                        : "bg-[#F8F8F8] text-gray-700"
+                    }`} 
+                    >
+                        {num}
+                        </button>
+                    ))}            
+                    <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
+                </div>
             </div>
         </div>
-    </div>
     </div>
 );
 }

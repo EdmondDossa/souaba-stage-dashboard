@@ -3,9 +3,11 @@ import { Search, Filter, Calendar } from "lucide-react";
 import { CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import ModalConfirm from "./ModalConfirm";
 
 export default function ReservationsPendingEnable() {
 const [active, setActive] = useState(true);
+const [isOpen, setIsOpen] = useState(false);
 
 const data = [
     { name: "Angus Copper", id: "LG-800108", type: "Deluxe 101", room: "Room 101", checkIn: "June 19, 2028", checkOut: "June 22, 2028", status: "Arrivée" },
@@ -67,7 +69,12 @@ return (
                             className={`absolute top-[2px] left-[2px] w-4 h-4 rounded-full transition-all ${
                             active ? "translate-x-6 bg-[#8EA6F6]" : "bg-[#EAEAEA]"
                             }`}
+                            onClick={() => setIsOpen(true)}
                         ></div>
+                        {/* Composant de la modale */}
+                            {isOpen && (
+                                <ModalConfirm isOpen={isOpen} onClose={() => setIsOpen(false)}/>
+                            )}
                     </div>
                 </div>
             </div>

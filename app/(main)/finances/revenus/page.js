@@ -23,20 +23,16 @@ const reservations = [
 
 const getStatusColor = (status) =>
     status === "En attente"
-    ? "bg-primary text-black border-primary"
+    ? "bg-[#F8AA24] text-[#0D0E0D] border-[#F8AA24]"
     : status === "Succès"
-    ? "bg-green/50 text-black border-green/50"
+    ? "bg-[#D5F6E5] text-[#0D0E0D] border-[#D5F6E5]"
     : status === "Refuser"
-    ? "bg-red-400 text-white border-red-400"
-    : "bg-primary text-black border-primary";
+    ? "bg-[#C94C4C] text-[#FFFFFF] border-[#C94C4C]"
+    : "bg-[#F8AA24] text-[#0D0E0D] border-[#F8AA24]";
 
 return (
 
     <>
-    
-    
-    
-
     {/*cards*/}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card
@@ -44,9 +40,9 @@ return (
                 value="$15,650"
                 trend={3.56}
                 icon={Wallet}
-                bgColor="bg-white"
-                bgColorTrend="bg-[#39FF14]"
-                bgColorIcon="bg-green-300"
+                bgColor="bg-[#FFFFFF]"
+                bgColorTrend="bg-[#E7F68E]"
+                bgColorIcon="bg-[#D5F6E5]"
             />
 
             <Card
@@ -54,9 +50,9 @@ return (
                 value="$45,650"
                 trend={1.25}
                 icon={dollarSign}
-                bgColor="bg-white"
-                bgColorTrend="bg-[#FF073A]"
-                bgColorIcon="bg-green-300"
+                bgColor="bg-[#FFFFFF]"
+                bgColorTrend="bg-[#FFC7C7]"
+                bgColorIcon="bg-[#D5F6E5]"
             />
 
             <Card
@@ -64,9 +60,9 @@ return (
                 value="$45,650"
                 trend={1.25}
                 icon={dollarSign}
-                bgColor="bg-white"
-                bgColorTrend="bg-[#39FF14]"
-                bgColorIcon="bg-green-300"
+                bgColor="bg-[#FFFFFF]"
+                bgColorTrend="bg-[#E7F68E]"
+                bgColorIcon="bg-[#D5F6E5]"
             />
     </div>
 
@@ -74,26 +70,26 @@ return (
     <div className="flex-1 bg-white border-white p-7 rounded min-h-screen mt-3">
       {/* Header Filters */}
     <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold text-gray-800">Transactions</h1>
+        <h1 className="text-xl font-semibold text-[#0D0E0D]">Transactions</h1>
         <div className="flex items-center gap-4">
-            <div className="flex items-center bg-gray-50 border border-gray-200 rounded-md py-1.5 w-64">
-                <Search size={16} className="text-gray-400 mr-2 ml-2" />
+            <div className="flex items-center bg-[#F8F8F8] border border-gray-200 rounded-md py-1.5 w-64">
+                <Search size={16} color="#6E6E6E" className="mr-2 ml-2" />
                 <input
                     type="text"
                     placeholder="Search expense"
-                    className="w-full text-sm text-gray-600 outline-none flex justify-end"
+                    className="w-full text-xs text-[#A3A3A3] outline-none flex justify-end"
                 />
             </div>
-        <button className="flex items-center gap-2 border rounded-lg px-3 py-1.5 text-sm text-black font-medium bg-gray-100 border-gray-100 hover:bg-gray-100">
-            <Filter className="text-gray-400 h-5 w-5"/>
+        <button className="flex items-center gap-2 border rounded-lg px-3 py-1.5 text-sm text-black font-medium bg-[#F8F8F8] border-[#F8F8F8]">
+            <Filter color="#0D0E0D" className="h-3 w-3"/>
             <span>Toutes les catégories</span>
-            <ChevronDown/>
+            <ChevronDown color="#0D0E0D"/>
         </button>
 
-        <button className="flex items-center gap-2 border rounded-lg px-3 py-1.5 text-sm text-black font-medium bg-gray-100 border-gray-100 hover:bg-gray-100">
-            <Filter className="text-gray-400 h-5 w-5"/>
+        <button className="flex items-center gap-2 border rounded-lg px-3 py-1.5 text-sm text-black font-medium bg-[#F8F8F8] border-[#F8F8F8]">
+            <Filter color="#0D0E0D" className="h-3 w-3"/>
                 <span>Tous les statuts</span>
-            <ChevronDown/>
+            <ChevronDown color="#0D0E0D"/>
         </button>
         </div>
     </div>
@@ -101,62 +97,62 @@ return (
       {/* Table */}
     <div className="bg-white rounded-xl shadow-sm overflow-hidden border-none">
         <table className="w-full text-sm text-center">
-        <thead className="bg-gray-50 border-b text-gray-400 text-center">
+        <thead className="bg-[#F5FDF9] border-b text-[#6E6E6E] text-center">
             <tr className="border-b border-gray-100">
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium">
                     <div className={"flex justify-center"}>
                         Numéro de réservation
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E"className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium">
                     <div className={"flex justify-center"}>
                         Catégorie
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E"className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium">
                     <div className={"flex justify-center"}>
                         Prix
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E"className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium">
                     <div className={"flex justify-center"}>
                         Commissions
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E"className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium">
                     <div className={"flex justify-center"}>
                         Reverssement
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E"className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium">
                     <div className={"flex justify-center"}>
                         Rembourssement
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E"className="h-5 w-5" />
                     </div>
                 </th>
-                <th className="p-3 font-medium bg-green-50">
+                <th className="p-3 font-medium">
                     <div className={"flex justify-center"}>
                         Statuts
-                        <ChevronUpDownIcon className="text-gray-400 h-5 w-5" />
+                        <ChevronUpDownIcon color="#6E6E6E"className="h-5 w-5" />
                     </div>
                 </th>
             </tr>
         </thead>
         <tbody>
             {reservations.map((r, i) => (
-            <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 py-10">
-                <td className="p-3 text-black font-medium">{r.id}</td>
-                <td className=" text-black font-medium">{r.category}</td>
-                <td className=" text-black font-medium">{r.price}</td>
-                <td className=" text-black font-medium">{r.commission}</td>
-                <td className="p-6 text-black font-medium">{r.reverssement}</td>
-                <td className="p-6 text-black font-medium">{r.rembourssement}</td>
-                <td className="p-6 text-black font-bold">
+            <tr key={i} className="border-b bg-[#FFFFFF] border-gray-100 py-10">
+                <td className="p-3 text-[#0D0E0D] text-xs font-medium">{r.id}</td>
+                <td className=" text-[#0D0E0D] text-xs font-medium">{r.category}</td>
+                <td className=" text-[#0D0E0D] text-xs font-medium">{r.price}</td>
+                <td className=" text-[#0D0E0D] text-xs font-medium">{r.commission}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-medium">{r.reverssement}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-medium">{r.rembourssement}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-bold">
                 <span className={`px-2 py-0.5 text-xs rounded-md border ${getStatusColor(r.status)}`}>{r.status}</span>
                 </td>
             </tr>
@@ -166,31 +162,31 @@ return (
     </div>
 
       {/* Footer */}
-    <div className="flex justify-between items-center p-4 mt-5 text-l text-gray-500">
-        <p>Showing 1-12 of 535</p>
-
-        <div className="flex gap-1 text-black justify-end">
-        <button className="flex items-center bg-primary text-black text-sm px-3 py-1.5 rounded-md hover:bg-primary/80">
-            <Download size={14} className="mr-2" /> Download
-        </button>
-                <ChevronLeft className="w-6 h-6 rounded mt-1 bg-gray-100 justify-center" />
-            <div className="flex gap-1 text-black justify-end">
-                {[1, 2, 3, "...", 8].map((num, i) => (
-                <button
-                    key={i}
-                    className={`px-3  m-1 text-black text-l rounded ${
-                        num === 1
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-700"
-                    }`}
-                >
-                    {num}
+        <div className="flex justify-between items-center p-4 text-l text-gray-500 bg-[#FFFFFF]">
+            <span className="text-[#6E6E6E] text-xs">Showing 1-12 of 385</span>
+            <div className="flex gap-2 text-black justify-end">
+                <button className="flex items-center bg-[#F8AA24] text-[#0D0E0D] text-xs px-2.5 py-2 rounded-md" onClick={() => setShowInvoice(true)}>
+                    <Download size={14} className="mr-2" /> Download
                 </button>
-                ))}
-                <ChevronRight className="w-6 h-6 rounded mt-1 bg-gray-100 justify-center" />
+                        <ChevronLeft className="w-6 h-6 rounded mt-1 bg-gray-100 justify-center" />
+
+                <div className="flex gap-1 text-black justify-end">
+                    {[1, 2, 3, "...", 8].map((num, i) => (
+                    <button
+                    key={i}
+                    className={`px-3 py-1 m-1 text-xs rounded ${
+                        num === 1
+                        ? "bg-[#F8AA24] text-[#FFFFFF]"
+                        : "bg-[#F8F8F8] text-gray-700"
+                    }`} 
+                    >
+                        {num}
+                        </button>
+                    ))}            
+                    <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
+                </div>
             </div>
         </div>
-    </div>
     </div>
         </>
 
