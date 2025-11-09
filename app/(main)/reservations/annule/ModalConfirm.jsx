@@ -2,9 +2,11 @@ import { useState } from "react";
 
 export default function ModalConfirm ({isOpen, onClose, onSave}) {
     const handleSave = () => {
-        if (onSave) {
+        if (onSave) 
             onSave(); 
-        }
+
+            //il garde l'etat du bouton continuer 
+            onClose();
     };
 
     // Fonction pour fermer la modale si on clique sur l’arrière-plan
@@ -24,7 +26,7 @@ export default function ModalConfirm ({isOpen, onClose, onSave}) {
                     </p>
                     <div className="flex justify-end gap-3">
                         <button className="text-[#FFFFFF] text-xs bg-[#C94C4C] px-6 py-2 rounded-md transition-colors" type="button" onClick={onClose}>Annuler</button>
-                        <button className="test-[#FFFFFF] text-xs bg-[#F8AA24] px-6 py-2 rounded-md transition-colors" type="button" onClick={onSave}>Continuer</button>
+                        <button className="test-[#FFFFFF] text-xs bg-[#F8AA24] px-6 py-2 rounded-md transition-colors" type="button" onClick={handleSave}>Continuer</button>
                     </div>
                 </div>
             </div>
