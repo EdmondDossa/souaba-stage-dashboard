@@ -22,34 +22,61 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
         }
     };
 
-    const groupMessagesByDate = () => {
+    const groupMessagesByDateAndTime = () => {
         if (!Array.isArray(messages)) return [];
 
         const grouped = [];
         let currentDate = null;
+        let currentTimeGroup = [];
+        let lastTime = null;
+        let lastSender = null;
 
-        messages.forEach((message) => {
+        messages.forEach((message, index) => {
             const date = message.date || "Aujourd'hui";
+
+            // Ajouter un séparateur de date si la date change
             if (date !== currentDate) {
+                // Flush le groupe de temps précédent
+                if (currentTimeGroup.length > 0) {
+                    grouped.push({ type: 'timeGroup', messages: currentTimeGroup });
+                    currentTimeGroup = [];
+                }
                 grouped.push({ type: 'date', date });
                 currentDate = date;
+                lastTime = null;
+                lastSender = null;
             }
-            grouped.push({ type: 'message', ...message });
+
+            // Grouper les messages par heure exacte et même expéditeur
+            if (message.time === lastTime && message.sender === lastSender) {
+                currentTimeGroup.push(message);
+            } else {
+                if (currentTimeGroup.length > 0) {
+                    grouped.push({ type: 'timeGroup', messages: currentTimeGroup });
+                }
+                currentTimeGroup = [message];
+                lastTime = message.time;
+                lastSender = message.sender;
+            }
+
+            // Si c'est le dernier message, flush le groupe
+            if (index === messages.length - 1 && currentTimeGroup.length > 0) {
+                grouped.push({ type: 'timeGroup', messages: currentTimeGroup });
+            }
         });
 
         return grouped;
     };
 
-
-    const groupedMessages = groupMessagesByDate();
+    const groupedMessages = groupMessagesByDateAndTime();
 
     return (
-        <div className="flex-1 rounded-4xl flex flex-col bg-gray-200">
+        <div className="flex-1 rounded-2xl flex flex-col bg-[#F8F8F8]">
             {/* Header */}
             <div className="px-6 py-4 border-b border-white flex items-center justify-between flex-shrink-0">
                 <div className="flex items-center gap-3">
                     <div className="relative">
-                        <div className="rounded-full !w-16 !h-16 overflow-hidden bg-primary object-cover object-top">
+                        <div className="rounded-full w-12 h-12 overflow-hidden bg-[#E7F68E] object-cover object-top">
                             <img
                                 src={conversation.avatar}
                                 alt={conversation.name}
@@ -66,109 +93,123 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                     </div>
                 </div>
 
-                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                   <SvgIcon name={"3points"} className={" "} size={10} />
+                <button className="p-2 bg-white rounded-lg transition-colors">
+                    <SvgIcon name={"DotsThree"} className={"bg-white "} size={21} />
                 </button>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            <div className="flex-1 overflow-y-auto p-6 space-y-1" style={{
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'transparent transparent'
+            }}
+                 onMouseEnter={(e) => e.currentTarget.style.scrollbarColor = '#cbd5e0 transparent'}
+                 onMouseLeave={(e) => e.currentTarget.style.scrollbarColor = 'transparent transparent'}>
                 {groupedMessages.map((item, index) => {
                     if (item.type === 'date') {
                         return (
-                            <div key={`date-${index}`} className="flex justify-center my-4">
-                <span className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full">
-                  {item.date}
-                </span>
+                            <div key={`date-${index}`} className="flex justify-center my-3">
+                                <span className="text-xs text-gray-500 bg-white px-3 rounded-full">
+                                    {item.date}
+                                </span>
                             </div>
                         );
                     }
 
-                    const isClient = item.sender === 'client';
+                    if (item.type === 'timeGroup') {
+                        const firstMessage = item.messages[0];
+                        const isClient = firstMessage.sender === 'client';
 
-                    return (
-                        <div key={item.id} className={`flex ${isClient ? 'justify-start' : 'justify-end'} items-end gap-2`}>
-                            {/* Avatar du client à gauche */}
-                            {isClient && (
-                                <img
-                                    src={conversation.avatar}
-                                    alt={conversation.name}
-                                    className="w-10 h-10 rounded-full flex-shrink-0 object-cover object-top"
-                                />
-                            )}
+                        return (
+                            <div key={`group-${index}`} className={`flex ${isClient ? 'justify-start' : 'justify-end'} items-end gap-2`}>
+                                {/* Avatar du client à gauche */}
+                                {isClient && (
+                                    <img
+                                        src={conversation.avatar}
+                                        alt={conversation.name}
+                                        className={`w-12 h-12 bg-[#E7F68E] rounded-full flex-shrink-0 object-cover object-top`}
+                                    />
+                                )}
 
-
-                            {/* Message bubble */}
-                            <div className={`flex flex-col ${isClient ? 'items-start' : 'items-end'} max-w-md`}>
-                                <div
-                                    className={`px-4 py-3  ${
-                                        isClient
-                                            ? 'bg-green-300 text-gray-black font-bold rounded-t-2xl rounded-r-2xl'
-                                            : 'bg-primary text-black font-bold rounded-t-2xl rounded-l-2xl'
-                                    }`}
-                                >
-                                    <p className="text-sm leading-relaxed">{item.text}</p>
+                                {/* Message bubbles groupés */}
+                                <div className={`flex flex-col ${isClient ? 'items-start' : 'items-end'} max-w-md gap-1`}>
+                                    {item.messages.map((message) => (
+                                        <div
+                                            key={message.id}
+                                            className={`px-4 py-3  ${
+                                                isClient
+                                                    ? 'bg-[#D5F6E5] text-gray-black font-bold rounded-t-2xl rounded-r-2xl'
+                                                    : 'bg-primary text-black font-bold rounded-t-2xl rounded-l-2xl'
+                                            }`}
+                                        >
+                                            <p className="text-sm leading-relaxed">{message.text}</p>
+                                        </div>
+                                    ))}
+                                    <span className="text-xs text-gray-900 mt-1 px-1">
+                                        {firstMessage.time}
+                                    </span>
                                 </div>
-                                <span className="text-xs text-gray-900 mt-1 px-1">
-                  {item.time}
-                </span>
+
+                                {/* Checkmark pour les messages admin */}
+                                {!isClient && (
+                                    <div className="w-12 h-12 rounded-full bg-[#BCD9CA] flex items-center justify-center flex-shrink-0">
+                                        <SvgIcon name={"Vector"} className={""} size={12} />
+                                    </div>
+                                )}
                             </div>
+                        );
+                    }
 
-                            {/* Checkmark pour les messages admin */}
-                            {!isClient && (
-                                <div className="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center flex-shrink-0">
-                                   <SvgIcon name={"safeRoom"} className={""} size={21} />
-                                </div>
-                            )}
-                        </div>
-                    );
+                    return null;
                 })}
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area */}
-            <div className="px-6 py-4 border-t border-gray-200 flex-shrink-0 bg-white">
-                <form onSubmit={handleSendMessage} className="flex items-center gap-3">
-                    {/* Emoji button */}
-                    <button
-                        type="button"
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
-                    >
-                        <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </button>
+            {/* Input Area - Fixed at bottom */}
+            <div className="px-6 py-12 flex-shrink-0">
+                <div className="px-2 py-2 rounded-xl bg-white">
+                    <form onSubmit={handleSendMessage} className="flex items-center gap-6">
+                        <div className={"flex gap-2 flex-1"}>
+                            <div className={"flex bg-[#F8F8F8] rounded-lg flex-1"}>
+                                <div className={"flex rounded-tl-2xl bg-[#F8F8F8] flex-1 h-[40px] items-center px-[13px] gap-[6px]"}>
+                                    {/* Emoji button */}
+                                    <button
+                                        type="button"
+                                        className="hover:bg-gray-100 transition-colors flex-shrink-0"
+                                    >
+                                        <SvgIcon name={"Icon-L"} size={21} className={""} />
+                                    </button>
 
-                    {/* Input field */}
-                    <input
-                        type="text"
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type a message..."
-                        className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-                    />
-
-                    {/* Attachment button */}
-                    <button
-                        type="button"
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
-                    >
-                        <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                        </svg>
-                    </button>
-
-                    {/* Send button */}
-                    <button
-                        type="submit"
-                        disabled={!newMessage.trim()}
-                        className="p-3 bg-primary hover:bg-primary disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg transition-colors flex-shrink-0"
-                    >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                    </button>
-                </form>
+                                    {/* Input field */}
+                                    <input
+                                        type="text"
+                                        value={newMessage}
+                                        onChange={(e) => setNewMessage(e.target.value)}
+                                        placeholder="Type a message..."
+                                        className="flex-1 px-1 py-3 bg-transparent focus:outline-none text-sm"
+                                    />
+                                </div>
+                                {/* Attachment button */}
+                                <button
+                                    type="button"
+                                    className="p-2 px-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
+                                >
+                                    <SvgIcon name={"Paperclip"} className={""} size={21} />
+                                </button>
+                            </div>
+                            <div className={"flex items-center justify-center"}>
+                                {/* Send button */}
+                                <button
+                                    type="submit"
+                                    disabled={!newMessage.trim()}
+                                    className="flex p-[9px] gap-[8px] h-[40px] w-[40px] bg-primary hover:bg-primary disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                                >
+                                    <SvgIcon name={"PaperPlaneRight"} className={""} size={21} />
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

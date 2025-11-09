@@ -18,7 +18,7 @@ export default function MessagesPage() {
             lastMessage: 'Puis-je demander un départ tardif pour la ch...',
             time: '09:15 AM',
             unread: 0,
-            online: true
+            // online: true,
         },
         {
             id: 2,
@@ -27,7 +27,7 @@ export default function MessagesPage() {
             lastMessage: 'La climatisation dans ma chambre ne fo...',
             time: '09:30 AM',
             unread: 1,
-            online: false
+            // online: false
         },
         {
             id: 3,
@@ -36,7 +36,7 @@ export default function MessagesPage() {
             lastMessage: 'Pouvez-vous confirmer ma prise en char...',
             time: '09:45 AM',
             unread: 2,
-            online: true
+            // online: true
         },
         {
             id: 4,
@@ -45,61 +45,61 @@ export default function MessagesPage() {
             lastMessage: 'J\'ai besoin de serviettes et d\'oreillers su...',
             time: '10:00 AM',
             unread: 1,
-            online: false
+            // online: false
         },
         {
             id: 5,
             name: 'Jane Smith',
-            avatar: '/placeholder-avatar-5.jpg',
+            avatar: '/images/messages/aliceJohnson.png',
             lastMessage: 'Le petit-déjeuner est-il inclus dans ma r...',
             time: '10:15 AM',
             unread: 3,
-            online: true
+            // online: true
         },
         {
             id: 6,
             name: 'Daniel Wilson',
-            avatar: '/placeholder-avatar-6.jpg',
+            avatar: '/images/messages/aliceJohnson.png',
             lastMessage: 'Quelles sont les heures d\'ouverture de l...',
             time: '10:30 AM',
             unread: 2,
-            online: false
+            // online: false
         },
         {
             id: 7,
             name: 'Sarah Johnson',
-            avatar: '/placeholder-avatar-7.jpg',
+            avatar: '/images/messages/aliceJohnson.png',
             lastMessage: 'Pouvez-vous m\'aider à réserver une visi...',
             time: '10:45 AM',
             unread: 1,
-            online: true
+            // online: true
         },
         {
             id: 8,
             name: 'Kevin Lee',
-            avatar: '/placeholder-avatar-8.jpg',
+            avatar: '/images/messages/aliceJohnson.png',
             lastMessage: 'Je dois prolonger mon séjour de deux n...',
             time: '11:00 AM',
             unread: 1,
-            online: false
+            // online: false
         },
         {
             id: 9,
             name: 'Laura Martin',
-            avatar: '/placeholder-avatar-9.jpg',
+            avatar: '/images/messages/aliceJohnson.png',
             lastMessage: 'Il y a un problème de bruit dans la pièce à cô...',
             time: '11:15 AM',
             unread: 0,
-            online: true
+            // online: true
         },
         {
             id: 10,
             name: 'Robert King',
-            avatar: '/placeholder-avatar-10.jpg',
+            avatar: '/images/messages/aliceJohnson.png',
             lastMessage: 'Pourriez-vous envoyer quelqu\'un pour répar...',
             time: '11:30 AM',
             unread: 0,
-            online: false
+            // online: false
         }
     ];
 
@@ -119,37 +119,49 @@ export default function MessagesPage() {
                     id: 2,
                     text: 'Bonjour Alice, nous pouvons organiser un départ tardif. À quelle heure souhaitez-vous rester ?',
                     time: '9:20 AM',
-                    sender: 'admin'
+                    sender: 'admin',
+                    date: 'Today, June 19'
+
                 },
                 {
                     id: 3,
                     text: 'J\'espérais rester jusqu\'à 14 heures. Est-ce possible ?',
                     time: '9:22 AM',
-                    sender: 'client'
+                    sender: 'client',
+                    date: 'Today, June 19'
+
                 },
                 {
                     id: 4,
                     text: 'Laissez-moi vérifier la disponibilité de la chambre 305. Un instant, s\'il vous plaît.',
                     time: '9:25 AM',
-                    sender: 'admin'
+                    sender: 'admin',
+                    date: 'Today, June 19'
+
                 },
                 {
                     id: 5,
                     text: 'Bonne nouvelle, Alice ! Nous pouvons prolonger votre heure de départ jusqu\'à 14 h.',
                     time: '9:30 AM',
-                    sender: 'admin'
+                    sender: 'admin',
+                    date: 'Today, June 19'
+
                 },
                 {
                     id: 6,
                     text: 'Merci beaucoup ! C\'est vraiment utile.',
                     time: '9:32 AM',
-                    sender: 'client'
+                    sender: 'client',
+                    date: 'Today, June 19'
+
                 },
                 {
                     id: 7,
                     text: 'De rien ! Si vous avez besoin d\'autre chose, n\'hésitez pas à nous le faire savoir.',
                     time: '09:35 AM',
-                    sender: 'admin'
+                    sender: 'admin',
+                    date: 'Today, June 19'
+
                 }
             ];
         }
@@ -210,17 +222,18 @@ export default function MessagesPage() {
     };
 
     // Générer les profils pour chaque conversation
-    const generateProfile = (conversationId, name) => {
+    // Générer les profils pour chaque conversation
+    const generateProfile = (conversation) => {
         return {
-            name: name,
-            phone: `G011-98765${conversationId}321`,
-            avatar: `/placeholder-avatar-${conversationId}.jpg`,
+            name: conversation.name,
+            phone: `G011-98765${conversation.id}321`,
+            avatar: conversation.avatar,
             about: `Client régulier de l'hôtel Souaba. Apprécie le service personnalisé et les chambres confortables.`,
-            medias: Array(6).fill(`/placeholder-media-${conversationId}.jpg`),
+            medias: Array(6).fill(`/placeholder-media-${conversation.id}.jpg`),
             documents: [
-                { name: `Invoice-24052${conversationId}.pdf`, size: '1,45 mb' },
-                { name: `Invoice-12032${conversationId}.pdf`, size: '1,58 mb' },
-                { name: `Invoice-01122${conversationId}.pdf`, size: '1,64 mb' }
+                { name: `Invoice-24052${conversation.id}.pdf`, size: '1,45 mb' },
+                { name: `Invoice-12032${conversation.id}.pdf`, size: '1,58 mb' },
+                { name: `Invoice-01122${conversation.id}.pdf`, size: '1,64 mb' }
             ],
             links: [
                 { title: 'Summer Staycation PROMO!', url: 'www.instagram.com' },
@@ -267,36 +280,42 @@ export default function MessagesPage() {
         <div className={"rounded-2xl flex h-screen"}>
             <div className="m-3 flex-1 flex bg-white rounded-2xl overflow-hidden">
                 {/* Liste des conversations */}
-                <ConversationList
-                    conversations={conversations}
-                    selectedId={selectedConversation?.id}
-                    onSelectConversation={handleSelectConversation}
-                />
+                <div className={"flex"}>
+                    <ConversationList
+                        conversations={conversations}
+                        selectedId={selectedConversation?.id}
+                        onSelectConversation={handleSelectConversation}
+                    />
+                </div>
 
                 {/* Fenêtre de chat */}
-                {selectedConversation ? (
-                    <ChatWindow
-                        conversation={selectedConversation}
-                        messages={allMessages[selectedConversation.id] || []}
-                        onSendMessage={handleSendMessage}
-                    />
-                ) : (
-                    <div className="flex-1 flex items-center justify-center bg-white">
-                        <div className="text-center">
-                            <svg className="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                            <p className="text-gray-500">Sélectionnez une conversation pour commencer</p>
+                <div className={"flex pt-5 w-[690px] pb-5"}>
+                    {selectedConversation ? (
+                        <ChatWindow
+                            conversation={selectedConversation}
+                            messages={allMessages[selectedConversation.id] || []}
+                            onSendMessage={handleSendMessage}
+                        />
+                    ) : (
+                        <div className="flex-1 flex items-center justify-center bg-white">
+                            <div className="text-center">
+                                <svg className="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                                <p className="text-gray-500">Sélectionnez une conversation pour commencer</p>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
 
                 {/* Panneau de profil du CLIENT - toujours visible */}
-                {selectedConversation && (
-                    <ProfilePanel
-                        profile={generateProfile(selectedConversation.id, selectedConversation.name)}
-                    />
-                )}
+               <div className={"flex pt-5"}>
+                   {selectedConversation && (
+                       <ProfilePanel
+                           profile={generateProfile(selectedConversation)}
+                       />
+                   )}
+               </div>
             </div>
         </div>
     );
