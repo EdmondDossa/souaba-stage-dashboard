@@ -5,10 +5,10 @@ import SecurityModal from './SecurityModal';
 import AmenitiesModal from './AmenitiesModal';
 import EditCategoryModal from './EditCategorieModal';
 import AddCategoryModal from './AddCategorieModal';
-import { Editor } from '@tinymce/tinymce-react';
+import DescriptionModal from './DescriptionModal';
 
 
-import { CheckIcon, Search } from "lucide-react";
+import { CheckIcon, Search, Edit } from "lucide-react";
 import { SvgIcon } from "@/components/ui/common";
 import { useRouter } from 'next/navigation';
 
@@ -31,26 +31,7 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
     const [categoryToEdit, setCategoryToEdit] = useState(null);
     const [categoryToAdd, setCategoryToAdd] = useState(null);
     const [categories, setCategories] = useState(initialCategories);
-    const editorRef = useRef(null);
-
-
-    // Nouveau état pour l'édition de description
-    const [isEditingDescription, setIsEditingDescription] = useState(false);
-    const [descriptionDraft, setDescriptionDraft] = useState(hotelData.description);
-    const descRef = useRef(null);
-
-    //quand on click ailleurs l'enregistrement est l'annulee
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (isEditingDescription && descRef.current && !descRef.current.contains(event.target)) {
-                // annuler l'édition
-                setDescriptionDraft(hotelData.description);
-                setIsEditingDescription(false);
-            }
-        }
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [isEditingDescription, hotelData.description]);
+    const [showDescriptionHover, setShowDescriptionHover] = useState(false);
 
 
     // Filtres + tri
@@ -176,34 +157,22 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                         </button>
                     </div>
 
-                    <div className="mb-6">
-                        {isEditingDescription ? (
-                            <Editor
-                                apiKey='qorlfq4g8zsgj1nl8phwf1ekbqa1mkvmqzbffdq4nfih86ri'
-                                onInit={(evt, editor) => (editorRef.current = editor)}
-                                initialValue={descriptionDraft || hotelData.description}
-                                onEditorChange={(content) => setDescriptionDraft(content)}
-                                init={{
-                                    height: 150,
-                                    menubar: false,
-                                    plugins: [
-                                        'advlist autolink lists link image charmap preview anchor',
-                                        'searchreplace visualblocks code fullscreen',
-                                        'insertdatetime media table paste code help wordcount'
-                                    ],
-                                    toolbar:
-                                        'undo redo | formatselect | bold italic underline | \
-                                        alignleft aligncenter alignright alignjustify | \
-                                        bullist numlist outdent indent | removeformat | help'
-                                }}
-                            />
-                        ) : (
-                            <p
-                                className="text-sm text-gray-700 leading-relaxed mt-2 cursor-pointer"
-                                onDoubleClick={() => setIsEditingDescription(true)}
+                    <div 
+                        className="mb-6 relative"
+                        onMouseEnter={() => setShowDescriptionHover(true)}
+                        onMouseLeave={() => setShowDescriptionHover(false)}
+                    >
+                        <p className="text-sm text-gray-700 leading-relaxed mt-2">
+                            <span dangerouslySetInnerHTML={{ __html: hotelData.description }} />
+                        </p>
+                        {showDescriptionHover && (
+                            <button
+                                onClick={() => setSelectedModal('description')}
+                                className="absolute top-0 right-0 bg-yellow-200 hover:bg-yellow-400 p-2 rounded-lg transition"
+                                title="Modifier la description"
                             >
-                                <span dangerouslySetInnerHTML={{ __html: hotelData.description }} />
-                            </p>
+                                <Edit className="w-4 h-4 text-black" />
+                            </button>
                         )}
                     </div>
                     {/* Commodités */}
@@ -441,6 +410,20 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                     category={categoryToAdd}
                     onClose={() => setSelectedModal(null)}
                     onSave={handleSaveCategory}
+                />
+            )}
+
+            {selectedModal === 'description' && (
+                <DescriptionModal
+                    description={hotelData.description}
+                    onClose={() => setSelectedModal(null)}
+                    onSave={(newDescription) => {
+                        setHotelData(prev => ({
+                            ...prev,
+                            description: newDescription
+                        }));
+                        setSelectedModal(null);
+                    }}
                 />
             )}
         </div>

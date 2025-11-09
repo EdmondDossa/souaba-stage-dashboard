@@ -190,7 +190,6 @@ export default function ReservationPageValide ({ }) {
             ))}            
             <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
           </div>
-
         </div>
       </div>
     </div>
