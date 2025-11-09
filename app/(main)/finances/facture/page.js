@@ -102,7 +102,7 @@ return (
                     </div>
                 </th>
                 <th className="p-3 font-medium bg-[#F5FDF9]">
-                    <div className={"flex justify-center"}>
+                    <div className={"flex justify-start px-6"}>
                         Statut
                         <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
