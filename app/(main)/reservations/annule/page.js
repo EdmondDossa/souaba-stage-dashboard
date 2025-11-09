@@ -3,9 +3,11 @@ import { Search, Filter, Calendar } from "lucide-react";
 import { CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import ModalConfirm from "./ModalConfirm";
 
 export default function ReservationPageAnnule () {
     const [active, setActive] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     const data = [
         { name: "Angus Copper", id: "LG-800108", type: "Deluxe 101", room: "Room 101", checkIn: "June 19, 2028", checkOut: "June 22, 2028", motif: "N'a pas repecter les regles de la reservations" },
@@ -54,18 +56,25 @@ export default function ReservationPageAnnule () {
             </button>
 
             {/* Toggle activé/désactivé */}
-                <div className="flex items-center gap-2 ml-2">
-                    <span className="text-sm text-[#000000]">Désactivé</span>                    
-                    <span className="text-sm text-[#000000]">Activé</span>
+                <div className="rows items-center gap-2 ml-2">
+                    <div className="flex justify-start items-center gap-5">
+                        <span className="text-sm text-[#000000]">Désactivé</span>                    
+                        <span className="text-sm text-[#000000]">Activé</span>
+                    </div>
                     <div
-                    className="relative w-11 h-5 bg-[#EAEAEA] rounded-full cursor-pointer"
+                    className="relative h-5 bg-[#EAEAEA] rounded-full cursor-pointer flex justify-center"
                     onClick={() => setActive(!active)}
                     >
                         <div
                             className={`absolute top-[2px] left-[2px] w-4 h-4 rounded-full transition-all ${
-                            active ? "translate-x-6 bg-[#8EA6F6]" : "bg-[#EAEAEA]"
+                                active ? "bg-[#6E6E6E]" : "translate-x-28 bg-[#8EA6F6]"
                             }`}
+                            onClick={() => setIsOpen(true)}
                         ></div>
+                        {/* Composant de la modale */}
+                            {isOpen && (
+                                <ModalConfirm isOpen={isOpen} onClose={() => setIsOpen(false)}/>
+                            )}
                     </div>
                 </div>
             </div>
