@@ -13,8 +13,8 @@ export default function FactureModal({ show, onClose, data }) {
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#00000033]" onClick={handleBackdropClick}>
-        <div className="bg-[#FFFFFF] rounded p-10 w-auto relative">
+        <div className="flex gap-3 fixed rounded-lg inset-0 z-50 flex items-center justify-center bg-[#00000033] " onClick={handleBackdropClick}>
+        <div className="bg-[#FFFFFF] rounded shadow-2xl max-w-md w-full relative overflow-hidden">
             {/* Bouton de fermeture */}
             <button
             onClick={onClose}
@@ -27,83 +27,84 @@ export default function FactureModal({ show, onClose, data }) {
             <h2 className="text-center text-[#000000] text-lg font-inter pb-4">Facture</h2>
 
             {/* Carte facture */}
-            <div className="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-200 overflow-hidden w-[120%] h-auto    ">
+            <div className="bg-gradient-to-b from-gray-50 to-gray-100 border border-gray-200 overflow-hidden w-[100%] h-auto">
                 <div className="relative p-6">
                 {/* Bande décorative */}
                 <div className="absolute top-0 left-0 w-20 h-20 rounded-br-full bg-gradient-to-b from-orange-400 to-orange-100"></div>
                 <div className="absolute bottom-0 right-0 w-24 h-24 rounded-tl-full bg-gradient-to-b from-orange-400 to-orange-100"></div>
 
-                {/* Header facture */}
-                <div className="flex justify-between items-center mb-6 relative z-10">
-                    <div className="flex justify-between">
-                    <p className="text-xs text-gray-500 mb-1">FACTURE N° :</p>
-                    <p className="text-lg font-semibold">00001</p>
-                    </div>
-                    <div className="flex flex-wrap">
-                    <p className="font-semibold mt-2">{data?.name || "John BILL"}</p>
-                    <p className="text-sm text-gray-600">{data?.phone || "+225 15 47 58 98"}</p>
-                    </div>
-                    <div className="text-right">
+                {/* Logo */}
+            <div className="flex justify-end mb-8">
+                <div className="relative">
                     <img
                         src="/logo_souaba.png"
                         alt="Souaba"
                         className="h-10 mx-auto"
                     />
-                    <p className="text-sm font-medium mt-1 text-gray-800">
-                        CÔTE D'IVOIRE, ABIDJAN
-                    </p>
-                    <p className="text-xs text-gray-500">hotel@gmail.com</p>
-                    </div>
                 </div>
+            </div>
+
+                {/* Header facture */}
+            <div className="flex justify-between mb-6 text-sm">
+                <div>
+                    <p className="text-[#000000] font-medium text-xs mb-1">FACTURE N° : <span className="text-[#000000] font-semibold">00001</span></p>
+                    <p className="font-bold text-[#000000] text-base mt-3">John BILL</p>
+                    <p className="text-[#000000] text-xs">+225 15 47 58 98</p>
+                </div>
+                <div className="text-right">
+                    <p className="font-semibold text-[#000000] text-xs">CÔTE D'IVOIRE, ABIDJAN</p>
+                    <p className="text-[#6E6E6E] text-xs italic">hotel@gmail.com</p>
+                </div>
+            </div>
 
                 {/* Résumé */}
                 <div className="text-center mb-4 relative z-10">
-                    <div className="bg-orange-400 text-white text-sm font-semibold px-4 py-1 rounded-full inline-block">
+                    <div className="bg-[#F8AA24] text-[#FFFFFF] text-xs font-semibold w-[60%] px-4 py-1 rounded-full inline-block">
                     Résumer de la réservation
                     </div>
                 </div>
 
                 <div className="text-sm space-y-3 relative z-10">
                     <div className="flex justify-between">
-                    <span className="text-gray-700">Date de la réservation</span>
+                    <span className="text-[#6E6E6E]">Date de la réservation</span>
                     <span className="font-medium">24 août 2023 10h00</span>
                     </div>
                     <div className="flex justify-between">
-                    <span className="text-gray-700">Date d’arrivée</span>
+                    <span className="text-[#6E6E6E]">Date d’arrivée</span>
                     <span className="font-medium">4 octobre 2023</span>
                     </div>
                     <div className="flex justify-between">
-                    <span className="text-gray-700">Date de départ</span>
+                    <span className="text-[#6E6E6E]">Date de départ</span>
                     <span className="font-medium">7 octobre 2023</span>
                     </div>
                     <div className="flex justify-between">
-                    <span className="text-gray-700">Nombre de nuits</span>
+                    <span className="text-[#6E6E6E]">Nombre de nuits</span>
                     <span className="font-medium">3</span>
                     </div>
                     <div className="flex justify-between">
-                    <span className="text-gray-700">Nombre d’invités</span>
+                    <span className="text-[#6E6E6E]">Nombre d’invités</span>
                     <span className="font-medium">5 personnes</span>
                     </div>
 
-                    <div className="flex justify-center mt-4">
-                    <span className="bg-orange-400 text-white text-sm font-semibold px-4 py-1.5 rounded-full">
-                        Montant&nbsp; 900.000&nbsp;FCFA
-                    </span>
+                    <div className="flex justify-end mt-4">
+                        <span className="bg-[#F8AA24] text-[#FFFFFF] text-sm font-semibold px-4 py-1.5 rounded-full">
+                            Montant 900.000FCFA
+                        </span>
                     </div>
                 </div>
 
-                <p className="text-xs text-center text-gray-600 mt-6 relative z-10">
-                    Merci de nous faire confiance&nbsp;!
+                <p className="text-xs text-center flex justify-start font-semibold text-[#000000] mt-6 relative z-10">
+                    Merci de nous faire confiance !
                 </p>
                 </div>
             </div>
 
             {/* Boutons d’action */}
-            <div className="flex justify-center gap-4 mt-6">
-                <button className="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-700">
+            <div className="flex justify-end gap-3 mt-6">
+                <button className="bg-[#D70A0A] text-[#FFFFFF] px-4 py-2 rounded-md text-sm">
                 Imprimez
                 </button>
-                <button className="bg-green-600 text-white px-4 py-2 rounded-md text-sm hover:bg-green-700">
+                <button className="bg-[#29B06F] text-[#FFFFFF] px-4 py-2 rounded-md text-sm">
                 Envoyez via Email au client
                 </button>
             </div>
