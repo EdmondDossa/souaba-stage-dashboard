@@ -26,6 +26,8 @@ export const Header = () => {
         if (pathname.includes("/reservations")) return "Réservation";
         if (pathname.includes("/finances")) return "Facture";
         if (pathname.includes("/messages")) return "Messages";
+        if (pathname.includes("/menage")) return "Ménage";
+        if (pathname.includes("/disponibilite")) return "Disponibilité";
         return "Souaba";
     }, [pathname]);
 
