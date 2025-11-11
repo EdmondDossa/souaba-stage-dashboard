@@ -98,10 +98,10 @@ return (
             onChange={(e) => setRoleFilter(e.target.value)}
             className="border-[#F8F8F8] bg-[#F8F8F8] border font-medium rounded-lg px-3 py-2 text-sm text-[#0D0E0D] focus:outline-none"
         >
-            <option>Tous les rôles</option>
-            <option>Admin</option>
-            <option>Réceptionniste</option>
-            <option>Responsable Ménage</option>
+            <option className={"bg-background"}>Tous les rôles</option>
+            <option className={"bg-background"}>Admin</option>
+            <option className={"bg-background"}>Réceptionniste</option>
+            <option className={"bg-background"}>Responsable Ménage</option>
         </select>
 
         <div className="flex items-center gap-3">
@@ -170,7 +170,7 @@ return (
         {personnels.map((p, i) => (
             <tr
                 key={i}
-                className="border-b border-gray-100 hover:bg-gray-50 py-10"
+                className="border-b border-gray-100 py-10"
             >
             <td className="px-6 py-4 flex text-[#1E1E1E] font-semibold items-center gap-3">
                 <div

@@ -148,12 +148,12 @@ return (
         <tbody>
             {reservations.map((r, i) => (
             <tr key={i} className="border-b bg-[#FFFFFF] border-gray-100 py-10">
-                <td className="p-3 text-[#0D0E0D] text-xs font-medium">{r.id}</td>
-                <td className=" text-[#0D0E0D] text-xs font-medium">{r.category}</td>
-                <td className=" text-[#0D0E0D] text-xs font-medium">{r.price}</td>
-                <td className=" text-[#0D0E0D] text-xs font-medium">{r.commission}</td>
-                <td className="p-6 text-[#0D0E0D] text-xs font-medium">{r.reverssement}</td>
-                <td className="p-6 text-[#0D0E0D] text-xs font-medium">{r.rembourssement}</td>
+                <td className="p-3 text-[#0D0E0D] text-xs font-bold">{r.id}</td>
+                <td className=" text-[#0D0E0D] text-xs font-bold">{r.category}</td>
+                <td className=" text-[#0D0E0D] text-xs font-bold">{r.price}</td>
+                <td className=" text-[#0D0E0D] text-xs font-bold">{r.commission}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-bold">{r.reverssement}</td>
+                <td className="p-6 text-[#0D0E0D] text-xs font-bold">{r.rembourssement}</td>
                 <td className="p-6 text-[#0D0E0D] text-xs font-bold">
                 <span className={`px-2 py-0.5 text-xs rounded-md border ${getStatusColor(r.status)}`}>{r.status}</span>
                 </td>

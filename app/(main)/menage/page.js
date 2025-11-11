@@ -169,24 +169,24 @@ return (
                         checked:after:text-[#0D0E0D] checked:after:text-base checked:after:font-bold relative"
                     />
                 </td>
-                <td className="px-6 py-4 text-xs font-medium text-[#0D0E0D]">{room.number}</td>
-                <td className="px-6 py-4 text-xs font-medium text-[#0D0E0D]">{room.type}</td>
+                <td className="px-6 py-4 text-xs font-bold text-[#0D0E0D]">{room.number}</td>
+                <td className="px-6 py-4 text-xs font-bold text-[#0D0E0D]">{room.type}</td>
                 <td className="px-6 py-4  text-start  ">
-                    <span className={`inline-flex items-center gap-2 px-3 py-1 text-[#0D0E0D] rounded-md text-xs font-medium ${getStatusColor(room.status)}`}>
+                    <span className={`inline-flex items-center gap-2 px-3 py-1 text-[#0D0E0D] rounded-md text-xs font-bold ${getStatusColor(room.status)}`}>
                     {room.status}
                     <ChevronDown size={14} />
                     </span>
                 </td>
                 <td className={`px-6 py-4 `}>
-                    <span className={`inline-flex ${getPriorityColor(room.priority)} items-center gap-2 text-[#0D0E0D] text-xs font-medium`}>
+                    <span className={`inline-flex ${getPriorityColor(room.priority)} items-center gap-2 text-[#0D0E0D] text-xs font-bold`}>
                     <span className={`w-2 h-2 rounded-full ${room.priorityDot}`}></span>
                     {room.priority}
                     <ChevronDown size={14} />
                     </span>
                 </td>
-                <td className="px-6 py-4 text-xs font-medium text-[#0D0E0D]">{room.floor}</td>
-                <td className="px-6 py-4 text-xs font-medium text-[#0D0E0D]">{room.reservation}</td>
-                <td className="px-6 py-4 text-xs font-medium text-[#0D0E0D] text-start">{room.notes}</td>
+                <td className="px-6 py-4 text-xs font-bold text-[#0D0E0D]">{room.floor}</td>
+                <td className="px-6 py-4 text-xs font-bold text-[#0D0E0D]">{room.reservation}</td>
+                <td className="px-6 py-4 text-xs font-bold text-[#0D0E0D] text-start">{room.notes}</td>
                 </tr>
             ))}
             </tbody>
