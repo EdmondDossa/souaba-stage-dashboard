@@ -20,7 +20,7 @@ import { useRouter, usePathname } from "next/navigation";
 const menuItems = [
     { icon: LayoutGrid, label: "Tableau de bord", href: "/" },
     { icon: CalendarCheck, label: "Réservation", href: "/reservations" },
-    { icon: HomeIcon, label: "Chambres", href: "/chambres" },
+    { icon: HomeIcon, label: "Chambres", href: "/Chambres" },
     { icon: MessageSquareText, label: "Messages", badge: 7, href: "/messages" },
     { icon: Users, label: "Ménage", href: "/menage" },
     { icon: Clock, label: "Disponibilité", href: "/disponibilite" },

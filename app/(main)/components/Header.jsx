@@ -14,7 +14,7 @@ export const Header = () => {
     // Définir le nom de page selon l’URL active
     const pageTitle = useMemo(() => {
         if (pathname === "/") return "Tableau de bord";
-        if (pathname.startsWith("/chambres")) {
+        if (pathname.startsWith("/Chambres")) {
             const parts = pathname.split("/");
             const roomNameEncoded = parts[3]; // "Nom%20chambre%201"
             if (roomNameEncoded) {

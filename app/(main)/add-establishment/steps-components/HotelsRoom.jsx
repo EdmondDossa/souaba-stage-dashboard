@@ -26,9 +26,9 @@ const HotelsRoom = ({ initialState, allowNextStep, handleFormDataUpdate }) => {
         },
         {
           name: "room_type_number",
-          label: "Nombre de chambres de ce type",
+          label: "Nombre de Chambres de ce type",
           type: "number",
-          placeholder: "Entrez le nombre de chambres",
+          placeholder: "Entrez le nombre de Chambres",
         },
       ],
     },

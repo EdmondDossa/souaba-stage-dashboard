@@ -18,7 +18,7 @@ export default function RoomList({ initialRooms, category }) {
     const [currentPage, setCurrentPage] = useState(1);
     const roomsPerPage = 12;
 
-    // Filtrer les chambres
+    // Filtrer les Chambres
     const filteredRooms = rooms.filter(room => {
         const matchesStatus = statusFilter === 'all' || room.status === statusFilter;
         const matchesFloor = floorFilter === 'all' || room.floor === parseInt(floorFilter);
@@ -132,7 +132,7 @@ export default function RoomList({ initialRooms, category }) {
                     </div>
                 </div>
 
-                {/* Tableau des chambres */}
+                {/* Tableau des Chambres */}
                 <div className="bg-white rounded-lg shadow overflow-hidden">
                     <table className="w-full">
                         <thead className="bg-green-50 h-[50px]">
