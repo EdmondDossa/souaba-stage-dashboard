@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, Filter, ChevronLeft} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
-import { Download, Wallet, dollarSign } from "lucide-react";
+import { Download, Wallet, DollarSign } from "lucide-react";
 import Card from "./Card";
+import FactureModal from "./FactureModal";
 
 export default function ReservationList() {
 const [statusFilter, setStatusFilter] = useState("Tous les statuts");
+const [showInvoice, setShowInvoice] = useState(false);
 
 const reservations = [
     { id: "LG-B00108", category: "Luxe", price: "10 000", commission: "20%", reverssement: "8 000", rembourssement: "0", status: "Succès" },
@@ -49,7 +51,7 @@ return (
                 title="Commisions"
                 value="$45,650"
                 trend={1.25}
-                icon={dollarSign}
+                icon={DollarSign}
                 bgColor="bg-[#FFFFFF]"
                 bgColorTrend="bg-[#FFC7C7]"
                 bgColorIcon="bg-[#D5F6E5]"
@@ -59,7 +61,7 @@ return (
                 title="Reversements"
                 value="$45,650"
                 trend={1.25}
-                icon={dollarSign}
+                icon={DollarSign}
                 bgColor="bg-[#FFFFFF]"
                 bgColorTrend="bg-[#E7F68E]"
                 bgColorIcon="bg-[#D5F6E5]"
@@ -168,6 +170,7 @@ return (
                 <button className="flex items-center bg-[#F8AA24] text-[#0D0E0D] text-xs px-2.5 py-2 rounded-md" onClick={() => setShowInvoice(true)}>
                     <Download size={14} className="mr-2" /> Download
                 </button>
+                <FactureModal  show={showInvoice} onClose={() => setShowInvoice(false)} data={reservations[0]}/>
                         <ChevronLeft className="w-6 h-6 rounded mt-1 bg-gray-100 justify-center" />
 
                 <div className="flex gap-1 text-black justify-end">

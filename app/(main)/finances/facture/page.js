@@ -102,7 +102,7 @@ return (
                     </div>
                 </th>
                 <th className="p-3 font-medium bg-[#F5FDF9]">
-                    <div className={"flex justify-center"}>
+                    <div className={"flex justify-start px-6"}>
                         Statut
                         <ChevronUpDownIcon color="#6E6E6E" className="h-5 w-5" />
                     </div>
@@ -125,7 +125,10 @@ return (
                 <td className="p-6 text-[#0D0E0D] text-xs font-medium">{r.nights} nuits</td>
                 <td className="p-6 text-[#0D0E0D] text-xs font-medium">{r.total}</td>
                 <td className="p-6 text-[#0D0E0D] text-xs font-bold">
-                <span className={`px-2 py-0.5 text-xs rounded-md border ${getStatusColor(r.status)}`}>{r.status}</span>
+                    <span className={`px-2 py-0.5 text-xs rounded-md border flex gap-2 w-23 ${getStatusColor(r.status)}`}>
+                        {r.status == "Présent" ? <span className="px-2 py-0.5 rounded-md border bg-[#CCD97E] border-[#CCD97E]"></span> : <span className="px-2 py-0.5 rounded-md border bg-[#865D5D] border-[#865D5D]"></span>}
+                        {r.status}
+                    </span>
                 </td>
                 <td className="px-4 py-3 flex justify-center">
                 <button className="flex items-center font-medium gap-1 text-xs bg-[#F8AA24] text-[#0D0E0D] px-2.5 py-2 rounded-md" onClick={() => setShowInvoice(true)}>

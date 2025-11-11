@@ -24,8 +24,12 @@ export const Header = () => {
             return "Chambres";
         }
         if (pathname.includes("/reservations")) return "Réservation";
-        if (pathname.includes("/finances")) return "Facture";
+        if (pathname.includes("/finances/facture")) return "Facture";
+        if (pathname.includes("/finances/revenus")) return "Revenu";
         if (pathname.includes("/messages")) return "Messages";
+        if (pathname.includes("/menage")) return "Ménage";
+        if (pathname.includes("/disponibilite")) return "Disponibilité";
+        if (pathname.includes("/personnel")) return "Le personnel";
         return "Souaba";
     }, [pathname]);
 

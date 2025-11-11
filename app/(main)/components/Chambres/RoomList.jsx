@@ -37,9 +37,9 @@ export default function RoomList({ initialRooms, category }) {
 
     const getStatusBadgeClass = (status) => {
         const classes = {
-            'Disponible': 'bg-[#29B06F] text-white',
-            'Occupée': 'bg-[#F8AA24]',
-            'Hors service': 'bg-[#EAEAEA]',
+            'Disponible': 'bg-[#29B06F] text-white font-[Lato]',
+            'Occupée': 'bg-[#F8AA24] font-[Lato]',
+            'Hors service': 'bg-[#EAEAEA] font-[Lato]',
         };
         return classes[status] || 'bg-gray-500';
     };
@@ -80,7 +80,7 @@ export default function RoomList({ initialRooms, category }) {
                 <div className={"bg-background rounded-2xl p-5"}>
                     <div className={"flex items-center justify-between"}>
                     {/* Titre de la liste */}
-                    <h2 className="font-semibold mb-4">
+                    <h2 className="mb-4 font-[Lato]">
                         Liste des chambres dans la catégorie {category.toLowerCase()}
                     </h2>
 
@@ -116,7 +116,7 @@ export default function RoomList({ initialRooms, category }) {
                                 onChange={(e) => setFloorFilter(e.target.value)}
                                 className="w-full h-2/5 pl-10 pr-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                             >
-                                <option value="all">Étage</option>
+                                <option value="all">Etage</option>
                                 {[...new Set(rooms.map(r => r.floor))].sort().map(floor => (
                                     <option key={floor} value={floor}>{floor}</option>
                                 ))}
@@ -172,17 +172,17 @@ export default function RoomList({ initialRooms, category }) {
                         <tbody className="bg-white divide-y divide-gray-200">
                         {currentRooms.map((room) => (
                             <tr key={room.id} className="hover:bg-gray-50">
-                                <td className="px-10 py-4 whitespace-nowrap text-xs font-bold text-gray-900">
+                                <td className="px-10 py-4 whitespace-nowrap text-xs text-gray-900">
                                     {room.number}
                                 </td>
-                                <td className="px-15 py-4 whitespace-nowrap text-xs font-bold text-gray-900">
+                                <td className="px-15 py-4 whitespace-nowrap text-xs text-gray-900">
                                     {room.capacity}
                                 </td>
-                                <td className="px-10 py-4 whitespace-nowrap text-xs font-bold text-gray-900">
+                                <td className="px-10 py-4 whitespace-nowrap text-xs text-gray-900">
                                     {room.floor}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-lg text-black ${getStatusBadgeClass(room.status)}`}>
+                      <span className={`px-3 py-1 inline-flex text-xs leading-5 rounded-lgtext-black ${getStatusBadgeClass(room.status)}`}>
                         {room.status}
                       </span>
                                 </td>

@@ -58,16 +58,18 @@ return (
             </button>
 
             {/* Toggle activé/désactivé */}
-                <div className="col items-center gap-2 ml-2">
-                    <span className="text-sm text-[#000000">Désactivé</span>                    
-                    <span className="text-sm text-[#000000]">Activé</span>
+                <div className="rows items-center gap-2 ml-2">
+                    <div className="flex justify-start items-center gap-5">
+                        <span className="text-sm text-[#000000]">Désactivé</span>                    
+                        <span className="text-sm text-[#000000]">Activé</span>
+                    </div>
                     <div
-                    className="relative w-11 h-5 bg-[#EAEAEA] rounded-full cursor-pointer flex justify-center"
-                    onClick={() => setActive(!active)}
+                        className="relative  h-5 bg-[#EAEAEA] rounded-full cursor-pointer flex justify-center"
+                        onClick={() => setActive(!active)}
                     >
                         <div
                             className={`absolute top-[2px] left-[2px] w-4 h-4 rounded-full transition-all ${
-                            active ? "translate-x-6 bg-[#8EA6F6]" : "bg-[#EAEAEA]"
+                                active ? "bg-[#6E6E6E]" : "translate-x-28 bg-[#8EA6F6]"
                             }`}
                             onClick={() => setIsOpen(true)}
                         ></div>
