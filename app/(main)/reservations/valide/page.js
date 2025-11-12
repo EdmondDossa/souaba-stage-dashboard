@@ -311,8 +311,10 @@ export default function ReservationPageValide ({ }) {
               >
                 {num}
               </button>
-            ))}            
-            <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
+            ))}
+            <button className="">
+              <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
+            </button>            
           </div>
         </div>
       </div>
