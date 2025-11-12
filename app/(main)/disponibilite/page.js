@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, X, Settings, Bell } from 'lucide-react';
-import { AddDisponibiliteModal } from './components/AddDisponibiliteModal';
+import AddDisponibiliteModal from './components/AddDisponibiliteModal';
 import {RoomCard} from './components/RoomCard';
 import {SvgIcon} from "@/components/ui/common";
 
@@ -24,8 +24,8 @@ const DisponibilitePage = () => {
     const allRoomsData = [
         // Étage 0
         { floor: 0, number: '102', type: ' ', status: ' ', dates: ' ', statusType: ' ', day: " "},
-        { floor: 0, number: '103', type: ' ', status: ' ', dates: '06-08-2025 au 12-08-2025', color: 'red', statusType: 'hors-service', day: 8 },
-        { floor: 0, number: '104', type: 'Suite', status: 'Disponible', dates: '----------', statusType: 'disponible', day: 12 },
+        { floor: 0, number: '103', type: ' ', status: ' ', dates: ' ', color: ' ', statusType: 'hors-service', day: " " },
+        { floor: 0, number: '104', type: '', status: '', dates: ' ', statusType: ' ', day: " " },
         { floor: 0, number: '105', type: 'Suite', status: 'Room Inspection', dates: '11:00 AM - 1:00 PM', color: 'green', note: 'Maintenance', statusType: 'propre', day: 15 },
         { floor: 0, number: '106', type: 'Suite', status: 'Disponible', dates: '----------', statusType: 'disponible', day: 18 },
 
@@ -126,9 +126,11 @@ const DisponibilitePage = () => {
         setActiveFilter(activeFilter === filter ? null : filter);
     };
 
+
+
     return (
         <div className="min-h-screen bg-gray-50">
-            <div className="flex bg-white">
+            <div className="flex bg-white rounded-xl">
                 {/* Sidebar */}
                 <div className="w-72 bg-gray-50 rounded-2xl p-6 m-6">
                     {/* Mini Calendrier */}
@@ -207,7 +209,7 @@ const DisponibilitePage = () => {
                 </div>
 
                 {/* Zone principale */}
-                <div className="flex-1 p-8">
+                <div className="flex-1 p-5">
                     {/* Filtres et bouton d'ajout */}
                     <div className="mb-6 flex justify-end">
                         <div className="flex gap-2">
@@ -323,9 +325,9 @@ const DisponibilitePage = () => {
                     )}
 
                     {/* Grille des chambres */}
-                    <div className="grid grid-cols-7 border-t border-dashed border-gray-300">
+                    <div className="grid grid-cols-6 border-l border-gray-300">
                         {filteredRooms.map((room, index) => (
-                            <div key={index} className="border-t border-dashed border-gray-300">
+                            <div key={index} className="border-b border-dashed border-gray-300">
                                 <RoomCard room={room} index={index} />
                             </div>
                         ))}

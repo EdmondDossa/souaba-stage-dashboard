@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import {SvgIcon} from "@/components/ui/common";
+import { SvgIcon } from "@/components/ui/common";
 
 export const RoomCard = ({ room, index }) => {
     const getBackgroundColor = () => {
@@ -10,32 +10,49 @@ export const RoomCard = ({ room, index }) => {
         return 'bg-white';
     };
 
-    // Si la chambre est vide (pas de données) - carte vide complète
-    const isEmpty = !room.status || room.status === '';
+    // Si la chambre est vide (pas de données)
+    const isEmpty = !room.status || room.status.trim() === '' || room.status === ' ';
 
     const isFirstInRow = index % 7 === 0;
 
     if (isEmpty) {
         return (
-            <div className={`bg-gray-50 p-3 min-h-[140px] border-r border-dashed border-gray-300 ${!isFirstInRow ? 'border-l-0' : ''}`}>
-                {/* Complètement vide - pas de contenu */}
+            <div
+                className={`relative w-full h-full bg-gray-50 p-3 min-h-[140px] border-r border-gray-300 overflow-hidden ${!isFirstInRow ? 'border-l-0' : ''}`}
+            >
+                {/* Hachures diagonales */}
+                <div
+                    className="absolute inset-0 opacity-40"
+                    style={{
+                        backgroundImage:
+                            'repeating-linear-gradient(130deg, #d1d5db 0, #d1d5db 2px, transparent 2px, transparent 20px)',
+                    }}
+                >
+                    <div className="text-base font-bold p-2">{room.number}</div>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className={`p-1 cursor-pointer transition-all hover:shadow-lg border-r border-dashed border-gray-300 ${!isFirstInRow ? 'border-l-0' : ''}`}>
+        <div className={`p-2 cursor-pointer transition-all hover:shadow-lg border-r border-gray-300 ${!isFirstInRow ? 'border-l-0' : ''}`}>
             <div className="text-base font-bold pb-2">{room.number}</div>
-            <div className={`rounded-lg pt-2  w-[100%] h-[100%] pb-1 ${getBackgroundColor()}`}>
-                <div className={""}>
+            <div className={`rounded-lg pt-2 w-full h-full pb-1 ${getBackgroundColor()}`}>
+                <div className={"p-1"}>
                     <div className="text-xs flex pl-1">{room.dates}</div>
                     <div className="text-sm font-bold pl-1">{room.status}</div>
-                    <div className={"justify-center text-center flex p-5"}>
-                        <SvgIcon name={"Broom"} className={""} size={30} />
+
+                    <div className="justify-center text-center flex p-6">
+                        <SvgIcon name={"Broom"} size={30} />
                     </div>
-                    <div className="flex items-center pl-2 justify-between pr-2">
+
+                    <div className="flex items-center justify-between pl-2 pr-2">
                         <span className="text-xs font-bold">{room.type}</span>
-                        <SvgIcon name={"EditCalendar"} className={"w-[30px] h-[50px]"} size={21} />
+
+                        {/* Affichage conditionnel du EditCalendar */}
+                        {(room.type && room.type.trim() !== '') && (
+                            <SvgIcon name={"EditCalendar"} className="w-[30px] h-[50px]" size={21} />
+                        )}
                     </div>
                 </div>
             </div>
