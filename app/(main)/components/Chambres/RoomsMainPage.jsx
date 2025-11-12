@@ -283,7 +283,7 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                                         <div className="flex text-right gap-14 justify-between">
                                             <div>
                                                 <button
-                                                    onClick={() => router.push(`/dashboard/chambres/${encodeURIComponent(category.type)}`)}
+                                                    onClick={() => router.push(`/Chambres/${encodeURIComponent(category.type)}`)}
                                                     className="px-3 py-1 border font-bold border-orange-300 rounded text-sm hover:bg-gray-50">
                                                     Voir les chambres
                                                 </button>
