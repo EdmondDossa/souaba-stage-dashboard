@@ -10,7 +10,7 @@ export default function ConversationList({ conversations, selectedId, onSelectCo
     );
 
     return (
-        <div className=" bg-background rounded-2xl  flex flex-col">
+        <div className="mt-5 bg-background rounded-2xl  flex flex-col">
             {/* Header */}
             <div className="p-6">
                 {/* Search bar */}
