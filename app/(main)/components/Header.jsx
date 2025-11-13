@@ -73,7 +73,7 @@ export const Header = () => {
                     </button>
                     <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-muted relative">
                         <Bell className="w-5 h-5 text-muted-foreground" />
-                        <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
+                        <span className="absolute top-1 bg-red-500 right-1 w-2 h-2 rounded-full" />
                     </button>
                 </div>
             </div>

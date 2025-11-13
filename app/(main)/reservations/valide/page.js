@@ -9,6 +9,17 @@ import UpdateReservationModal from "./UpdateReservation";
 export default function ReservationPageValide ({ }) {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("Tous les statuts");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dateRange, setDateRange] = useState({
+    start: "June 19, 2028",
+    end: "June 24, 2028"
+  });
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const handleStatusChange = (e) => {
+    setStatusFilter(e.target.value);
+  };
 
   const reservations = [
     { name: "Angus Copper", id: "LG-800108", type: "Deluxe 101", room: "Room 101", checkIn: "June 19, 2028", checkOut: "June 22, 2028", status: "Arrivée" },
@@ -24,6 +35,40 @@ export default function ReservationPageValide ({ }) {
     { name: "Davis Bergson", id: "LG-800118", type: "Deluxe 110", room: "Room 654", checkIn: "June 21, 2028", checkOut: "June 24, 2028", status: "Présent" },
     { name: "Martin Curtis", id: "LG-800119", type: "Standard 209", room: "Room 109", checkIn: "June 22, 2028", checkOut: "June 27, 2028", status: "Arrivée" },
   ];
+
+  // Fonction pour convertir une date string en objet Date
+  const parseDate = (dateStr) => {
+    return new Date(dateStr);
+  };
+
+  // Fonction de filtrage et recherche
+  const filteredReservations = reservations.filter((res) => {
+    // Filtre par statut
+    const matchesStatus = statusFilter === "Tous les statuts" || res.status === statusFilter;
+    
+    // Filtre par recherche (nom, id, type, room, statut)
+    const matchesSearch = 
+      searchQuery === "" ||
+      res.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.room.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.status.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    // Filtre par date
+    const checkInDate = parseDate(res.checkIn);
+    const checkOutDate = parseDate(res.checkOut);
+    const startDate = parseDate(dateRange.start);
+    const endDate = parseDate(dateRange.end);
+    
+    // La réservation doit avoir un chevauchement avec la période sélectionnée
+    const matchesDate = 
+      (checkInDate >= startDate && checkInDate <= endDate) ||
+      (checkOutDate >= startDate && checkOutDate <= endDate) ||
+      (checkInDate <= startDate && checkOutDate >= endDate);
+    
+    return matchesStatus && matchesSearch && matchesDate;
+  });
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -41,15 +86,13 @@ export default function ReservationPageValide ({ }) {
   const handleReservationSave = (reservation) => {
     console.log("Reservation saved:", reservation);
     setIsOpen(false);
-    };
+  };
 
-    const savedReservation = {
-      name: "John Doe",
-      id: "LG-800120",
-      checkIn: "June 22, 2028",
-      checkOut: "June 25, 2028",
-      status: "Arrivée",
-    };
+  // Fonction pour formater la date d'affichage
+  const formatDateDisplay = (dateStr) => {
+    const date = parseDate(dateStr);
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+  };
 
   return (
     <div className="flex-1 bg-white border-white p-7 rounded min-h-screen mt-3">
@@ -58,23 +101,96 @@ export default function ReservationPageValide ({ }) {
         <h1 className="text-l font-semibold text-[#0D0E0D]">Liste des réservation validées</h1>
         <div className="flex items-center gap-4">
           <div className="flex items-center bg-[#F8F8F8] border-gray-100 rounded-md px-3 h-10 py-1.5 w-64">
-            <Search size={16} className="text-[#6E6E6E] mr-2" />
+            <Search size={16} className="text-[#6E6E6E] mr-2"/>
             <input
               type="text"
               placeholder="Rechercher un invité, un statut, etc."
-              className="w-full text-xs outline-none text-[#A3A3A3]"
+              className="w-full text-xs outline-none text-[#0D0E0D] bg-transparent"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-xs text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
             <Filter className="text-[#6E6E6E] h-5 w-5"/>
-              <span>Tous les statuts</span> 
-            <ChevronDown/>  
+            <select 
+              value={statusFilter} 
+              onChange={handleStatusChange} 
+              className="outline-none bg-transparent"
+            >
+              <option value="Tous les statuts">Tous les statuts</option>
+              <option value="Arrivée">Arrivée</option>
+              <option value="Présent">Présent</option>
+              <option value="Départ">Départ</option>
+            </select>
           </button>
-          <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-xs text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
-            <CalendarDays size={16} />
-            19 <span className="text-[#0D0E0D]"> - </span> 24 Juin 2028
-            <ChevronDown/>
-          </button>
+          
+          {/* Date Range Picker */}
+          <div className="relative">
+            <button 
+              onClick={() => setShowDatePicker(!showDatePicker)}
+              className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-xs text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]"
+            >
+              <CalendarDays size={16} />
+              {formatDateDisplay(dateRange.start)} - {formatDateDisplay(dateRange.end)}
+              <ChevronDown/>
+            </button>
+            
+            {showDatePicker && (
+              <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-80">
+                <div className="mb-4">
+                  <label className="block text-xs text-gray-600 mb-2">Date de début</label>
+                  <input
+                    type="date"
+                    value={new Date(dateRange.start).toISOString().split('T')[0]}
+                    onChange={(e) => {
+                      const newDate = new Date(e.target.value);
+                      setDateRange({
+                        ...dateRange,
+                        start: newDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                      });
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-xs outline-none focus:ring-2 focus:ring-[#F8AA24]"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-xs text-gray-600 mb-2">Date de fin</label>
+                  <input
+                    type="date"
+                    value={new Date(dateRange.end).toISOString().split('T')[0]}
+                    onChange={(e) => {
+                      const newDate = new Date(e.target.value);
+                      setDateRange({
+                        ...dateRange,
+                        end: newDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                      });
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-xs outline-none focus:ring-2 focus:ring-[#F8AA24]"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setShowDatePicker(false)}
+                    className="flex-1 px-3 py-2 bg-[#F8AA24] text-white rounded-md text-xs font-medium hover:bg-[#e09a1a]"
+                  >
+                    Appliquer
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDateRange({
+                        start: "June 19, 2028",
+                        end: "June 24, 2028"
+                      });
+                      setShowDatePicker(false);
+                    }}
+                    className="flex-1 px-3 py-2 bg-gray-200 text-gray-700 rounded-md text-xs font-medium hover:bg-gray-300"
+                  >
+                    Réinitialiser
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
           <button 
             onClick={() => setIsOpen(true)}
             className="flex items-center gap-2 bg-[#F8AA24] text-[#0D0E0D] rounded-lg px-3 py-1.5 text-xs">
@@ -137,44 +253,52 @@ export default function ReservationPageValide ({ }) {
             </tr>
           </thead>
           <tbody>
-            {reservations.map((res) => (
-              <tr key={res.id} className="border-b border-gray-100 hover:bg-gray-50 py-10">
-                <td className="p-3 text-[#0D0E0D] text-xs font-bold">{res.name}</td>
-                <td className=" text-[#0D0E0D] text-xs font-bold">{res.id}</td>
-                <td className=" text-[#0D0E0D] text-xs font-bold">{res.type}</td>
-                <td className=" text-[#0D0E0D] text-xs font-bold">{res.room}</td>
-                <td className="p-6 text-[#0D0E0D] text-xs font-bold">
-                  {res.checkIn} - {res.checkOut}
-                </td>
-                <td className="p-3">
-                  <span
-                    className={`px-1 py-1  text-xs rounded font-medium ${getStatusColor(
-                      res.status
-                    )}`}
-                  >
-                    {res.status}
-                  </span>
-                </td>
-                <td className="p-3 text-right flex justify-center gap-2">   
-                  <button className="p-1.5 rounded-md bg-[#F8F8F8]">
-                    <Eye size={16}/>
-                  </button>
-                  <button className="p-1.5 rounded-md bg-[#F8F8F8]">
-                    <Edit size={16} />
-                  </button>
+            {filteredReservations.length > 0 ? (
+              filteredReservations.map((res) => (
+                <tr key={res.id} className="border-b border-gray-100 hover:bg-gray-50 py-10">
+                  <td className="p-3 text-[#0D0E0D] text-xs font-bold">{res.name}</td>
+                  <td className=" text-[#0D0E0D] text-xs font-bold">{res.id}</td>
+                  <td className=" text-[#0D0E0D] text-xs font-bold">{res.type}</td>
+                  <td className=" text-[#0D0E0D] text-xs font-bold">{res.room}</td>
+                  <td className="p-6 text-[#0D0E0D] text-xs font-bold">
+                    {res.checkIn} - {res.checkOut}
+                  </td>
+                  <td className="p-3">
+                    <span
+                      className={`px-1 py-1  text-xs rounded font-medium ${getStatusColor(
+                        res.status
+                      )}`}
+                    >
+                      {res.status}
+                    </span>
+                  </td>
+                  <td className="p-3 text-right flex justify-center gap-2">   
+                    <button className="p-1.5 rounded-md bg-[#F8F8F8]">
+                      <Eye size={16}/>
+                    </button>
+                    <button className="p-1.5 rounded-md bg-[#F8F8F8]">
+                      <Edit size={16} />
+                    </button>
 
-                  <button className="flex items-center gap-1 bg-[#248EF8] text-white text-xs px-1 rounded hover:bg-blue-600">
-                    Payer
-                  </button>
+                    <button className="flex items-center gap-1 bg-[#248EF8] text-white text-xs px-1 rounded hover:bg-blue-600">
+                      Payer
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="p-8 text-center text-gray-500 text-sm">
+                  Aucune réservation trouvée
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
 
         {/* Footer */}
         <div className="flex justify-between items-center p-4 text-l text-gray-500 bg-[#FFFFFF]">
-          <span className="text-[#6E6E6E] text-xs">Showing 1-12 of 385</span>
+          <span className="text-[#6E6E6E] text-xs">Showing 1-{filteredReservations.length} of {reservations.length}</span>
           <div className="flex gap-1 text-black justify-end">
             {[1, 2, 3, "...", 8].map((num, i) => (
               <button
@@ -187,8 +311,10 @@ export default function ReservationPageValide ({ }) {
               >
                 {num}
               </button>
-            ))}            
-            <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
+            ))}
+            <button className="">
+              <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
+            </button>            
           </div>
         </div>
       </div>

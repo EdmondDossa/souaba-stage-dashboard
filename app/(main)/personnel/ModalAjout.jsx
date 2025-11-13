@@ -73,7 +73,8 @@ export default function ModalAdd ({ isOpen, onClose}) {
                                 name="role"
                                 >
                                     <option className="text-[#0D0E0D] flex justify-start">Admin</option>
-                                    <option className="text-[#0D0E0D] flex justify-start">User</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Réceptionnister</option>
+                                    <option className="text-[#0D0E0D] flex justify-start">Responsable Ménage</option>
                                 </select>
                             </div>
                         </div>
