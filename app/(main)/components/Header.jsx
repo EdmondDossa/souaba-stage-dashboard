@@ -16,7 +16,7 @@ export const Header = () => {
         if (pathname === "/") return "Tableau de bord";
         if (pathname.startsWith("/Chambres")) {
             const parts = pathname.split("/");
-            const roomNameEncoded = parts[3]; // "Nom%20chambre%201"
+            const roomNameEncoded = parts[3];
             if (roomNameEncoded) {
                 const roomName = decodeURIComponent(roomNameEncoded);
                 return ` `;
@@ -38,22 +38,25 @@ export const Header = () => {
             <h1 className="text-2xl font-semibold text-gray-800">{pageTitle}</h1>
 
             <div className="flex items-center gap-4">
-                {/* Barre de recherche */}
-                <div className="relative w-64 text-xs">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                    <input
-                        type="text"
-                        placeholder="Rechercher une chambre, un invité, etc."
-                        className="w-full h-2/5 pl-10 pr-4 py-2 text-sm rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-ring"
-                    />
-                </div>
+                {/* Barre de recherche  presente uniquement sur la page Dashboard*/}
+                {pathname === "/" ? (
+                    <div className="relative w-64 text-xs">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                        <input
+                            type="text"
+                            placeholder="Rechercher une chambre, un invité, etc."
+                            className="w-full h-2/5 pl-10 pr-4 py-2 text-sm rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                        />
+                    </div>
+                ) : (<div></div>)}
+
 
                 {/* Profil utilisateur + icônes */}
                 <div className="flex items-center gap-3">
                     {userInfo.map((user, index) => (
                         <div key={index} className="flex items-center gap-2 ml-2">
                             <img
-                                src={user.pathImg ?? "./images/jaylonprofile.png"}
+                                src={user.pathImg}
                                 alt={user.name}
                                 className="w-9 h-9 rounded-full"
                             />

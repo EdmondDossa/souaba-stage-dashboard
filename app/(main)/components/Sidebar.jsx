@@ -16,7 +16,7 @@ const menuItems = [
     { icon: "ChatText", label: "Messages", badge: 7, href: "/messages" },
     { icon: "HandSoap", label: "Ménage", href: "/menage" },
     { icon: "CalendarSidebar", label: "Disponibilité", href: "/disponibilite" },
-    { icon: "Money", label: "Finances", href: "/finances" },
+    { icon: "IconMoney", label: "Finances", href: "/finances" },
     { icon: "IdentificationBadge", label: "Le personnel", href: "/personnel" },
 ];
 
@@ -94,10 +94,10 @@ export const Sidebar = () => {
                                             : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                                     )}
                                 >
-                <span className="flex items-center gap-3">
-                    <IconComponent className="w-4 h-4" />
-                        {item.label}
-                </span>
+                                    <span className="flex items-center gap-3">
+                                        <IconComponent className="w-4 h-4" />
+                                            {item.label}
+                                    </span>
                                     <ChevronDownIcon
                                         className={cn(
                                             "w-4 h-4 transition-transform duration-200",
@@ -151,9 +151,9 @@ export const Sidebar = () => {
                             />
                             <span className="text-left flex-1">{item.label}</span>
                             {item.badge && (
-                                <span className="bg-red-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {item.badge}
-                </span>
+                                <span className="bg-[#FD4242] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                    {item.badge}
+                                </span>
                             )}
                         </button>
                     );
