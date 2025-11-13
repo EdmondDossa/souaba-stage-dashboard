@@ -17,6 +17,7 @@ const personnels = [
     contact: "+1 (555) 234-5678",
     email: "bebe.cullen@example.com",
     color: "bg-[#8EA6F6]",
+    pathImg: "/images/personnel/boy.png"
 },
 {
     name: "Alwar King",
@@ -24,6 +25,7 @@ const personnels = [
     contact: "+1 (555) 345-6789",
     email: "alwar.king@example.com",
     color: "bg-[#8EA6F6]",
+    pathImg: "/images/personnel/boy.png"
 },
 {
     name: "Sarah May",
@@ -31,6 +33,7 @@ const personnels = [
     contact: "+1 (555) 456-7890",
     email: "sarah.may@example.com",
     color: "bg-[#F38EF6]",
+    pathImg: "/images/personnel/girl.png"
 },
 {
     name: "Gavin Timberbolt",
@@ -38,6 +41,7 @@ const personnels = [
     contact: "+1 (555) 567-8901",
     email: "gavin.timberbolt@example.com",
     color: "bg-[#8EA6F6]",
+    pathImg: "/images/personnel/boy.png"
 },
 {
     name: "Francesca Illing",
@@ -45,6 +49,7 @@ const personnels = [
     contact: "+1 (555) 678-9012",
     email: "francesca.illing@example.com",
     color: "bg-[#F38EF6]",
+    pathImg: "/images/personnel/girl.png"
 },
 {
     name: "Joan Laster",
@@ -52,6 +57,7 @@ const personnels = [
     contact: "+1 (555) 789-0123",
     email: "joan.laster@example.com",
     color: "bg-[#8EA6F6]",
+    pathImg: "/images/personnel/boy.png"
 },
 {
     name: "Odena Berg",
@@ -59,6 +65,8 @@ const personnels = [
     contact: "+1 (555) 890-1234",
     email: "odena.berg@example.com",
     color: "bg-[#F38EF6]",
+    pathImg: "/images/personnel/girl.png"
+
 },
 {
     name: "Kevin Nicolas",
@@ -66,6 +74,8 @@ const personnels = [
     contact: "+1 (555) 901-2345",
     email: "vinnicolas@example.com",
     color: "bg-[#8EA6F6]",
+    pathImg: "/images/personnel/boy.png"
+
 },
 {
     name: "Beatrice White",
@@ -73,6 +83,8 @@ const personnels = [
     contact: "+1 (555) 012-3456",
     email: "beatrice.white@example.com",
     color: "bg-[#F38EF6]",
+    pathImg: "/images/personnel/girl.png"
+
 },
 {
     name: "Vincent Snow",
@@ -80,6 +92,8 @@ const personnels = [
     contact: "+1 (555) 123-4567",
     email: "vincent.snow@example.com",
     color: "bg-[#8EA6F6]",
+    pathImg: "/images/personnel/boy.png"
+
 },
 {
     name: "Rafael Bartoletti",
@@ -87,6 +101,9 @@ const personnels = [
     contact: "+1 (555) 896-1019",
     email: "rafael98@example.com",
     color: "bg-[#8EA6F6]",
+    pathImg: "/images/personnel/boy.png"
+
+
 },
 ];
 
@@ -202,9 +219,9 @@ return (
             >
                 <td className="px-6 py-4 flex text-[#1E1E1E] font-semibold items-center gap-3">
                 <div
-                    className={`${p.color} w-9 h-9 rounded-full flex items-center justify-center text-white font-semibold`}
+                    className={`${p.color} w-15 h-15 rounded-full flex items-center justify-center text-white font-semibold`}
                 >
-                    {p.name.split(" ")[0][0]}
+                    <img src={p.pathImg} alt="image_personnel" height="50" width="50" className="relative"/>
                 </div>
                 {p.name}
                 </td>
