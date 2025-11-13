@@ -6,14 +6,13 @@ import { ChevronDown } from "lucide-react";
 
 // Données brutes
 const rawData = [
-    { month: "Dec 2027", value: 200000 },
+    { month: "Nov 2027", value: 100000 },
+    { month: "Dec 2027", value: 280000 },
     { month: "Jan 2028", value: 250000 },
     { month: "Feb 2028", value: 315060 },
-    { month: "Mar 2028", value: 280000 },
-    { month: "Apr 2028", value: 320000 },
-    { month: "May 2028", value: 290000 },
-    { month: "Jun 2028", value: 330000 },
-    { month: "Jul 2028", value: 310000 },
+    { month: "Mar 2028", value: 225000 },
+    { month: "Apr 2028", value: 390000 },
+    { month: "May 2028", value: 250000 },
 ];
 
 const monthToNumber = {
@@ -58,6 +57,39 @@ export const RevenueChart = () => {
         setData(filteredData);
         setDropdownOpen(false);
     };
+
+    //personalisation du tooltip
+    const CustomTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div style={{
+                    backgroundColor: '#F8AA24',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '8px 12px'
+                }}>
+                    <p style={{
+                        color: 'gray',
+                        fontSize: '10px',
+                        margin: '0 0 4px 0',
+                        fontWeight: '400'
+                    }}>
+                        Revenu total
+                    </p>
+                    <p style={{
+                        color: 'black',
+                        fontSize: '14px',
+                        margin: 0,
+                        fontWeight: '600'
+                    }}>
+                        ${(payload[0].value / 1000).toFixed(0)}K
+                    </p>
+                </div>
+            );
+        }
+        return null;
+    };
+
 
     // Construire dynamiquement les options
     const monthOptions = [9,6,3,1].map(n => ({ key: `${n}mois`, label: `${n} dernier${n>1?'s':''} mois` }));
@@ -112,16 +144,20 @@ export const RevenueChart = () => {
                     <AreaChart data={data}>
                         <defs>
                             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="hsl(142, 71%, 45%)" stopOpacity={0.2} />
-                                <stop offset="95%" stopColor="hsl(142, 71%, 45%)" stopOpacity={0} />
+                                <stop offset="0%" stopColor="#D5F6E5B8" stopOpacity={0.8} />
+                                <stop offset="72%" stopColor="#D5F6E5B8" stopOpacity={0.1} />
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+                        <CartesianGrid
+                            strokeDasharray="5 5"
+                            stroke="#E5E7EB"
+                            vertical={false}
+                        />
                         <XAxis
                             dataKey="month"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: '#9CA3AF', fontSize: 12 }}
+                            tick={{ fill: '#6E6E6E', fontSize: 12 }}
                         />
                         <YAxis
                             axisLine={false}
@@ -130,28 +166,24 @@ export const RevenueChart = () => {
                             tickFormatter={(value) => `$${value / 1000}K`}
                         />
                         <Tooltip
-                            formatter={(value) => [`$${value.toLocaleString()}`, 'Revenu total']}
-                            contentStyle={{
-                                backgroundColor: 'hsl(38, 92%, 50%)',
-                                border: 'none',
-                                borderRadius: '8px',
-                                color: 'white',
-                                fontSize: '14px',
-                                fontWeight: '600',
-                                padding: '8px 12px'
+                            content={<CustomTooltip />}
+                            cursor={{
+                                stroke: '#CCD97E',
+                                strokeWidth: 2,
+                                strokeDasharray: '5 5'
                             }}
-                            labelStyle={{ display: 'none' }}
                         />
                         <Area
                             type="natural"
                             dataKey="value"
-                            stroke="hsl(142, 71%, 45%)"
+                            stroke="#CCD97E"
                             strokeWidth={3}
                             fill="url(#colorRevenue)"
                         />
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
+
         </div>
     );
 };

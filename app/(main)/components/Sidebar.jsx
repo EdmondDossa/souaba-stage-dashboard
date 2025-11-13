@@ -1,5 +1,4 @@
 "use client";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 import { cn } from "@/lib/utils";
@@ -39,7 +38,7 @@ export const Sidebar = () => {
     const [openDropdown, setOpenDropdown] = useState(null);
 
     return (
-        <aside className="w-[200px] bg-white flex flex-col border-r border-gray-200">
+        <aside className="fixed left-0 top-0 w-[200px] h-screen bg-white flex flex-col border-r border-gray-200 z-10">
             {/* LOGO */}
             <div className="p-4 flex justify-center mb-6">
                 <Link href="/" className="flex items-center">
@@ -56,9 +55,6 @@ export const Sidebar = () => {
             {/* NAVIGATION */}
             <nav className="flex-1 px-2 font-bold text-gray-400">
                 {menuItems.map((item, index) => {
-                    const IconComponent = typeof SvgIcon === 'function' ? SvgIcon : item.icon;
-
-
                     //  Actif si chemin correspond exactement
                     const isExactMatch = pathname === item.href;
                     //  Actif si sous-routes uniquement pour Réservation / Finances
@@ -95,8 +91,8 @@ export const Sidebar = () => {
                                     )}
                                 >
                                     <span className="flex items-center gap-3">
-                                        <IconComponent className="w-4 h-4" />
-                                            {item.label}
+                                        <SvgIcon name={item.icon} size={21} className="w-6 h-6" />
+                                        {item.label}
                                     </span>
                                     <ChevronDownIcon
                                         className={cn(
@@ -143,12 +139,7 @@ export const Sidebar = () => {
                                     : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                             )}
                         >
-                            <IconComponent
-                                className="w-[20px] h-[20px]"
-                                {...(typeof item.icon === "string"
-                                    ? { name: item.icon, size: 21 }
-                                    : {})}
-                            />
+                            <SvgIcon name={item.icon} size={20} className="w-5 h-5" />
                             <span className="text-left flex-1">{item.label}</span>
                             {item.badge && (
                                 <span className="bg-[#FD4242] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
