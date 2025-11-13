@@ -1,15 +1,7 @@
 "use client";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import {
-    CalendarCheck,
-    MessageSquareText,
-    Users,
-    DollarSign,
-    Clock,
-    HomeIcon,
-    LayoutGrid,
-} from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,14 +10,14 @@ import { SvgIcon } from "@/components/ui/common";
 import { useRouter, usePathname } from "next/navigation";
 
 const menuItems = [
-    { icon: LayoutGrid, label: "Tableau de bord", href: "/" },
-    { icon: CalendarCheck, label: "Réservation", href: "/reservations" },
-    { icon: HomeIcon, label: "Chambres", href: "/chambres" },
-    { icon: MessageSquareText, label: "Messages", badge: 7, href: "/messages" },
-    { icon: Users, label: "Ménage", href: "/menage" },
-    { icon: Clock, label: "Disponibilité", href: "/disponibilite" },
-    { icon: DollarSign, label: "Finances", href: "/finances" },
-    { icon: Users, label: "Le personnel", href: "/personnel" },
+    { icon: "SquaresFour", label: "Tableau de bord", href: "/" },
+    { icon: "CalendarCheck", label: "Réservation", href: "/reservations" },
+    { icon: "HouseLine", label: "Chambres", href: "/Chambres" },
+    { icon: "ChatText", label: "Messages", badge: 7, href: "/messages" },
+    { icon: "HandSoap", label: "Ménage", href: "/menage" },
+    { icon: "CalendarSidebar", label: "Disponibilité", href: "/disponibilite" },
+    { icon: "IconMoney", label: "Finances", href: "/finances" },
+    { icon: "IdentificationBadge", label: "Le personnel", href: "/personnel" },
 ];
 
 const dropDownReservation = [
@@ -64,8 +56,8 @@ export const Sidebar = () => {
             {/* NAVIGATION */}
             <nav className="flex-1 px-2 font-bold text-gray-400">
                 {menuItems.map((item, index) => {
-                    const IconComponent =
-                        typeof item.icon === "string" ? SvgIcon : item.icon;
+                    const IconComponent = typeof SvgIcon === 'function' ? SvgIcon : item.icon;
+
 
                     //  Actif si chemin correspond exactement
                     const isExactMatch = pathname === item.href;
@@ -102,10 +94,10 @@ export const Sidebar = () => {
                                             : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                                     )}
                                 >
-                <span className="flex items-center gap-3">
-                    <IconComponent className="w-4 h-4" />
-                        {item.label}
-                </span>
+                                    <span className="flex items-center gap-3">
+                                        <IconComponent className="w-4 h-4" />
+                                            {item.label}
+                                    </span>
                                     <ChevronDownIcon
                                         className={cn(
                                             "w-4 h-4 transition-transform duration-200",
@@ -152,16 +144,16 @@ export const Sidebar = () => {
                             )}
                         >
                             <IconComponent
-                                className="w-4 h-4"
+                                className="w-[20px] h-[20px]"
                                 {...(typeof item.icon === "string"
-                                    ? { name: item.icon, size: 12 }
+                                    ? { name: item.icon, size: 21 }
                                     : {})}
                             />
                             <span className="text-left flex-1">{item.label}</span>
                             {item.badge && (
-                                <span className="bg-red-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {item.badge}
-                </span>
+                                <span className="bg-[#FD4242] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                    {item.badge}
+                                </span>
                             )}
                         </button>
                     );

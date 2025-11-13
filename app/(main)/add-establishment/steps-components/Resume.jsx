@@ -20,7 +20,7 @@ const Resume = ({ formValues, allowNextStep, setCurrentStep }) => {
       key: "description_rooms",
     },
     {
-      label: "Nombre de chambres",
+      label: "Nombre de Chambres",
       key: "room_type_number",
     },
     {
@@ -39,7 +39,7 @@ const Resume = ({ formValues, allowNextStep, setCurrentStep }) => {
 
   const equipementsList = [
     {
-      label: "Nombre de chambres",
+      label: "Nombre de Chambres",
       key: "rooms",
     },
     {

@@ -5,6 +5,7 @@ import SecurityModal from './SecurityModal';
 import AmenitiesModal from './AmenitiesModal';
 import EditCategoryModal from './EditCategorieModal';
 import AddCategoryModal from './AddCategorieModal';
+import DescriptionModal from './DescriptionModal';
 
 
 import { CheckIcon, Search, Edit } from "lucide-react";
@@ -82,7 +83,7 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
     const router = useRouter();
 
     return (
-        <div className="p-6 bg-white rounded-2xl text-[Lato]">
+        <div className="p-6 bg-white rounded-2xl">
             <div className="flex gap-6">
                 {/* Colonne gauche - Info hôtel */}
                 <div className="w-1/3 bg-gray-100 rounded-lg p-6">
@@ -282,7 +283,7 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                                         <div className="flex text-right gap-14 justify-between">
                                             <div>
                                                 <button
-                                                    onClick={() => router.push(`/chambres/${encodeURIComponent(category.type)}`)}
+                                                    onClick={() => router.push(`/Chambres/${encodeURIComponent(category.type)}`)}
                                                     className="px-3 py-1 border font-bold border-orange-300 rounded text-sm hover:bg-gray-50">
                                                     Voir les chambres
                                                 </button>

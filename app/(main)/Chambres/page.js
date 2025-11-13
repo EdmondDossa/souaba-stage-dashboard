@@ -1,4 +1,4 @@
-import RoomsMainPage from '@/app/(main)/components/chambres/RoomsMainPage';
+import RoomsMainPage from '@/app/(main)/components/Chambres/RoomsMainPage';
 
 async function getHotelData() {
     const hotelData = {
@@ -11,7 +11,7 @@ async function getHotelData() {
             '/images/chambre/details3chambre.png',
         ],
         description: "Optez pour une chambre Deluxe pour plus d'espace et de luxe. Dotées d'un lit king-size, d'un coin salon séparé," +
-            "d'un grand bureau et d'une télévision à écran plat de 55 pouces, ces chambres sont idéales pour se détendre avec style.",
+            "d'un grand bureau et d'une télévision à écran plat de 55 pouces, ces Chambres sont idéales pour se détendre avec style.",
         amenities: [
             'Wi-Fi haut débit',
             'Coffre-fort dans la chambre',

@@ -11,7 +11,7 @@ const PropertyFeatures = ({
   const features = [
     {
       icon: Bed,
-      label: bedrooms === 1 ? 'chambre' : 'chambres',
+      label: bedrooms === 1 ? 'chambre' : 'Chambres',
       value: bedrooms,
       color: 'text-blue-600'
     },

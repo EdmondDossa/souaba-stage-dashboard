@@ -93,9 +93,9 @@ const PropertyInformations = ({
     fields: [
       {
         name: "rooms_number",
-        label: "Nombre de chambres",
+        label: "Nombre de Chambres",
         type: "number",
-        placeholder: "Entrez le nombre de chambres",
+        placeholder: "Entrez le nombre de Chambres",
       },
       {
         name: "floor_number",
