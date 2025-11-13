@@ -255,7 +255,7 @@ export default function ReservationPageValide ({ }) {
           <tbody>
             {filteredReservations.length > 0 ? (
               filteredReservations.map((res) => (
-                <tr key={res.id} className="border-b border-gray-100 hover:bg-gray-50 py-10">
+                <tr key={res.id} className="border-b border-gray-100 py-10">
                   <td className="p-3 text-[#0D0E0D] text-xs font-bold">{res.name}</td>
                   <td className=" text-[#0D0E0D] text-xs font-bold">{res.id}</td>
                   <td className=" text-[#0D0E0D] text-xs font-bold">{res.type}</td>
@@ -305,8 +305,8 @@ export default function ReservationPageValide ({ }) {
                 key={i}
                 className={`px-3 py-1 m-1 text-xs rounded ${
                   num === 1
-                    ? "bg-[#F8AA24] text-[#FFFFFF]"
-                    : "bg-[#F8F8F8] text-gray-700"
+                    ? "bg-[#F8AA24] text-[#000000]"
+                    : "bg-[#F8F8F8] text-[#000000]"
                 }`} 
               >
                 {num}
