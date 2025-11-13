@@ -7,35 +7,35 @@ const activities = [
         time: "12:00 PM",
         title: "Configuration de la salle de conférence",
         description: "L'équipe des événements a installé la salle de conférence B pour la réunion de 10 heures, y compris l'équipement audiovisuel et les rafraîchissements.",
-        color: "bg-yellow-200",
+        color: "bg-[#E7F68E]",
         icon: "ChalkboardTeacher"
     },
     {
         time: "11:30 AM",
         title: "Départ des invités",
         description: "Sarah Johnson a terminé le processus de départ et a mis à jour la disponibilité de la chambre 305.",
-        color: "bg-green-200",
+        color: "bg-[#D5F6E5]",
         icon: "SignOut"
     },
     {
         time: "11:00 AM",
         title: "Nettoyage de la chambre terminé",
         description: "Maria Gonzalez a nettoyé et préparé la chambre 204 pour les nouveaux invités.",
-        color: "bg-yellow-300",
+        color: "bg-[#E7F68E]",
         icon: "CircleWavyCheck"
     },
     {
         time: "10:50 AM",
         title: "Demande de maintenance enregistrée",
         description: "Roberta causée dans la chambre 109, demande de maintenance attribuée au technicien.",
-        color: "bg-green-200",
+        color: "bg-[#D5F6E5]",
         icon: "WarningOctagon"
     },
     {
         time: "10:40 AM",
         title: "Enregistrement des invités",
         description: "Angus Cooper a terminé le processus d'enregistrement et a délivré la clé de la chambre.",
-        color: "bg-yellow-300",
+        color: "bg-[#E7F68E]",
         icon: "SignIn"
     },
 ];
