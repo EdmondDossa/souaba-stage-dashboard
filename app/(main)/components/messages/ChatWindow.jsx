@@ -34,9 +34,7 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
         messages.forEach((message, index) => {
             const date = message.date || "Aujourd'hui";
 
-            // Ajouter un séparateur de date si la date change
             if (date !== currentDate) {
-                // Flush le groupe de temps précédent
                 if (currentTimeGroup.length > 0) {
                     grouped.push({ type: 'timeGroup', messages: currentTimeGroup });
                     currentTimeGroup = [];
@@ -47,7 +45,6 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                 lastSender = null;
             }
 
-            // Grouper les messages par heure exacte et même expéditeur
             if (message.time === lastTime && message.sender === lastSender) {
                 currentTimeGroup.push(message);
             } else {
@@ -59,7 +56,6 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                 lastSender = message.sender;
             }
 
-            // Si c'est le dernier message, flush le groupe
             if (index === messages.length - 1 && currentTimeGroup.length > 0) {
                 grouped.push({ type: 'timeGroup', messages: currentTimeGroup });
             }
@@ -71,16 +67,16 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
     const groupedMessages = groupMessagesByDateAndTime();
 
     return (
-        <div className="flex-1 rounded-2xl flex flex-col bg-[#F8F8F8]">
-            {/* Header */}
+        <div className="flex-1 h-full rounded-2xl flex flex-col bg-[#F8F8F8] overflow-hidden">
+            {/* Header - Fixe */}
             <div className="px-6 py-4 border-b border-white flex items-center justify-between flex-shrink-0">
                 <div className="flex items-center gap-3">
                     <div className="relative">
-                        <div className="rounded-full w-12 h-12 overflow-hidden bg-[#E7F68E] object-cover object-top">
+                        <div className="rounded-full w-12 h-12 overflow-hidden bg-[#E7F68E]">
                             <img
                                 src={conversation.avatar}
                                 alt={conversation.name}
-                                className=""
+                                className="w-full h-full object-cover object-top"
                             />
                         </div>
                         {conversation.online && (
@@ -94,11 +90,11 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                 </div>
 
                 <button className="p-2 bg-white rounded-lg transition-colors">
-                    <SvgIcon name={"DotsThree"} className={"bg-white "} size={21} />
+                    <SvgIcon name={"DotsThree"} className={"bg-white"} size={21} />
                 </button>
             </div>
 
-            {/* Messages Area */}
+            {/* Messages Area - Scrollable */}
             <div className="flex-1 overflow-y-auto p-6 space-y-1" style={{
                 scrollbarWidth: 'thin',
                 scrollbarColor: 'transparent transparent'
@@ -109,7 +105,7 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                     if (item.type === 'date') {
                         return (
                             <div key={`date-${index}`} className="flex justify-center my-3">
-                                <span className="text-xs text-gray-500 bg-white px-3 rounded-full">
+                                <span className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full">
                                     {item.date}
                                 </span>
                             </div>
@@ -121,22 +117,20 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                         const isClient = firstMessage.sender === 'client';
 
                         return (
-                            <div key={`group-${index}`} className={`flex ${isClient ? 'justify-start' : 'justify-end'} items-end gap-2`}>
-                                {/* Avatar du client à gauche */}
+                            <div key={`group-${index}`} className={`flex ${isClient ? 'justify-start' : 'justify-end'} items-end gap-2 mb-4`}>
                                 {isClient && (
                                     <img
                                         src={conversation.avatar}
                                         alt={conversation.name}
-                                        className={`w-12 h-12 bg-[#E7F68E] rounded-full flex-shrink-0 object-cover object-top`}
+                                        className="w-12 h-12 bg-[#E7F68E] rounded-full flex-shrink-0 object-cover object-top"
                                     />
                                 )}
 
-                                {/* Message bubbles groupés */}
                                 <div className={`flex flex-col ${isClient ? 'items-start' : 'items-end'} max-w-md gap-1`}>
                                     {item.messages.map((message) => (
                                         <div
                                             key={message.id}
-                                            className={`px-4 py-3  ${
+                                            className={`px-4 py-3 ${
                                                 isClient
                                                     ? 'bg-[#D5F6E5] text-gray-black font-bold rounded-t-2xl rounded-r-2xl'
                                                     : 'bg-primary text-black font-bold rounded-t-2xl rounded-l-2xl'
@@ -150,7 +144,6 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                                     </span>
                                 </div>
 
-                                {/* Checkmark pour les messages admin */}
                                 {!isClient && (
                                     <div className="w-12 h-12 rounded-full bg-[#BCD9CA] flex items-center justify-center flex-shrink-0">
                                         <SvgIcon name={"Vector"} className={""} size={12} />
@@ -165,14 +158,13 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area - Fixed at bottom */}
-            <div className="px-6 py-12 flex-shrink-0">
+            {/* Input Area - Fixe en bas */}
+            <div className="px-6 py-4 flex-shrink-0">
                 <div className="px-2 py-2 rounded-xl bg-white">
                     <form onSubmit={handleSendMessage} className="flex items-center gap-6">
-                        <div className={"flex gap-2 flex-1"}>
-                            <div className={"flex bg-[#F8F8F8] rounded-lg flex-1"}>
-                                <div className={"flex rounded-tl-2xl bg-[#F8F8F8] flex-1 h-[40px] items-center px-[13px] gap-[6px]"}>
-                                    {/* Emoji button */}
+                        <div className="flex gap-2 flex-1">
+                            <div className="flex bg-[#F8F8F8] rounded-lg flex-1">
+                                <div className="flex rounded-tl-2xl bg-[#F8F8F8] flex-1 h-[40px] items-center px-[13px] gap-[6px]">
                                     <button
                                         type="button"
                                         className="hover:bg-gray-100 transition-colors flex-shrink-0"
@@ -180,7 +172,6 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                                         <SvgIcon name={"Icon-L"} size={21} className={""} />
                                     </button>
 
-                                    {/* Input field */}
                                     <input
                                         type="text"
                                         value={newMessage}
@@ -189,7 +180,6 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                                         className="flex-1 px-1 py-3 bg-transparent focus:outline-none text-sm"
                                     />
                                 </div>
-                                {/* Attachment button */}
                                 <button
                                     type="button"
                                     className="p-2 px-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
@@ -197,12 +187,11 @@ export default function ChatWindow({ conversation, messages, onSendMessage }) {
                                     <SvgIcon name={"Paperclip"} className={""} size={21} />
                                 </button>
                             </div>
-                            <div className={"flex items-center justify-center"}>
-                                {/* Send button */}
+                            <div className="flex items-center justify-center">
                                 <button
                                     type="submit"
                                     disabled={!newMessage.trim()}
-                                    className="flex p-[9px] gap-[8px] h-[40px] w-[40px] bg-primary hover:bg-primary disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                                    className="flex p-[9px] gap-[8px] h-[40px] w-[40px] bg-primary hover:bg-primary disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
                                 >
                                     <SvgIcon name={"PaperPlaneRight"} className={""} size={21} />
                                 </button>

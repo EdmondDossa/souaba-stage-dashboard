@@ -1,4 +1,3 @@
-// components/messages/MessagesPage.js
 'use client';
 import { useState, useEffect } from 'react';
 import ConversationList from './ConversationList';
@@ -277,19 +276,17 @@ export default function MessagesPage() {
     };
 
     return (
-        <div className={"rounded-2xl flex h-screen"}>
-            <div className="m-3 flex-1 flex bg-white rounded-2xl overflow-hidden">
+        <div className="flex h-[calc(100vh-2rem)] rounded-2xl overflow-hidden">
+            <div className="flex-1 flex bg-white rounded-2xl overflow-hidden">
                 {/* Liste des conversations */}
-                <div className={"flex"}>
-                    <ConversationList
-                        conversations={conversations}
-                        selectedId={selectedConversation?.id}
-                        onSelectConversation={handleSelectConversation}
-                    />
-                </div>
+                <ConversationList
+                    conversations={conversations}
+                    selectedId={selectedConversation?.id}
+                    onSelectConversation={handleSelectConversation}
+                />
 
                 {/* Fenêtre de chat */}
-                <div className={"flex pt-5 w-[690px] pb-5"}>
+                <div className="flex-1 flex p-5">
                     {selectedConversation ? (
                         <ChatWindow
                             conversation={selectedConversation}
@@ -308,14 +305,12 @@ export default function MessagesPage() {
                     )}
                 </div>
 
-                {/* Panneau de profil du CLIENT - toujours visible */}
-               <div className={"flex pt-5"}>
-                   {selectedConversation && (
-                       <ProfilePanel
-                           profile={generateProfile(selectedConversation)}
-                       />
-                   )}
-               </div>
+                {/* Panneau de profil */}
+                {selectedConversation && (
+                    <ProfilePanel
+                        profile={generateProfile(selectedConversation)}
+                    />
+                )}
             </div>
         </div>
     );

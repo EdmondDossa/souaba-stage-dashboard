@@ -81,7 +81,7 @@ export default function HotelRooms() {
                   "Capacité d'accueil",
                   "Prix par nuit",
                   "Nombre de salle de bain",
-                  "Sélectionnez des chambres",
+                  "Sélectionnez des Chambres",
                 ].map((title, i) => {
                   return (
                     <th
@@ -166,10 +166,10 @@ export default function HotelRooms() {
                       </div>
                     </td>
 
-                    {/* Sélectionnez des chambres */}
+                    {/* Sélectionnez des Chambres */}
                     <td className="px-6 py-4 align-middle">
                       <div className="flex items-center justify-between space-x-4">
-                        {/* Select pour choisir le nombre de chambres */}
+                        {/* Select pour choisir le nombre de Chambres */}
                         <select
                           defaultValue={room.selectedCount ?? 0}
                           onChange={(e) => {

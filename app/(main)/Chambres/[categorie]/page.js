@@ -1,6 +1,6 @@
-import RoomList from '@/app/(main)/components/chambres/RoomList';
+import RoomList from '@/app/(main)/components/Chambres/RoomList';
 
-// Fonction pour récupérer les chambres d'une catégorie
+// Fonction pour récupérer les Chambres d'une catégorie
 async function getCategoryRooms(category) {
         return [
             {
