@@ -17,7 +17,6 @@ export default function FactureModal({ show, onClose, data }) {
 
     // Ouvrir la modal de confirmation
     const handleSendEmail = () => {
-        onClose();             // on ferme la modale de facture
         setShowConfirm(true);  // on ouvre la modale confirm
     };
 
@@ -135,7 +134,7 @@ export default function FactureModal({ show, onClose, data }) {
 
                             <button
                                 className="bg-[#29B06F] text-white px-4 py-2 rounded-md text-sm"
-                                onClick={showConfirm}
+                                onClick={handleSendEmail}
                             >
                                 Envoyez via Email au client
                             </button>
@@ -143,7 +142,10 @@ export default function FactureModal({ show, onClose, data }) {
                                 {showConfirm && (
                                     <ModalConfirm
                                         show={showConfirm}
-                                        onClose={() => setShowConfirm(true)}
+                                        onClose={() => {
+                                            setShowConfirm(false);
+                                            onClose();   // on ferme la facture après la confirmation
+                                        }}
                                     />
                                 )}
                         </div>

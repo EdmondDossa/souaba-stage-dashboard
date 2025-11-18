@@ -108,8 +108,9 @@ function ReservationInfo() {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-        <div className="flex justify-between gap-3 mb-4">
+    <div className="w-full bg-white rounded-xl p-6 shadow-sm grid grid-cols-2 gap-10">
+     <div className="w-full mr-5">
+         <div className="flex justify-between gap-3 mb-4">
           <h3 className="text-[#0D0E0D] font-medium">Informations de réservation</h3>
           <button className="text-muted-foreground hover:text-foreground">
             <MoreHorizontal color="#6E6E6E" className="w-5 h-5" />
@@ -192,8 +193,12 @@ function ReservationInfo() {
           Annuler la réservation
         </button>
       </div> 
-      {/* ================= ROOM DETAILS ================= */}    
-      <div className="bg-[#F8F8F8] rounded-xl p-4 shadow-sm col-span-2">
+
+      
+     </div>
+      <div className="">
+                {/* ================= ROOM DETAILS ================= */}    
+      <div className="h-full w-full bg-[#F8F8F8] rounded-xl p-4 shadow-sm col-span-2">
         <div className="flex justify-between">
           <p className="text-[#0D0E0D] text-sm text-[Lato]">
             Informations sur la chambre
@@ -227,6 +232,7 @@ function ReservationInfo() {
 
         </div>
       </div>
+        </div>
 
     </div>
   );
@@ -266,18 +272,24 @@ const [searchQuery, setSearchQuery] = useState("");
     {
       id: "LG-B00109",
       name: "Angus Copper",
-      date: "June 09, 2028 — 9:08 AM",
-      checkIn: "June 19, 2028 — 1:45 PM",
-      checkOut: "June 21, 2028 — 11:45 AM",
+      date: "June 09, 2028",
+      heureDate:"9.08 AM",
+      checkIn: "June 19, 2028",
+      heureIn: "9:08 AM", 
+      checkOut: "June 21, 2028",
+      heureOut: "1:45 PM",
       guests: "2 Guests",
       img: "/images/profil/MiniChan1.jpg",
     },
     {
       id: "LG-B00085",
       name: "John Doe",
-      date: "March 20, 2028 — 9:08 AM",
-      checkIn: "March 25, 2028 — 1:45 PM",
-      checkOut: "March 30, 2028 — 11:45 AM",
+      date: "March 20, 2028",
+      heureDate:"9.08 AM",
+      checkIn: "March 25, 2028",
+      heureIn: "1:45 PM",
+      checkOut: "March 30, 2028",
+      heureOut: "11:45 AM",
       guests: "1 Guest",
       img: "/images/profil/MiniChan2.jpg",
     },
@@ -292,7 +304,7 @@ const [searchQuery, setSearchQuery] = useState("");
 
   // Fonction de filtrage et recherche
   const filteredReservations = res.filter((reservation) => {
-    // Filtre par recherche (nom, id)
+    // Filtre par recherche (id)
     const matchesSearch = 
       searchQuery === "" ||
       reservation.id.toLowerCase().includes(searchQuery.toLowerCase());
@@ -444,16 +456,29 @@ const [searchQuery, setSearchQuery] = useState("");
           </tr>
         </thead>
         <tbody>
-          {filteredReservations.map((res) => (
+          {filteredReservations.map((res, index) => (
               <tr key={res.id} className="border-b border-gray-100 py-10">
                 <td className="py-3 items-center">
                   <img src={res.img} width={70} height={50} alt="Image miniature" className="rounded-md" />
                 </td>
-                <td className="p-3 text-[#0D0E0D] text-xs font-bold">{res.id}</td>
-                <td className=" text-[#0D0E0D] text-xs font-bold">{res.date}</td>
-                <td className=" text-[#0D0E0D] text-xs font-bold">{res.checkIn}</td>
-                <td className=" text-[#0D0E0D] text-xs font-bold">{res.checkOut}</td>
-                <td className="p-6 text-[#0D0E0D] text-xs font-bold">{res.guests}</td>
+                <td className="p-3 text-[#0D0E0D] text-xs font-bold">
+                  {res.id}
+                </td>
+                <td className="p-3 text-[#0D0E0D] text-xs font-bold">
+                  {res.date}
+                  <span className="text-[#6E6E6E] text-xs grid">{res.heureDate}</span>
+                </td>
+                <td className="p-3 text-[#0D0E0D] text-xs font-bold items-center grid">
+                  {res.checkIn}
+                  <span className="text-[#6E6E6E] text-xs">{res.heureIn}</span>
+                </td>
+                <td className="p-3 text-[#0D0E0D] text-xs font-bold ">
+                  {res.checkOut}
+                  <span className="text-[#6E6E6E] text-xs grid">{res.heureOut}</span>
+                </td>
+                <td className="p-3 text-[#0D0E0D] text-xs font-bold">
+                  {res.guests}
+                </td>
               </tr>
             ))
           }
