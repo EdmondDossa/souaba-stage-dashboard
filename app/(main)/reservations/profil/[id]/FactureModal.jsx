@@ -135,7 +135,7 @@ export default function FactureModal({ show, onClose, data }) {
 
                             <button
                                 className="bg-[#29B06F] text-white px-4 py-2 rounded-md text-sm"
-                                onClick={handleSendEmail}
+                                onClick={showConfirm}
                             >
                                 Envoyez via Email au client
                             </button>

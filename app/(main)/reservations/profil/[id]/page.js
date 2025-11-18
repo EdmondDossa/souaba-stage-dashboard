@@ -6,6 +6,7 @@ import Image from "next/image";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { MoreHorizontal, Phone, MailOpen, Check, Maximize2, Bed, User, Search, CalendarDays, ChevronDown } from "lucide-react";
 import { useParams } from "next/navigation";
+import FactureModal from "./FactureModal";
 
 export default function ReservationPage() {
   //recuperation de l'id envoye a cette page
@@ -98,6 +99,14 @@ function ProfileCard() {
 
 /* ================= RESERVATION INFO ================= */
 function ReservationInfo() {
+  const [showInvoice, setShowInvoice] = useState(false);
+  const [selectedInvoiceData, setSelectedInvoiceData] = useState(null);
+
+  const handleInvoiceClick = (reservation) => {
+    setSelectedInvoiceData(reservation);
+    setShowInvoice(true);
+  };
+
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm">
         <div className="flex justify-between gap-3 mb-4">
@@ -171,9 +180,14 @@ function ReservationInfo() {
         </div>
 
       <div className="flex justify-end gap-3 mt-6">
-        <button className="px-5 py-2 text-sm font-medium rounded-lg bg-[#29B06F] text-white">
+        <button className="px-5 py-2 text-sm font-medium rounded-lg bg-[#29B06F] text-white"
+        onClick={() => setShowInvoice(true)}
+        >
           Payer
         </button>
+        {showInvoice && (
+          <FactureModal show={showInvoice} onClose={() => setShowInvoice(false)} data={selectedInvoiceData} />
+        )}
         <button className="px-5 py-2 text-sm font-medium rounded-lg border-[#FFEEEE] bg-[#FFEEEE] text-[#0D0E0D]">
           Annuler la réservation
         </button>
@@ -247,29 +261,27 @@ const [searchQuery, setSearchQuery] = useState("");
     end: "June 24, 2028"
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [statusFilter, setStatusFilter] = useState("Tous les statuts");
 
   const res = [
-  { 
-    id: "LG-B00109",
-    date: "June 09, 2028 — 9:08 AM",
-    checkIn: "June 19, 2024 — 1:45 PM",
-    checkOut: "June 21, 2024 — 11:45 AM",
-    guests: "2 Guests",
-    img: "/images/profil/MiniChan1.jpg",
-  }, 
-  {
-    id: "LG-B00085",
-    date: "March 20, 2028 — 9:08 AM",
-    checkIn: "March 25, 2028 — 1:45 PM",
-    checkOut: "March 30, 2028 — 11:45 AM",
-    guests: "1 Guest",
-    img: "/images/profil/MiniChan2.jpg",
-  }];      
-
-  const handleStatusChange = (e) => {
-    setStatusFilter(e.target.value);
-  };
+    {
+      id: "LG-B00109",
+      name: "Angus Copper",
+      date: "June 09, 2028 — 9:08 AM",
+      checkIn: "June 19, 2028 — 1:45 PM",
+      checkOut: "June 21, 2028 — 11:45 AM",
+      guests: "2 Guests",
+      img: "/images/profil/MiniChan1.jpg",
+    },
+    {
+      id: "LG-B00085",
+      name: "John Doe",
+      date: "March 20, 2028 — 9:08 AM",
+      checkIn: "March 25, 2028 — 1:45 PM",
+      checkOut: "March 30, 2028 — 11:45 AM",
+      guests: "1 Guest",
+      img: "/images/profil/MiniChan2.jpg",
+    },
+  ];
 
   // Fonction pour convertir une date string en objet Date
   const parseDate = (dateStr) => {
@@ -280,13 +292,9 @@ const [searchQuery, setSearchQuery] = useState("");
 
   // Fonction de filtrage et recherche
   const filteredReservations = res.filter((reservation) => {
-    // Filtre par statut
-    const matchesStatus = statusFilter === "Tous les statuts" || reservation.status === statusFilter;
-    
     // Filtre par recherche (nom, id)
     const matchesSearch = 
       searchQuery === "" ||
-      reservation.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       reservation.id.toLowerCase().includes(searchQuery.toLowerCase());
     
     // Filtre par date
@@ -301,7 +309,7 @@ const [searchQuery, setSearchQuery] = useState("");
       (checkOutDate >= startDate && checkOutDate <= endDate) ||
       (checkInDate <= startDate && checkOutDate >= endDate);
     
-    return matchesStatus && matchesSearch && matchesDate;
+    return matchesSearch && matchesDate;
   });
 
   // Fonction pour formater la date d'affichage
@@ -436,8 +444,7 @@ const [searchQuery, setSearchQuery] = useState("");
           </tr>
         </thead>
         <tbody>
-          {filteredReservations.length > 0 ? (
-            filteredReservations.map((res) => (
+          {filteredReservations.map((res) => (
               <tr key={res.id} className="border-b border-gray-100 py-10">
                 <td className="py-3 items-center">
                   <img src={res.img} width={70} height={50} alt="Image miniature" className="rounded-md" />
@@ -449,7 +456,8 @@ const [searchQuery, setSearchQuery] = useState("");
                 <td className="p-6 text-[#0D0E0D] text-xs font-bold">{res.guests}</td>
               </tr>
             ))
-          ) : (
+          }
+          {filteredReservations.length === 0 && (
             <tr>
               <td colSpan={6} className="p-8 text-center text-gray-500 text-sm">
                 Aucune réservation trouvée
