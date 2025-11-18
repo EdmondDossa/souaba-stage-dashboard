@@ -128,7 +128,7 @@ export default function ReservationPageValide ({ }) {
           </button>
           
           {/* Date Range Picker */}
-          <div className="relative">
+          <div className="relative"> 
             <button 
               onClick={() => setShowDatePicker(!showDatePicker)}
               className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-xs text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]"
