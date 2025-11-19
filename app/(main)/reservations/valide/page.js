@@ -5,6 +5,7 @@ import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, Chevron
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import AddReservationModal from "./AddReservationModal";
 import UpdateReservationModal from "./UpdateReservation";
+import { useRouter } from "next/navigation";
 
 export default function ReservationPageValide ({ }) {
 
@@ -40,6 +41,8 @@ export default function ReservationPageValide ({ }) {
   const parseDate = (dateStr) => {
     return new Date(dateStr);
   };
+
+  const router = useRouter();
 
   // Fonction de filtrage et recherche
   const filteredReservations = reservations.filter((res) => {
@@ -125,7 +128,7 @@ export default function ReservationPageValide ({ }) {
           </button>
           
           {/* Date Range Picker */}
-          <div className="relative">
+          <div className="relative"> 
             <button 
               onClick={() => setShowDatePicker(!showDatePicker)}
               className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-xs text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]"
@@ -255,7 +258,7 @@ export default function ReservationPageValide ({ }) {
           <tbody>
             {filteredReservations.length > 0 ? (
               filteredReservations.map((res) => (
-                <tr key={res.id} className="border-b border-gray-100 hover:bg-gray-50 py-10">
+                <tr key={res.id} className="border-b border-gray-100 py-10">
                   <td className="p-3 text-[#0D0E0D] text-xs font-bold">{res.name}</td>
                   <td className=" text-[#0D0E0D] text-xs font-bold">{res.id}</td>
                   <td className=" text-[#0D0E0D] text-xs font-bold">{res.type}</td>
@@ -280,7 +283,7 @@ export default function ReservationPageValide ({ }) {
                       <Edit size={16} />
                     </button>
 
-                    <button className="flex items-center gap-1 bg-[#248EF8] text-white text-xs px-1 rounded hover:bg-blue-600">
+                    <button className="flex items-center gap-1 bg-[#248EF8] text-white text-xs px-1 rounded hover:bg-blue-600" onClick={() => router.push(`/reservations/profil/${res.id}`)}>
                       Payer
                     </button>
                   </td>
@@ -305,8 +308,8 @@ export default function ReservationPageValide ({ }) {
                 key={i}
                 className={`px-3 py-1 m-1 text-xs rounded ${
                   num === 1
-                    ? "bg-[#F8AA24] text-[#FFFFFF]"
-                    : "bg-[#F8F8F8] text-gray-700"
+                    ? "bg-[#F8AA24] text-[#000000]"
+                    : "bg-[#F8F8F8] text-[#000000]"
                 }`} 
               >
                 {num}

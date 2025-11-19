@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
 const userInfo = [
-    { name: "Jaylon Dorwart", role: "Admin", pathImg: "./images/jaylonprofile.png" },
+    { name: "Jaylon Dorwart", role: "Admin", pathImg: "/images/jaylonprofile.png" },
 ];
 
 export const Header = () => {
@@ -24,6 +24,7 @@ export const Header = () => {
             return "Chambres";
         }
         if (pathname.includes("/reservations")) return "Réservation";
+        if (pathname.includes("/reservations/profil/")) return "Profil d'invité";
         if (pathname.includes("/finances/facture")) return "Facture";
         if (pathname.includes("/finances/revenus")) return "Revenu";
         if (pathname.includes("/messages")) return "Messages";
@@ -68,11 +69,11 @@ export const Header = () => {
                             </div>
                         </div>
                     ))}
-                    <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-muted">
-                        <Settings className="w-5 h-5 text-muted-foreground" />
+                    <button className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#FFFFFF]">
+                        <Settings color="#6E6E6E" className="w-5 h-5" />
                     </button>
-                    <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-muted relative">
-                        <Bell className="w-5 h-5 text-muted-foreground" />
+                    <button className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#FFFFFF] relative">
+                        <Bell color="#6E6E6E" className="w-5 h-5" />
                         <span className="absolute top-1 bg-red-500 right-1 w-2 h-2 rounded-full" />
                     </button>
                 </div>
