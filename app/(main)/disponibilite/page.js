@@ -5,51 +5,44 @@ import { ChevronLeft, ChevronRight, X, Settings, Bell } from 'lucide-react';
 import AddDisponibiliteModal from './components/AddDisponibiliteModal';
 import {RoomCard} from './components/RoomCard';
 import {SvgIcon} from "@/components/ui/common";
+import { useRoomAvailability, useMutation, API_ROUTES } from '@/lib/api-routes';
+import getAxiosInstance from '@/lib/request';
 
 const DisponibilitePage = () => {
-    const [currentDate, setCurrentDate] = useState(new Date(2028, 5, 1));
+    const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedFloor, setSelectedFloor] = useState(null);
     const [selectedDay, setSelectedDay] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [activeFilter, setActiveFilter] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('Tous les catégories');
+    const [selectedRoom, setSelectedRoom] = useState(null);
 
-    const floors = [
-        { id: 0, name: 'Etage 0', rooms: 23 },
-        { id: 1, name: 'Etage 1', rooms: 23 },
-        { id: 2, name: 'Etage 2', rooms: 23 },
-        { id: 3, name: 'Etage 3', rooms: 23 }
-    ];
-
-    const allRoomsData = [
-        // Étage 0
-        { floor: 0, number: '102', type: ' ', status: ' ', dates: ' ', statusType: ' ', day: " "},
-        { floor: 0, number: '103', type: ' ', status: ' ', dates: ' ', color: ' ', statusType: 'hors-service', day: " " },
-        { floor: 0, number: '104', type: '', status: '', dates: ' ', statusType: ' ', day: " " },
-        { floor: 0, number: '105', type: 'Suite', status: 'Room Inspection', dates: '11:00 AM - 1:00 PM', color: 'green', note: 'Maintenance', statusType: 'propre', day: 15 },
-        { floor: 0, number: '106', type: 'Suite', status: 'Disponible', dates: '----------', statusType: 'disponible', day: 18 },
-
-        // Étage 1
-        { floor: 1, number: '107', type: 'Suite', status: 'Disponible', dates: '06-08-2025 au 12-08-2025', statusType: 'disponible', day: 3 },
-        { floor: 1, number: '108', type: 'Suite', status: 'Disponible', dates: '06-08-2025 au 12-08-2025', statusType: 'disponible', day: 7 },
-        { floor: 1, number: '109', type: 'Standard', status: 'Robinet cassé', dates: '06-08-2025 au 12-08-2025', color: 'red', statusType: 'hors-service', day: 10 },
-        { floor: 1, number: '110', type: 'Suite', status: 'Disponible', dates: '----------', statusType: 'disponible', day: 14 },
-        { floor: 1, number: '111', type: 'Luxe', status: 'Occupé', dates: '06-08-2025 au 12-08-2025', color: 'green', statusType: 'occupe', day: 20 },
-
-        // Étage 2
-        { floor: 2, number: '112', type: 'Suite', status: 'Disponible', dates: '06-08-2025 au 12-08-2025', statusType: 'disponible', day: 6 },
-        { floor: 2, number: '113', type: 'Suite', status: 'Disponible', dates: '06-08-2025 au 12-08-2025', statusType: 'disponible', day: 9 },
-        { floor: 2, number: '114', type: 'luxe', status: 'Douche sale', dates: '06-08-2025 au 12-08-2025', color: 'red', statusType: 'sale', day: 13 },
-        { floor: 2, number: '115', type: 'Suite', status: 'Disponible', dates: '06-08-2025 au 12-08-2025', statusType: 'disponible', day: 16 },
-        { floor: 2, number: '116', type: 'Standard', status: 'Occupé', dates: '06-08-2025 au 12-08-2025', color: 'green', statusType: 'occupe', day: 22 },
-
-        // Étage 3
-        { floor: 3, number: '117', type: 'Suite', status: 'Disponible', dates: '----------', statusType: 'disponible', day: 4 },
-        { floor: 3, number: '118', type: 'Suite', status: 'Disponible', dates: '----------', statusType: 'disponible', day: 11 },
-        { floor: 3, number: '15', type: 'Suite', status: 'Housekeeping Training', dates: '06-08-2025 au 12-08-2025', color: 'red', statusType: 'hors-service', day: 17 },
-        { floor: 3, number: '16', type: 'Suite', status: 'Disponible', dates: '06-08-2025 au 12-08-2025', statusType: 'disponible', day: 23 },
-        { floor: 3, number: '17', type: 'Suite', status: 'Disponible', dates: '06-08-2025 au 12-08-2025', statusType: 'disponible', day: 27 }
-    ];
+    // Utiliser le hook pour récupérer les données
+    const { data, loading } = useRoomAvailability();
+    
+    // Vérifier si les données sont disponibles
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                    <p className="text-gray-600">Chargement des chambres...</p>
+                </div>
+            </div>
+        );
+    }
+    
+    if (!data || !data.rooms || !data.floors) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center text-gray-600">
+                    <p>Aucune donnée de chambre disponible</p>
+                </div>
+            </div>
+        );
+    }
+    
+    const { rooms: allRoomsData, floors } = data;
 
     const getMonthName = (date) => {
         const months = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -105,7 +98,7 @@ const DisponibilitePage = () => {
 
         if (selectedCategory !== 'Tous les catégories') {
             filtered = filtered.filter(room =>
-                room.type.toLowerCase() === selectedCategory.toLowerCase()
+                room.type && room.type.toLowerCase() === selectedCategory.toLowerCase()
             );
         }
 
@@ -126,7 +119,27 @@ const DisponibilitePage = () => {
         setActiveFilter(activeFilter === filter ? null : filter);
     };
 
-
+    const handleSaveDisponibilite = async (data) => {
+        try {
+            const axios = getAxiosInstance();
+            
+            // Créer une période d'indisponibilité
+            await axios.post('/hotel-room-unavailabilities/unavailable', {
+                hotel_room_id: data.hotel_room_id,
+                start_date: data.dateDebut,
+                end_date: data.dateFin,
+                reason: data.motif,
+                type: data.unavailabilityType || 'BLOCKED',
+                notes: data.notes || ''
+            });
+            
+            // Recharger les données
+            window.location.reload();
+        } catch (err) {
+            console.error('Erreur lors de l\'enregistrement:', err);
+            alert('Erreur lors de l\'enregistrement de la disponibilité');
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -328,7 +341,14 @@ const DisponibilitePage = () => {
                     <div className="grid grid-cols-6 border-l border-gray-300">
                         {filteredRooms.map((room, index) => (
                             <div key={index} className="border-b border-dashed border-gray-300">
-                                <RoomCard room={room} index={index} />
+                                <RoomCard 
+                                    room={room} 
+                                    index={index} 
+                                    onEdit={(selectedRoom) => {
+                                        setSelectedRoom(selectedRoom);
+                                        setShowModal(true);
+                                    }}
+                                />
                             </div>
                         ))}
                     </div>
@@ -371,8 +391,13 @@ const DisponibilitePage = () => {
             {/* Modal */}
             <AddDisponibiliteModal
                 show={showModal}
-                onClose={() => setShowModal(false)}
-                onSave={(data) => console.log('Saving:', data)}
+                onClose={() => {
+                    setShowModal(false);
+                    setSelectedRoom(null);
+                }}
+                onSave={handleSaveDisponibilite}
+                rooms={allRoomsData}
+                selectedRoom={selectedRoom}
             />
         </div>
     );

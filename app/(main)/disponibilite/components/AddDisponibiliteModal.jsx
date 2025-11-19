@@ -1,23 +1,61 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function AddDisponibiliteModal({ show, onClose, onSave }) {
+// Types d'indisponibilité selon l'API
+const UNAVAILABILITY_TYPES = {
+    'MAINTENANCE': 'Maintenance',
+    'RENOVATION': 'Rénovation',
+    'BLOCKED': 'Bloquée',
+    'DAMAGE': 'Dommages',
+    'OTHER': 'Autre'
+};
+
+export default function AddDisponibiliteModal({ show, onClose, onSave, rooms = [], selectedRoom = null }) {
     const [formData, setFormData] = useState({
-        roomNumber: 'Room 101',
-        motif: '',
-        dateDebut: '',
-        dateFin: '',
-        roomType: 'Standard',
-        status: 'Disponible',
+        hotel_room_id: '',
+        motif: '', // reason dans l'API
+        dateDebut: '', // start_date dans l'API
+        dateFin: '', // end_date dans l'API
+        unavailabilityType: 'BLOCKED', // type dans l'API
+        notes: '' // notes dans l'API
     });
+
+    useEffect(() => {
+        if (selectedRoom) {
+            setFormData({
+                hotel_room_id: selectedRoom.hotel_room_id,
+                motif: selectedRoom.status || '',
+                dateDebut: '',
+                dateFin: '',
+                unavailabilityType: 'BLOCKED',
+                notes: ''
+            });
+        } else if (rooms.length > 0) {
+            setFormData({
+                hotel_room_id: rooms[0].hotel_room_id,
+                motif: '',
+                dateDebut: '',
+                dateFin: '',
+                unavailabilityType: 'BLOCKED',
+                notes: ''
+            });
+        }
+    }, [selectedRoom, rooms]);
 
     if (!show) return null;
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+        if (!formData.hotel_room_id || !formData.dateDebut || !formData.dateFin || !formData.motif) {
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
+        }
+        
         onSave(formData);
-        onClose();
     };
+
+    const selectedRoomData = rooms.find(r => r.hotel_room_id === formData.hotel_room_id) || selectedRoom;
 
     return (
         <div
@@ -48,39 +86,39 @@ export default function AddDisponibiliteModal({ show, onClose, onSave }) {
                 <div className="flex justify-center mt-[8%] ">
                     <div className="w-full">
                         <h2 className="flex text-xl justify-center items-center font-bold mb-10">
-                            Ajouter une disponibilité
+                            {selectedRoom ? 'Modifier la disponibilité' : 'Ajouter une disponibilité'}
                         </h2>
 
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-4 mb-6 ml-[10%]">
-                                {/* Numéro de chambre */}
+                                {/* Numéro de chambre - hotel_room_id */}
                                 <div>
                                     <label className="block text-sm font-bold text-gray-700 mb-2">
-                                        Numéro de chambre
+                                        Numéro de chambre *
                                     </label>
                                     <select
-                                        value={formData.roomNumber}
+                                        value={formData.hotel_room_id}
                                         onChange={(e) =>
                                             setFormData({
                                                 ...formData,
-                                                roomNumber: e.target.value,
+                                                hotel_room_id: e.target.value,
                                             })
                                         }
-                                        className="focus:outline-none text-xs"
+                                        className="focus:outline-none text-xs border-b w-40 pb-1"
+                                        disabled={!!selectedRoom}
                                     >
-                                        <option>Room 101</option>
-                                        <option>Room 102</option>
-                                        <option>Room 103</option>
-                                        <option>Room 104</option>
-                                        <option>Room 105</option>
+                                        {rooms.map(room => (
+                                            <option key={room.hotel_room_id} value={room.hotel_room_id}>
+                                                {room.number}
+                                            </option>
+                                        ))}
                                     </select>
-                                    <div className="w-40 text-gray-200"></div>
                                 </div>
 
-                                {/* Motif */}
+                                {/* Motif - reason */}
                                 <div>
                                     <label className="block text-sm font-bold text-gray-700 mb-2">
-                                        Motif
+                                        Motif *
                                     </label>
                                     <input
                                         type="text"
@@ -91,16 +129,15 @@ export default function AddDisponibiliteModal({ show, onClose, onSave }) {
                                                 motif: e.target.value,
                                             })
                                         }
-                                        className="focus:outline-none text-xs"
-                                        placeholder=" "
+                                        className="focus:outline-none text-xs border-b w-40 pb-1"
+                                        placeholder="Ex: Réparation"
                                     />
-                                    <div className="w-40 text-gray-200 border-b"></div>
                                 </div>
 
-                                {/* Date de début */}
+                                {/* Date de début - start_date */}
                                 <div>
                                     <label className="block text-sm font-bold text-gray-700 mb-2">
-                                        Date de début
+                                        Date de début *
                                     </label>
                                     <input
                                         type="date"
@@ -111,15 +148,14 @@ export default function AddDisponibiliteModal({ show, onClose, onSave }) {
                                                 dateDebut: e.target.value,
                                             })
                                         }
-                                        className="focus:outline-none text-xs"
+                                        className="focus:outline-none text-xs border-b w-40 pb-1"
                                     />
-                                    <div className="w-40 text-gray-200 border-b"></div>
                                 </div>
 
-                                {/* Date de fin */}
+                                {/* Date de fin - end_date */}
                                 <div>
                                     <label className="block text-sm font-bold text-gray-700 mb-2">
-                                        Date de fin
+                                        Date de fin *
                                     </label>
                                     <input
                                         type="date"
@@ -130,55 +166,91 @@ export default function AddDisponibiliteModal({ show, onClose, onSave }) {
                                                 dateFin: e.target.value,
                                             })
                                         }
-                                        className="focus:outline-none text-xs"
+                                        className="focus:outline-none text-xs border-b w-40 pb-1"
                                     />
-                                    <div className="w-40 text-gray-200 border-b"></div>
                                 </div>
 
-                                {/* Type de chambre */}
+                                {/* Type d'indisponibilité - type */}
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2 mt-20">
+                                        Type d'indisponibilité
+                                    </label>
+                                    <select
+                                        value={formData.unavailabilityType}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                unavailabilityType: e.target.value,
+                                            })
+                                        }
+                                        className="focus:outline-none text-xs border-b w-40 pb-1"
+                                    >
+                                        {Object.entries(UNAVAILABILITY_TYPES).map(([key, value]) => (
+                                            <option key={key} value={key}>{value}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Notes - notes */}
+                                <div className="col-span-2">
+                                    <label className="block text-sm font-bold text-gray-700 mb-2 mt-20">
+                                        Notes (optionnel)
+                                    </label>
+                                    <textarea
+                                        value={formData.notes}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                notes: e.target.value,
+                                            })
+                                        }
+                                        className="focus:outline-none text-xs border w-full p-2 rounded"
+                                        rows="3"
+                                        placeholder="Notes supplémentaires..."
+                                    />
+                                </div>
+
+                                {/* COMMENTÉ: Type de chambre - n'existe pas dans hotel_room_unavailabilities */}
+                                {/* Le type de chambre est dans HotelRoomCategory, pas dans les indisponibilités */}
+                                {/* 
                                 <div>
                                     <label className="block text-sm font-bold text-gray-700 mb-2 mt-20">
                                         Type de chambre
                                     </label>
-                                    <select
-                                        value={formData.roomType}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                roomType: e.target.value,
-                                            })
-                                        }
-                                        className="focus:outline-none text-xs"
-                                    >
-                                        <option>Standard</option>
-                                        <option>Suite</option>
-                                        <option>Luxe</option>
-                                    </select>
-                                    <div className="w-40 text-gray-200"></div>
+                                    <div className="text-xs text-gray-600">
+                                        {selectedRoomData?.type || 'N/A'}
+                                    </div>
                                 </div>
+                                */}
 
-                                {/* Statut */}
+                                {/* COMMENTÉ: Statut - n'existe pas dans hotel_room_unavailabilities */}
+                                {/* Le statut est dans HotelRoom (status), pas dans les indisponibilités */}
+                                {/* 
                                 <div>
                                     <label className="block text-sm font-bold text-gray-700 mb-2 mt-20">
                                         Statut
                                     </label>
                                     <select
-                                        value={formData.status}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                status: e.target.value,
-                                            })
-                                        }
                                         className="focus:outline-none text-xs"
                                     >
                                         <option>Disponible</option>
                                         <option>Occupé</option>
                                         <option>Hors service</option>
                                     </select>
-                                    <div className="w-40 text-gray-200 "></div>
                                 </div>
+                                */}
                             </div>
+
+                            {/* Info chambre sélectionnée */}
+                            {selectedRoomData && (
+                                <div className="bg-gray-50 rounded-lg p-4 mb-6 ml-[10%] mr-[10%]">
+                                    <p className="text-sm text-gray-700">
+                                        <span className="font-bold">Chambre:</span> {selectedRoomData.number} - 
+                                        <span className="font-bold"> Type:</span> {selectedRoomData.type || 'N/A'} - 
+                                        <span className="font-bold"> Étage:</span> {selectedRoomData.floor}
+                                    </p>
+                                </div>
+                            )}
 
                             {/* Bouton de validation */}
                             <div className="flex justify-end mt-6">

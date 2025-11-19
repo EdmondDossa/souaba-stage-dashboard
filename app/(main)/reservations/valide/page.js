@@ -84,7 +84,7 @@ export default function ReservationPageValide ({ }) {
   };
 
   const handleReservationSave = (reservation) => {
-    console.log("Reservation saved:", reservation);
+    //console.log("Reservation saved:", reservation);
     setIsOpen(false);
   };
 

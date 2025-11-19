@@ -6,7 +6,7 @@ export default function ProfilePanel({ profile, onClose }) {
     if (!profile) return null;
 
     return (
-        <div className="w-[450px] h-full bg-white pl-4 border-l border-gray-200 flex flex-col overflow-hidden">
+        <div className="w-[450px] h-full bg-white pl-4 border-gray-200 flex flex-col overflow-hidden">
             {/* Header - Fixe */}
             <div className="flex-shrink-0 pt-5 pb-4">
                 <div className="flex items-center justify-between mb-4">

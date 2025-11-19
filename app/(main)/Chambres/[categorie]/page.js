@@ -1,140 +1,101 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import RoomList from '@/app/(main)/components/Chambres/RoomList';
+import getAxiosInstance from '@/lib/request';
 
-// Fonction pour récupérer les Chambres d'une catégorie
-async function getCategoryRooms(category) {
-        return [
-            {
-                id: 1,
-                number: 'Luxe Room 101',
-                capacity: 5,
-                floor: 5,
-                status: 'Occupée',
-                category: 'Luxe'
-            },
-            {
-                id: 2,
-                number: 'Luxe Room 102',
-                capacity: 4,
-                floor: 4,
-                status: 'Hors service',
-                category: 'Luxe'
-            },
-            {
-                id: 3,
-                number: 'Luxe Room 103',
-                capacity: 2,
-                floor: 2,
-                status: 'Disponible',
-                category: 'Luxe'
-            },
-            {
-                id: 4,
-                number: 'Luxe Room 104',
-                capacity: 6,
-                floor: 6,
-                status: 'Occupée',
-                category: 'Luxe'
-            },
-            {
-                id: 5,
-                number: 'Luxe Room 105',
-                capacity: 4,
-                floor: 4,
-                status: 'Disponible',
-                category: 'Luxe'
-            },
-            {
-                id: 6,
-                number: 'Luxe Room 106',
-                capacity: 3,
-                floor: 3,
-                status: 'Disponible',
-                category: 'Luxe'
-            },
-            {
-                id: 7,
-                number: 'Luxe Room 107',
-                capacity: 6,
-                floor: 6,
-                status: 'Hors service',
-                category: 'Luxe'
-            },
-            {
-                id: 8,
-                number: 'Luxe Room 108',
-                capacity: 9,
-                floor: 9,
-                status: 'Hors service',
-                category: 'Luxe'
-            },
-            {
-                id: 9,
-                number: 'Luxe Room 109',
-                capacity: 1,
-                floor: 1,
-                status: 'Hors service',
-                category: 'Luxe'
-            },
-            {
-                id: 10,
-                number: 'Luxe Room 200',
-                capacity: 8,
-                floor: 8,
-                status: 'Disponible',
-                category: 'Luxe'
-            },{
-                id: 11,
-                number: 'Luxe Room 201',
-                capacity: 8,
-                floor: 8,
-                status: 'Disponible',
-                category: 'Luxe'
-            },{
-                id: 12,
-                number: 'Luxe Room 202',
-                capacity: 8,
-                floor: 8,
-                status: 'Disponible',
-                category: 'Luxe'
-            },{
-                id: 13,
-                number: 'Luxe Room 203',
-                capacity: 8,
-                floor: 8,
-                status: 'Disponible',
-                category: 'Luxe'
-            },{
-                id: 14,
-                number: 'Luxe Room 203',
-                capacity: 8,
-                floor: 8,
-                status: 'Disponible',
-                category: 'Luxe'
-            },
-        ];
-}
+// Mapping des statuts API vers l'affichage
+const STATUS_MAP = {
+    'AVAILABLE': 'Disponible',
+    'OCCUPIED': 'Occupée',
+    'OUT_OF_ORDER': 'Hors service',
+    'MAINTENANCE': 'En maintenance',
+    'CLEANING': 'En nettoyage',
+    'RESERVED': 'Réservée'
+};
 
-export default async function CategoryPage({ params }) {
+export default function CategoryPage() {
+    const params = useParams();
     const { categorie } = params;
-    const rooms = await getCategoryRooms(categorie);
-
-    // Décoder le nom de la catégorie depuis l'URL
+    const [rooms, setRooms] = useState([]);
+    const [loading, setLoading] = useState(true);
     const categoryName = decodeURIComponent(categorie);
+
+    useEffect(() => {
+        const fetchCategoryRooms = async () => {
+            try {
+                setLoading(true);
+                const axios = getAxiosInstance();
+                
+                // Mapper le nom de catégorie vers le type enum
+                const typeMap = {
+                    'Chambre Standard': 'STANDARD',
+                    'Chambre Luxe': 'LUXE',
+                    'Suite Présidentielle': 'SUITE'
+                };
+                
+                const categoryType = typeMap[categoryName];
+                
+                if (!categoryType) {
+                    console.warn('Type de catégorie non trouvé pour:', categoryName);
+                    setRooms([]);
+                    return;
+                }
+                
+                // Récupérer toutes les chambres
+                const roomsResponse = await axios.get('/hotel-room');
+                const allRooms = roomsResponse.data?.data || roomsResponse.data || [];
+                
+                console.log('Toutes les chambres:', allRooms);
+                console.log('Filtrer par type:', categoryType);
+                
+                // Filtrer les chambres par type de catégorie
+                const filteredRooms = allRooms.filter(room => 
+                    room.category?.type === categoryType
+                );
+                
+                console.log('Chambres filtrées:', filteredRooms);
+                
+                // Mapper les chambres
+                const mappedRooms = filteredRooms.map(room => ({
+                    id: room.hotel_room_id,
+                    number: room.name || room.room_number,
+                    capacity: room.category?.capacity || 2,
+                    floor: room.floor || 1,
+                    status: STATUS_MAP[room.status] || room.status,
+                    category: categoryName,
+                    is_active: room.is_active,
+                    notes: room.notes
+                }));
+                
+                setRooms(mappedRooms);
+                
+            } catch (err) {
+                console.error('Erreur lors de la récupération des chambres:', err);
+                setRooms([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCategoryRooms();
+    }, [categorie, categoryName]);
+
+    if (loading) {
+        return (
+            <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                    <p className="text-gray-600">Chargement des chambres {categoryName}...</p>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="min-h-screen bg-gray-50">
             <RoomList initialRooms={rooms} category={categoryName} />
         </main>
     );
-}
-
-// Générer les métadonnées pour la page
-export async function generateMetadata({ params }) {
-    const { categorie } = params;
-    const categoryName = decodeURIComponent(categorie);
-
-    return {
-        title: `${categoryName} - Chambres | Souaba`,
-        description: `Liste des chambres dans la catégorie ${categoryName}`,
-    };
 }

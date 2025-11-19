@@ -1,0 +1,1067 @@
+{
+  "description": "Données de test complètes pour TOUS les endpoints de l'API Souba Dashboard - Adaptées au backend existant",
+  "last_updated": "2025-01-16",
+  "notes": "Ces données fonctionnent avec les données existantes de l'API. Le frontend s'adapte aux champs disponibles.",
+  "endpoints": {
+    "reservations": {
+      "endpoint": "GET /reservations",
+      "used_by": ["Dashboard (KPI)", "Page Réservations", "Activités récentes", "RevenueChart"],
+      "required_fields": ["reservation_id", "user_id", "check_in_date", "check_out_date", "total_price", "status", "createdAt"],
+      "optional_fields": ["user", "roomDetails", "accommodation_id", "special_requests"],
+      "data": {
+        "data": [
+          {
+            "reservation_id": "RES-2025-001",
+            "user_id": "user-002",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-13T14:00:00Z",
+            "check_out_date": "2025-01-18T12:00:00Z",
+            "number_of_guests": 2,
+            "total_price": "225000",
+            "status": "CHECKED_IN",
+            "special_requests": "Chambre non-fumeur, lit king size",
+            "createdAt": "2025-01-10T10:30:00Z",
+            "updatedAt": "2025-01-13T15:00:00Z",
+            "user": {
+              "user_id": "user-002",
+              "firstName": "Marie",
+              "lastName": "Kouassi",
+              "email": "marie.kouassi@email.com",
+              "phone": "+229 97 12 34 56"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-001",
+                "quantity": 1,
+                "price_at_booking": "45000",
+                "room_number": "102",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-001",
+                  "name": "Chambre Standard",
+                  "type": "STANDARD",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-002",
+            "user_id": "user-003",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-16T14:00:00Z",
+            "check_out_date": "2025-01-20T12:00:00Z",
+            "number_of_guests": 2,
+            "total_price": "340000",
+            "status": "CONFIRMED",
+            "special_requests": "Vue sur mer si possible",
+            "createdAt": "2025-01-12T14:20:00Z",
+            "updatedAt": "2025-01-12T14:25:00Z",
+            "user": {
+              "user_id": "user-003",
+              "firstName": "Jean",
+              "lastName": "Tossou",
+              "email": "jean.tossou@email.com",
+              "phone": "+229 96 45 67 89"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-002",
+                "quantity": 1,
+                "price_at_booking": "85000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-002",
+                  "name": "Chambre Luxe",
+                  "type": "LUXE",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-003",
+            "user_id": "user-004",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-01T14:00:00Z",
+            "check_out_date": "2025-01-30T12:00:00Z",
+            "number_of_guests": 4,
+            "total_price": "3770000",
+            "status": "CHECKED_IN",
+            "special_requests": "Séjour longue durée - facturation mensuelle",
+            "createdAt": "2024-12-25T09:00:00Z",
+            "updatedAt": "2025-01-01T14:30:00Z",
+            "user": {
+              "user_id": "user-004",
+              "firstName": "Amadou",
+              "lastName": "Diallo",
+              "email": "amadou.diallo@email.com",
+              "phone": "+229 95 78 90 12"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-003",
+                "quantity": 1,
+                "price_at_booking": "130000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-003",
+                  "name": "Suite Présidentielle",
+                  "type": "SUITE",
+                  "capacity": 4
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-004",
+            "user_id": "user-005",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-08T14:00:00Z",
+            "check_out_date": "2025-01-11T12:00:00Z",
+            "number_of_guests": 1,
+            "total_price": "135000",
+            "status": "CHECKED_OUT",
+            "special_requests": "Chambre calme, étage élevé",
+            "createdAt": "2025-01-05T16:45:00Z",
+            "updatedAt": "2025-01-11T12:30:00Z",
+            "user": {
+              "user_id": "user-005",
+              "firstName": "Sophie",
+              "lastName": "Mensah",
+              "email": "sophie.mensah@email.com",
+              "phone": "+229 94 23 45 67"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-001",
+                "quantity": 1,
+                "price_at_booking": "45000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-001",
+                  "name": "Chambre Standard",
+                  "type": "STANDARD",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-005",
+            "user_id": "user-006",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-20T14:00:00Z",
+            "check_out_date": "2025-01-25T12:00:00Z",
+            "number_of_guests": 3,
+            "total_price": "425000",
+            "status": "PENDING",
+            "special_requests": "Arrivée tardive possible",
+            "createdAt": "2025-01-14T11:20:00Z",
+            "updatedAt": "2025-01-14T11:20:00Z",
+            "user": {
+              "user_id": "user-006",
+              "firstName": "Paul",
+              "lastName": "Agbodji",
+              "email": "paul.agbodji@email.com",
+              "phone": "+229 93 56 78 90"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-002",
+                "quantity": 1,
+                "price_at_booking": "85000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-002",
+                  "name": "Chambre Luxe",
+                  "type": "LUXE",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-006",
+            "user_id": "user-007",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-05T14:00:00Z",
+            "check_out_date": "2025-01-08T12:00:00Z",
+            "number_of_guests": 2,
+            "total_price": "255000",
+            "status": "CHECKED_OUT",
+            "special_requests": null,
+            "createdAt": "2025-01-01T13:00:00Z",
+            "updatedAt": "2025-01-08T12:15:00Z",
+            "user": {
+              "user_id": "user-007",
+              "firstName": "Fatou",
+              "lastName": "Bambara",
+              "email": "fatou.bambara@email.com",
+              "phone": "+229 92 34 56 78"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-002",
+                "quantity": 1,
+                "price_at_booking": "85000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-002",
+                  "name": "Chambre Luxe",
+                  "type": "LUXE",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-007",
+            "user_id": "user-008",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-16T14:00:00Z",
+            "check_out_date": "2025-01-19T12:00:00Z",
+            "number_of_guests": 2,
+            "total_price": "135000",
+            "status": "CONFIRMED",
+            "special_requests": "Lune de miel - décoration spéciale",
+            "createdAt": "2025-01-13T09:30:00Z",
+            "updatedAt": "2025-01-13T10:00:00Z",
+            "user": {
+              "user_id": "user-008",
+              "firstName": "Yves",
+              "lastName": "Houenou",
+              "email": "yves.houenou@email.com",
+              "phone": "+229 91 23 45 67"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-001",
+                "quantity": 1,
+                "price_at_booking": "45000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-001",
+                  "name": "Chambre Standard",
+                  "type": "STANDARD",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-008",
+            "user_id": "user-010",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-22T14:00:00Z",
+            "check_out_date": "2025-01-24T12:00:00Z",
+            "number_of_guests": 1,
+            "total_price": "90000",
+            "status": "CONFIRMED",
+            "special_requests": "Départ matinal - préparer la facture",
+            "createdAt": "2025-01-15T08:15:00Z",
+            "updatedAt": "2025-01-15T08:20:00Z",
+            "user": {
+              "user_id": "user-010",
+              "firstName": "Ibrahim",
+              "lastName": "Saidou",
+              "email": "ibrahim.saidou@email.com",
+              "phone": "+229 99 87 65 43"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-001",
+                "quantity": 1,
+                "price_at_booking": "45000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-001",
+                  "name": "Chambre Standard",
+                  "type": "STANDARD",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-009",
+            "user_id": "user-011",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-18T14:00:00Z",
+            "check_out_date": "2025-01-21T12:00:00Z",
+            "number_of_guests": 2,
+            "total_price": "255000",
+            "status": "PENDING",
+            "special_requests": "Besoin de deux lits séparés",
+            "createdAt": "2025-01-14T17:30:00Z",
+            "updatedAt": "2025-01-14T17:30:00Z",
+            "user": {
+              "user_id": "user-011",
+              "firstName": "Aminata",
+              "lastName": "Traoré",
+              "email": "aminata.traore@email.com",
+              "phone": "+229 98 76 54 32"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-002",
+                "quantity": 1,
+                "price_at_booking": "85000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-002",
+                  "name": "Chambre Luxe",
+                  "type": "LUXE",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-010",
+            "user_id": "user-012",
+            "accommodation_id": null,
+            "check_in_date": "2024-12-15T14:00:00Z",
+            "check_out_date": "2024-12-20T12:00:00Z",
+            "number_of_guests": 4,
+            "total_price": "650000",
+            "status": "CHECKED_OUT",
+            "special_requests": "Famille avec enfants - lit bébé nécessaire",
+            "createdAt": "2024-12-10T12:00:00Z",
+            "updatedAt": "2024-12-20T12:30:00Z",
+            "user": {
+              "user_id": "user-012",
+              "firstName": "Michel",
+              "lastName": "Dossou",
+              "email": "michel.dossou@email.com",
+              "phone": "+229 97 65 43 21"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-003",
+                "quantity": 1,
+                "price_at_booking": "130000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-003",
+                  "name": "Suite Présidentielle",
+                  "type": "SUITE",
+                  "capacity": 4
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-011",
+            "user_id": "user-013",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-12T14:00:00Z",
+            "check_out_date": "2025-01-13T12:00:00Z",
+            "number_of_guests": 1,
+            "total_price": "45000",
+            "status": "CANCELLED",
+            "special_requests": null,
+            "createdAt": "2025-01-08T10:00:00Z",
+            "updatedAt": "2025-01-10T14:00:00Z",
+            "user": {
+              "user_id": "user-013",
+              "firstName": "Rachelle",
+              "lastName": "Koffi",
+              "email": "rachelle.koffi@email.com",
+              "phone": "+229 96 54 32 10"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-001",
+                "quantity": 1,
+                "price_at_booking": "45000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-001",
+                  "name": "Chambre Standard",
+                  "type": "STANDARD",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2024-012",
+            "user_id": "user-014",
+            "accommodation_id": null,
+            "check_in_date": "2024-12-20T14:00:00Z",
+            "check_out_date": "2024-12-25T12:00:00Z",
+            "number_of_guests": 2,
+            "total_price": "425000",
+            "status": "CHECKED_OUT",
+            "special_requests": "Anniversaire de mariage - champagne en chambre",
+            "createdAt": "2024-12-10T09:30:00Z",
+            "updatedAt": "2024-12-25T12:15:00Z",
+            "user": {
+              "user_id": "user-014",
+              "firstName": "Laurent",
+              "lastName": "Assogba",
+              "email": "laurent.assogba@email.com",
+              "phone": "+229 95 43 21 09"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-002",
+                "quantity": 1,
+                "price_at_booking": "85000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-002",
+                  "name": "Chambre Luxe",
+                  "type": "LUXE",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2025-013",
+            "user_id": "user-015",
+            "accommodation_id": null,
+            "check_in_date": "2025-01-25T14:00:00Z",
+            "check_out_date": "2025-01-28T12:00:00Z",
+            "number_of_guests": 2,
+            "total_price": "135000",
+            "status": "PENDING",
+            "special_requests": "Chambre avec balcon si possible",
+            "createdAt": "2025-01-15T10:45:00Z",
+            "updatedAt": "2025-01-15T10:45:00Z",
+            "user": {
+              "user_id": "user-015",
+              "firstName": "Élise",
+              "lastName": "Zannou",
+              "email": "elise.zannou@email.com",
+              "phone": "+229 94 32 10 98"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-001",
+                "quantity": 1,
+                "price_at_booking": "45000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-001",
+                  "name": "Chambre Standard",
+                  "type": "STANDARD",
+                  "capacity": 2
+                }
+              }
+            ]
+          },
+          {
+            "reservation_id": "RES-2024-014",
+            "user_id": "user-016",
+            "accommodation_id": null,
+            "check_in_date": "2024-12-10T14:00:00Z",
+            "check_out_date": "2024-12-17T12:00:00Z",
+            "number_of_guests": 3,
+            "total_price": "910000",
+            "status": "CHECKED_OUT",
+            "special_requests": "Séjour vacances - activités touristiques recommandées",
+            "createdAt": "2024-12-01T14:00:00Z",
+            "updatedAt": "2024-12-17T12:30:00Z",
+            "user": {
+              "user_id": "user-016",
+              "firstName": "David",
+              "lastName": "Akakpo",
+              "email": "david.akakpo@email.com",
+              "phone": "+229 93 21 09 87"
+            },
+            "roomDetails": [
+              {
+                "room_category_id": "cat-003",
+                "quantity": 1,
+                "price_at_booking": "130000",
+                "hotelRoomCategory": {
+                  "room_category_id": "cat-003",
+                  "name": "Suite Présidentielle",
+                  "type": "SUITE",
+                  "capacity": 4
+                }
+              }
+            ]
+          }
+        ],
+        "pagination": {
+          "total": 14,
+          "page": 1,
+          "limit": 50
+        }
+      }
+    },
+    "hotels": {
+      "endpoint": "GET /hotels",
+      "used_by": ["Page Chambres", "Sidebar (nom hôtel)"],
+      "data": {
+        "data": [
+          {
+            "hotel_id": "hotel-001",
+            "user_id": "user-001",
+            "name": "Grand Hôtel Océan",
+            "description": "Un magnifique hôtel en bord de mer avec vue panoramique sur l'océan Atlantique. Notre établissement offre un cadre luxueux et relaxant pour des séjours d'affaires ou de loisirs.",
+            "address": "123 Avenue de la Plage",
+            "city": "Cotonou",
+            "country": "Bénin",
+            "district": "Littoral",
+            "google_maps_location": "https://maps.google.com/?q=6.3703,2.3912",
+            "latitude": 6.3703,
+            "longitude": 2.3912,
+            "email": "contact@grandhotel.com",
+            "phone": "+229 21 30 45 67",
+            "active": true,
+            "status": "VALIDATED",
+            "validated_by": "admin-001",
+            "validated_at": "2025-01-15T10:30:00Z",
+            "booking_and_cancellation_policy": "Annulation gratuite jusqu'à 48h avant l'arrivée. En cas d'annulation tardive, une nuit sera facturée. Paiement à l'arrivée par carte bancaire ou espèces.",
+            "amenities": [
+              "WiFi gratuit",
+              "Piscine extérieure",
+              "Restaurant gastronomique",
+              "Spa et centre de bien-être",
+              "Parking gratuit",
+              "Climatisation",
+              "Salle de fitness",
+              "Service en chambre 24h/24",
+              "Bar lounge",
+              "Concierge"
+            ],
+            "photos": ["/images/hotel1.jpg", "/images/hotel2.jpg"],
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-15T10:30:00Z",
+            "HotelMedia": [
+              {
+                "hotel_media_id": "hm-001",
+                "hotel_id": "hotel-001",
+                "media_id": "media-001",
+                "media_category": "GALLERY",
+                "is_primary": true,
+                "media": {
+                  "media_id": "media-001",
+                  "file_path": "/images/chambre/HotelRoom.png",
+                  "mime_type": "image/png"
+                }
+              },
+              {
+                "hotel_media_id": "hm-002",
+                "hotel_id": "hotel-001",
+                "media_id": "media-005",
+                "media_category": "GALLERY",
+                "is_primary": false,
+                "media": {
+                  "media_id": "media-005",
+                  "file_path": "/images/hotel/facade.jpg",
+                  "mime_type": "image/jpeg"
+                }
+              }
+            ],
+            "HotelRoomCategories": [
+              {
+                "room_category_id": "cat-001",
+                "hotel_id": "hotel-001",
+                "name": "Chambre Standard",
+                "type": "STANDARD",
+                "number_of_rooms": 20,
+                "number_of_bathrooms": 1,
+                "amenities": ["WiFi", "TV", "Minibar", "Climatisation", "Bureau", "Coffre-fort"],
+                "price_per_night": "45000",
+                "discountType": "PERCENTAGE",
+                "discountValue": 10,
+                "capacity": 2,
+                "description": "Chambre confortable de 25m² avec tout le nécessaire pour un séjour agréable. Lit double ou lits jumeaux disponibles.",
+                "HotelRoomCategoryMedia": [
+                  {
+                    "room_category_media_id": "rcm-001",
+                    "is_primary": true,
+                    "media": {
+                      "media_id": "media-002",
+                      "file_path": "/images/chambre/chambre1.png",
+                      "mime_type": "image/png"
+                    }
+                  }
+                ],
+                "HotelRoom": [
+                  {
+                    "hotel_room_id": "room-001",
+                    "room_number": "101",
+                    "floor": 1,
+                    "status": "AVAILABLE",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-002",
+                    "room_number": "102",
+                    "floor": 1,
+                    "status": "OCCUPIED",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-007",
+                    "room_number": "103",
+                    "floor": 1,
+                    "status": "CLEANING",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-009",
+                    "room_number": "104",
+                    "floor": 1,
+                    "status": "AVAILABLE",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-011",
+                    "room_number": "105",
+                    "floor": 1,
+                    "status": "RESERVED",
+                    "is_active": true
+                  }
+                ]
+              },
+              {
+                "room_category_id": "cat-002",
+                "hotel_id": "hotel-001",
+                "name": "Chambre Luxe",
+                "type": "LUXE",
+                "number_of_rooms": 15,
+                "number_of_bathrooms": 1,
+                "amenities": ["WiFi", "TV Smart 50''", "Minibar", "Climatisation", "Jacuzzi", "Vue mer", "Balcon privé", "Peignoirs"],
+                "price_per_night": "85000",
+                "discountType": "NONE",
+                "discountValue": 0,
+                "capacity": 2,
+                "description": "Chambre luxueuse de 35m² avec vue imprenable sur l'océan. Salle de bain avec baignoire jacuzzi et douche à l'italienne.",
+                "HotelRoomCategoryMedia": [
+                  {
+                    "room_category_media_id": "rcm-002",
+                    "is_primary": true,
+                    "media": {
+                      "media_id": "media-003",
+                      "file_path": "/images/chambre/chambre2.png",
+                      "mime_type": "image/png"
+                    }
+                  }
+                ],
+                "HotelRoom": [
+                  {
+                    "hotel_room_id": "room-003",
+                    "room_number": "201",
+                    "floor": 2,
+                    "status": "AVAILABLE",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-004",
+                    "room_number": "202",
+                    "floor": 2,
+                    "status": "RESERVED",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-008",
+                    "room_number": "203",
+                    "floor": 2,
+                    "status": "OUT_OF_ORDER",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-010",
+                    "room_number": "204",
+                    "floor": 2,
+                    "status": "AVAILABLE",
+                    "is_active": true
+                  }
+                ]
+              },
+              {
+                "room_category_id": "cat-003",
+                "hotel_id": "hotel-001",
+                "name": "Suite Présidentielle",
+                "type": "SUITE",
+                "number_of_rooms": 5,
+                "number_of_bathrooms": 2,
+                "amenities": ["WiFi", "TV Smart 65''", "Minibar premium", "Climatisation", "Jacuzzi", "Vue panoramique", "Salon privé", "Balcon terrasse", "Machine Nespresso", "Service majordome"],
+                "price_per_night": "150000",
+                "discountType": "FIXED_AMOUNT",
+                "discountValue": 20000,
+                "capacity": 4,
+                "description": "Suite luxueuse de 60m² avec salon séparé et vue panoramique à 180°. Salle de bain principale avec baignoire jacuzzi et salle d'eau attenante.",
+                "HotelRoomCategoryMedia": [
+                  {
+                    "room_category_media_id": "rcm-003",
+                    "is_primary": true,
+                    "media": {
+                      "media_id": "media-004",
+                      "file_path": "/images/chambre/chambre3.png",
+                      "mime_type": "image/png"
+                    }
+                  }
+                ],
+                "HotelRoom": [
+                  {
+                    "hotel_room_id": "room-005",
+                    "room_number": "301",
+                    "floor": 3,
+                    "status": "AVAILABLE",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-006",
+                    "room_number": "302",
+                    "floor": 3,
+                    "status": "MAINTENANCE",
+                    "is_active": true
+                  },
+                  {
+                    "hotel_room_id": "room-012",
+                    "room_number": "303",
+                    "floor": 3,
+                    "status": "OCCUPIED",
+                    "is_active": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "pagination": {
+          "total": 1,
+          "page": 1,
+          "limit": 10
+        }
+      }
+    },
+    "hotel_room": {
+      "endpoint": "GET /hotel-room",
+      "used_by": ["Page Disponibilité", "Statistiques Dashboard"],
+      "data": {
+        "data": [
+          {
+            "hotel_room_id": "room-001",
+            "room_category_id": "cat-001",
+            "name": "Chambre Standard 101",
+            "room_number": "101",
+            "floor": 1,
+            "status": "AVAILABLE",
+            "is_active": true,
+            "notes": null,
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-16T12:00:00Z",
+            "category": {
+              "room_category_id": "cat-001",
+              "type": "STANDARD",
+              "name": "Chambre Standard",
+              "price_per_night": "45000"
+            },
+            "unavailabilities": []
+          },
+          {
+            "hotel_room_id": "room-002",
+            "room_category_id": "cat-001",
+            "name": "Chambre Standard 102",
+            "room_number": "102",
+            "floor": 1,
+            "status": "OCCUPIED",
+            "is_active": true,
+            "notes": "Client VIP",
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-14T15:30:00Z",
+            "category": {
+              "room_category_id": "cat-001",
+              "type": "STANDARD",
+              "name": "Chambre Standard",
+              "price_per_night": "45000"
+            },
+            "unavailabilities": [
+              {
+                "hotel_room_unavailability_id": "unavail-002",
+                "start_date": "2025-01-13T14:00:00Z",
+                "end_date": "2025-01-18T12:00:00Z",
+                "reason": "Réservation en cours",
+                "type": "UNAVAILABLE"
+              }
+            ]
+          },
+          {
+            "hotel_room_id": "room-003",
+            "room_category_id": "cat-002",
+            "name": "Chambre Luxe 201",
+            "room_number": "201",
+            "floor": 2,
+            "status": "AVAILABLE",
+            "is_active": true,
+            "notes": null,
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-16T12:00:00Z",
+            "category": {
+              "room_category_id": "cat-002",
+              "type": "LUXE",
+              "name": "Chambre Luxe",
+              "price_per_night": "85000"
+            },
+            "unavailabilities": []
+          },
+          {
+            "hotel_room_id": "room-004",
+            "room_category_id": "cat-002",
+            "name": "Chambre Luxe 202",
+            "room_number": "202",
+            "floor": 2,
+            "status": "RESERVED",
+            "is_active": true,
+            "notes": "Réservation confirmée",
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-16T09:00:00Z",
+            "category": {
+              "room_category_id": "cat-002",
+              "type": "LUXE",
+              "name": "Chambre Luxe",
+              "price_per_night": "85000"
+            },
+            "unavailabilities": [
+              {
+                "hotel_room_unavailability_id": "unavail-003",
+                "start_date": "2025-01-16T14:00:00Z",
+                "end_date": "2025-01-20T12:00:00Z",
+                "reason": "Réservation confirmée",
+                "type": "UNAVAILABLE"
+              }
+            ]
+          },
+          {
+            "hotel_room_id": "room-005",
+            "room_category_id": "cat-003",
+            "name": "Suite Présidentielle 301",
+            "room_number": "301",
+            "floor": 3,
+            "status": "AVAILABLE",
+            "is_active": true,
+            "notes": null,
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-16T12:00:00Z",
+            "category": {
+              "room_category_id": "cat-003",
+              "type": "SUITE",
+              "name": "Suite Présidentielle",
+              "price_per_night": "150000"
+            },
+            "unavailabilities": []
+          },
+          {
+            "hotel_room_id": "room-006",
+            "room_category_id": "cat-003",
+            "name": "Suite Présidentielle 302",
+            "room_number": "302",
+            "floor": 3,
+            "status": "MAINTENANCE",
+            "is_active": true,
+            "notes": "Rénovation de la salle de bain",
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-11T10:00:00Z",
+            "category": {
+              "room_category_id": "cat-003",
+              "type": "SUITE",
+              "name": "Suite Présidentielle",
+              "price_per_night": "150000"
+            },
+            "unavailabilities": [
+              {
+                "hotel_room_unavailability_id": "unavail-001",
+                "start_date": "2025-01-11T00:00:00Z",
+                "end_date": "2025-01-20T00:00:00Z",
+                "reason": "Rénovation de la salle de bain",
+                "type": "MAINTENANCE"
+              }
+            ]
+          },
+          {
+            "hotel_room_id": "room-007",
+            "room_category_id": "cat-001",
+            "name": "Chambre Standard 103",
+            "room_number": "103",
+            "floor": 1,
+            "status": "CLEANING",
+            "is_active": true,
+            "notes": "Nettoyage en cours après départ",
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-16T11:00:00Z",
+            "category": {
+              "room_category_id": "cat-001",
+              "type": "STANDARD",
+              "name": "Chambre Standard",
+              "price_per_night": "45000"
+            },
+            "unavailabilities": []
+          },
+          {
+            "hotel_room_id": "room-008",
+            "room_category_id": "cat-002",
+            "name": "Chambre Luxe 203",
+            "room_number": "203",
+            "floor": 2,
+            "status": "OUT_OF_ORDER",
+            "is_active": true,
+            "notes": "Problème de climatisation",
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-14T16:00:00Z",
+            "category": {
+              "room_category_id": "cat-002",
+              "type": "LUXE",
+              "name": "Chambre Luxe",
+              "price_per_night": "85000"
+            },
+            "unavailabilities": [
+              {
+                "hotel_room_unavailability_id": "unavail-004",
+                "start_date": "2025-01-14T16:00:00Z",
+                "end_date": "2025-01-17T00:00:00Z",
+                "reason": "Réparation climatisation",
+                "type": "MAINTENANCE"
+              }
+            ]
+          },
+          {
+            "hotel_room_id": "room-009",
+            "room_category_id": "cat-001",
+            "name": "Chambre Standard 104",
+            "room_number": "104",
+            "floor": 1,
+            "status": "AVAILABLE",
+            "is_active": true,
+            "notes": null,
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-16T12:00:00Z",
+            "category": {
+              "room_category_id": "cat-001",
+              "type": "STANDARD",
+              "name": "Chambre Standard",
+              "price_per_night": "45000"
+            },
+            "unavailabilities": []
+          },
+          {
+            "hotel_room_id": "room-010",
+            "room_category_id": "cat-002",
+            "name": "Chambre Luxe 204",
+            "room_number": "204",
+            "floor": 2,
+            "status": "AVAILABLE",
+            "is_active": true,
+            "notes": null,
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-16T12:00:00Z",
+            "category": {
+              "room_category_id": "cat-002",
+              "type": "LUXE",
+              "name": "Chambre Luxe",
+              "price_per_night": "85000"
+            },
+            "unavailabilities": []
+          },
+          {
+            "hotel_room_id": "room-011",
+            "room_category_id": "cat-001",
+            "name": "Chambre Standard 105",
+            "room_number": "105",
+            "floor": 1,
+            "status": "RESERVED",
+            "is_active": true,
+            "notes": "Arrivée prévue demain",
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-16T10:00:00Z",
+            "category": {
+              "room_category_id": "cat-001",
+              "type": "STANDARD",
+              "name": "Chambre Standard",
+              "price_per_night": "45000"
+            },
+            "unavailabilities": [
+              {
+                "hotel_room_unavailability_id": "unavail-005",
+                "start_date": "2025-01-16T14:00:00Z",
+                "end_date": "2025-01-19T12:00:00Z",
+                "reason": "Réservation confirmée",
+                "type": "UNAVAILABLE"
+              }
+            ]
+          },
+          {
+            "hotel_room_id": "room-012",
+            "room_category_id": "cat-003",
+            "name": "Suite Présidentielle 303",
+            "room_number": "303",
+            "floor": 3,
+            "status": "OCCUPIED",
+            "is_active": true,
+            "notes": "Séjour longue durée",
+            "createdAt": "2025-01-10T08:00:00Z",
+            "updatedAt": "2025-01-01T14:00:00Z",
+            "category": {
+              "room_category_id": "cat-003",
+              "type": "SUITE",
+              "name": "Suite Présidentielle",
+              "price_per_night": "150000"
+            },
+            "unavailabilities": [
+              {
+                "hotel_room_unavailability_id": "unavail-006",
+                "start_date": "2025-01-01T14:00:00Z",
+                "end_date": "2025-01-30T12:00:00Z",
+                "reason": "Séjour longue durée",
+                "type": "UNAVAILABLE"
+              }
+            ]
+          }
+        ],
+        "pagination": {
+          "total": 12,
+          "page": 1,
+          "limit": 50
+        }
+      }
+    }
+/*
+    "reviews": {
+      "endpoint": "GET /reviews (À CRÉER - N'EXISTE PAS ENCORE)",
+      "used_by": ["GlobalRating.jsx"],
+      "status": "NOT_IMPLEMENTED",
+      "needed_for": "Afficher les notes globales de l'hôtel",
+      "suggested_structure": {
+        "data": [
+          {
+            "review_id": "rev-001",
+            "reservation_id": "RES-2025-001",
+            "user_id": "user-002",
+            "hotel_id": "hotel-001",
+            "overall_rating": 4.8,
+            "cleanliness": 4.9,
+            "comfort": 4.8,
+            "facilities": 4.7,
+            "staff": 4.9,
+            "location": 4.6,
+            "value_for_money": 4.5,
+            "comment": "Excellent séjour, personnel très accueillant",
+            "created_at": "2025-01-19T10:00:00Z"
+          }
+        ],
+        "statistics": {
+          "total_reviews": 2546,
+          "average_rating": 4.6,
+          "ratings_breakdown": {
+            "installations": {"value": 4.4, "percent": 88},
+            "cleanliness": {"value": 4.7, "percent": 94},
+            "services": {"value": 4.6, "percent": 92},
+            "comfort": {"value": 4.8, "percent": 96},
+            "location": {"value": 4.5, "percent": 90}
+          }
+        }
+      }
+    }
+*/
+  },
+  "summary": {
+    "total_endpoints": 4,
+    "implemented": 3,
+    "not_implemented": 1,
+    "pages_covered": [
+      "Dashboard (KPI)",
+      "Page Chambres",
+      "Page Disponibilité",
+      "Page Réservations",
+      "Sidebar",
+      "GlobalRating (partiellement - manque endpoint)"
+    ],
+    "date_range_used": "Du 2024-12-01 au 2025-01-30"
+  }
+}

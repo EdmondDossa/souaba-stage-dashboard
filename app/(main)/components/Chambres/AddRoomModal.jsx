@@ -1,18 +1,53 @@
 'use client';
 import { useState } from 'react';
+import { useMutation, API_ROUTES } from '@/lib/api-routes';
 
 export default function AddRoomModal({ onClose, onSave, category }) {
+    const { mutate, loading } = useMutation();
     const [formData, setFormData] = useState({
-        number: 'Room 101',
+        number: '',
         capacity: '',
         floor: '',
-        status: 'Disponible',
+        status: 'AVAILABLE',
         category: category,
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSave(formData);
+        
+        if (!category || !category.id) {
+            alert('Erreur: Catégorie manquante');
+            return;
+        }
+        
+        if (!formData.number || !formData.floor) {
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
+        }
+        
+        try {
+            const apiData = {
+                room_category_id: category.id,
+                name: `${category.name} ${formData.number}`,
+                room_number: formData.number,
+                floor: parseInt(formData.floor),
+                status: 'AVAILABLE',
+                is_active: true,
+                notes: null
+            };
+
+            await mutate(API_ROUTES.ROOMS.CREATE, {
+                method: 'POST',
+                data: apiData
+            });
+
+            alert('Chambre créée avec succès !');
+            onSave && onSave(formData);
+            onClose();
+        } catch (err) {
+            console.error('Erreur lors de la création de la chambre:', err);
+            alert('Erreur lors de la création: ' + (err.response?.data?.message || err.message));
+        }
     };
 
     return (

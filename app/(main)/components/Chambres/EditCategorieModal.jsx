@@ -1,7 +1,9 @@
 'use client';
 import { useState } from 'react';
+import { useMutation, API_ROUTES } from '@/lib/api-routes';
 
 export default function EditCategoryModal({ category, onClose, onSave }) {
+    const { mutate, loading } = useMutation();
     const [formData, setFormData] = useState({
         type: category.type || 'Standard',
         name: category.name || '',
@@ -33,12 +35,40 @@ export default function EditCategoryModal({ category, onClose, onSave }) {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSave(category.id, {
-            ...formData,
-            photos: [...formData.photos, ...newPhotos],
-        });
+        
+        try {
+            // Mapper le type vers l'enum de l'API
+            const typeMap = {
+                'Standard': 'STANDARD',
+                'Luxe': 'LUXE',
+                'Suite': 'SUITE',
+                'Supérieure': 'LUXE'
+            };
+
+            const apiData = {
+                name: formData.name || `Chambre ${formData.type}`,
+                type: typeMap[formData.type] || 'STANDARD',
+                number_of_rooms: parseInt(formData.roomCount) || category.number_of_rooms || 0,
+                number_of_bathrooms: parseInt(formData.bathrooms) || category.number_of_bathrooms || 1,
+                price_per_night: parseFloat(formData.price) || category.price || 0,
+                capacity: parseInt(formData.capacity) || category.capacity || 1,
+                description: formData.description || ''
+            };
+
+            await mutate(API_ROUTES.ROOM_CATEGORIES.UPDATE(category.id), {
+                method: 'PATCH',
+                data: apiData
+            });
+
+            alert('Catégorie modifiée avec succès !');
+            onSave && onSave();
+            onClose();
+        } catch (err) {
+            console.error('Erreur lors de la modification:', err);
+            alert('Erreur lors de la modification: ' + (err.response?.data?.message || err.message));
+        }
     };
 
     return (

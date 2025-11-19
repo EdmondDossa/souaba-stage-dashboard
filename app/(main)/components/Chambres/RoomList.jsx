@@ -3,12 +3,14 @@ import { useState } from 'react';
 import RoomCard from './RoomCard';
 import RoomModal from './RoomModal';
 import AddRoomModal from './AddRoomModal';
+import { useHotelWithCategories } from '@/lib/api-routes';
 import {ArrowLeft, Funnel, Search} from "lucide-react";
 import {ChevronUpDownIcon} from "@heroicons/react/16/solid";
 import {SvgIcon} from "@/components/ui/common";
 import {FunnelIcon} from "@heroicons/react/24/solid";
 
 export default function RoomList({ initialRooms, category }) {
+    const { refetch } = useHotelWithCategories();
     const [rooms, setRooms] = useState(initialRooms);
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -17,6 +19,12 @@ export default function RoomList({ initialRooms, category }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const roomsPerPage = 12;
+    
+    const handleRefresh = async () => {
+        if (refetch) {
+            await refetch();
+        }
+    };
 
     // Filtrer les Chambres
     const filteredRooms = rooms.filter(room => {
@@ -290,7 +298,7 @@ export default function RoomList({ initialRooms, category }) {
             {isAddModalOpen && (
                 <AddRoomModal
                     onClose={() => setIsAddModalOpen(false)}
-                    onSave={handleAddRoom}
+                    onSave={handleRefresh}
                     category={category}
                 />
             )}

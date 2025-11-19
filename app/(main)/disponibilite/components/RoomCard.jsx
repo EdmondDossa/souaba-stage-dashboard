@@ -3,7 +3,7 @@
 import React from 'react';
 import { SvgIcon } from "@/components/ui/common";
 
-export const RoomCard = ({ room, index }) => {
+export const RoomCard = ({ room, index, onEdit }) => {
     const getBackgroundColor = () => {
         if (room.color === 'red') return 'bg-[#C94C4C] text-white';
         if (room.color === 'green') return 'bg-[#D5F6E5]';
@@ -35,7 +35,10 @@ export const RoomCard = ({ room, index }) => {
     }
 
     return (
-        <div className={`p-2 cursor-pointer transition-all hover:shadow-lg border-r border-gray-300 ${!isFirstInRow ? 'border-l-0' : ''}`}>
+        <div 
+            className={`p-2 cursor-pointer transition-all hover:shadow-lg border-r border-gray-300 ${!isFirstInRow ? 'border-l-0' : ''}`}
+            onClick={() => onEdit && onEdit(room)}
+        >
             <div className="text-base font-bold pb-2">{room.number}</div>
             <div className={`rounded-lg pt-2 w-full h-full pb-1 ${getBackgroundColor()}`}>
                 <div className={"p-1"}>
