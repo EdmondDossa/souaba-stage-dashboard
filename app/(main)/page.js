@@ -11,7 +11,6 @@ import { ReservationTable } from "@/app/(main)/components/ReservationTable";
 import { Calendar, LogIn, LogOut, CircleDollarSign } from "lucide-react";
 import getAxiosInstance from "@/lib/request";
 
-
 const Dashboard = () => {
     const [kpiData, setKpiData] = useState({
         newReservations: { value: 0, trend: 0 },
@@ -31,18 +30,6 @@ const Dashboard = () => {
                 const reservationsRes = await axios.get('/reservations');
                 const reservations = Array.isArray(reservationsRes.data?.data) ? reservationsRes.data.data : [];
 
-               // console.log('Dashboard Total réservations:', reservations.length);
-             //   console.log('Dashboard Première réservation:', reservations[0]);
-
-                const now = new Date();
-                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-                const twoWeeksAgo = new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000);
-
-             /*   console.log('[Dashboard] Today:', today);
-                console.log('[Dashboard] Last week:', lastWeek);
-                console.log('[Dashboard] Two weeks ago:', twoWeeksAgo);
-*/
                 // Fonction helper pour obtenir la date de manière flexible
                 const getDate = (dateStr) => {
                     if (!dateStr) return null;
@@ -50,70 +37,91 @@ const Dashboard = () => {
                     return isNaN(date.getTime()) ? null : date;
                 };
 
-                // KPIs de cette semaine
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+                // Obtenir le début de la semaine actuelle (lundi)
+                const currentDayOfWeek = today.getDay(); // 0 = dimanche, 1 = lundi, ...
+                const daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
+                const thisWeekStart = new Date(today.getTime() - daysToMonday * 24 * 60 * 60 * 1000);
+                const thisWeekEnd = new Date(thisWeekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
+
+                // Semaine précédente
+                const lastWeekStart = new Date(thisWeekStart.getTime() - 7 * 24 * 60 * 60 * 1000);
+                const lastWeekEnd = new Date(thisWeekStart.getTime() - 1);
+
+                //console.log('[Dashboard] This week:', thisWeekStart, 'to', thisWeekEnd);
+                //console.log('[Dashboard] Last week:', lastWeekStart, 'to', lastWeekEnd);
+
                 const thisWeekReservations = reservations.filter(r => {
                     const createdAt = getDate(r.createdAt);
-                    return createdAt && createdAt >= lastWeek && createdAt <= today;
+                    return createdAt && createdAt >= thisWeekStart && createdAt <= thisWeekEnd;
                 });
 
-            //    console.log('Dashboard This week reservations:', thisWeekReservations.length, thisWeekReservations);
+                const lastWeekReservations = reservations.filter(r => {
+                    const createdAt = getDate(r.createdAt);
+                    return createdAt && createdAt >= lastWeekStart && createdAt <= lastWeekEnd;
+                });
+
+               // console.log('New reservations this week:', thisWeekReservations.length);
 
                 const thisWeekCheckIns = reservations.filter(r => {
                     const checkIn = getDate(r.check_in_date || r.checkInDate);
-                    return checkIn && checkIn >= lastWeek && checkIn <= today && r.status === 'CHECKED_IN';
-                });
-
-            //    console.log('Dashboard This week check-ins:', thisWeekCheckIns.length);
-
-                const thisWeekCheckOuts = reservations.filter(r => {
-                    const checkOut = getDate(r.check_out_date || r.checkOutDate);
-                    return checkOut && checkOut >= lastWeek && checkOut <= today && r.status === 'CHECKED_OUT';
-                });
-
-                //console.log('Dashboard This week check-outs:', thisWeekCheckOuts.length);
-
-                const thisWeekRevenue = reservations
-                    .filter(r => {
-                        const createdAt = getDate(r.createdAt);
-                        const isValid = createdAt && createdAt >= lastWeek && createdAt <= today && r.status !== 'CANCELLED';
-                        if (isValid) {
-                            console.log('💰 Revenue entry:', r.reservation_id, r.total_price || r.totalPrice, r.createdAt);
-                        }
-                        return isValid;
-                    })
-                    .reduce((sum, r) => {
-                        const price = parseFloat(r.total_price || r.totalPrice || 0);
-                        return sum + (isNaN(price) ? 0 : price);
-                    }, 0);
-
-            //    console.log('Dashboard This week revenue:', thisWeekRevenue);
-
-                // KPIs semaine précédente
-                const lastWeekReservations = reservations.filter(r => {
-                    const createdAt = getDate(r.createdAt);
-                    return createdAt && createdAt >= twoWeeksAgo && createdAt < lastWeek;
+                    // Compter TOUTES les réservations avec check-in cette semaine
+                    // (peu importe le statut: CONFIRMED, CHECKED_IN, CHECKED_OUT, etc.)
+                    return checkIn && checkIn >= thisWeekStart && checkIn <= thisWeekEnd
+                        && !['CANCELLED', 'NO_SHOW'].includes(r.status);
                 });
 
                 const lastWeekCheckIns = reservations.filter(r => {
                     const checkIn = getDate(r.check_in_date || r.checkInDate);
-                    return checkIn && checkIn >= twoWeeksAgo && checkIn < lastWeek && r.status === 'CHECKED_IN';
+                    return checkIn && checkIn >= lastWeekStart && checkIn <= lastWeekEnd
+                        && !['CANCELLED', 'NO_SHOW'].includes(r.status);
+                });
+
+                //console.log('Check-ins this week:', thisWeekCheckIns.length);
+
+                const thisWeekCheckOuts = reservations.filter(r => {
+                    const checkOut = getDate(r.check_out_date || r.checkOutDate);
+                    // Compter TOUTES les réservations avec check-out cette semaine
+                    return checkOut && checkOut >= thisWeekStart && checkOut <= thisWeekEnd
+                        && !['CANCELLED', 'NO_SHOW'].includes(r.status);
                 });
 
                 const lastWeekCheckOuts = reservations.filter(r => {
                     const checkOut = getDate(r.check_out_date || r.checkOutDate);
-                    return checkOut && checkOut >= twoWeeksAgo && checkOut < lastWeek && r.status === 'CHECKED_OUT';
+                    return checkOut && checkOut >= lastWeekStart && checkOut <= lastWeekEnd
+                        && !['CANCELLED', 'NO_SHOW'].includes(r.status);
                 });
 
-                const lastWeekRevenue = reservations
+                console.log('🚪 Check-outs this week:', thisWeekCheckOuts.length);
+
+                //  KPI 4: Revenu total (réservations créées cette semaine, non annulées)
+                const thisWeekRevenue = reservations
                     .filter(r => {
                         const createdAt = getDate(r.createdAt);
-                        return createdAt && createdAt >= twoWeeksAgo && createdAt < lastWeek && r.status !== 'CANCELLED';
+                        return createdAt && createdAt >= thisWeekStart && createdAt <= thisWeekEnd
+                            && !['CANCELLED', 'NO_SHOW'].includes(r.status);
                     })
                     .reduce((sum, r) => {
                         const price = parseFloat(r.total_price || r.totalPrice || 0);
                         return sum + (isNaN(price) ? 0 : price);
                     }, 0);
 
+                const lastWeekRevenue = reservations
+                    .filter(r => {
+                        const createdAt = getDate(r.createdAt);
+                        return createdAt && createdAt >= lastWeekStart && createdAt <= lastWeekEnd
+                            && !['CANCELLED', 'NO_SHOW'].includes(r.status);
+                    })
+                    .reduce((sum, r) => {
+                        const price = parseFloat(r.total_price || r.totalPrice || 0);
+                        return sum + (isNaN(price) ? 0 : price);
+                    }, 0);
+
+                console.log('💰 Revenue this week:', thisWeekRevenue);
+
+                // Calculer les tendances
                 const calculateTrend = (current, previous) => {
                     if (previous === 0) return current > 0 ? 100 : 0;
                     return Number((((current - previous) / previous) * 100).toFixed(2));
@@ -138,14 +146,14 @@ const Dashboard = () => {
                     }
                 });
 
-               /* console.log('Dashboard KPI Data set:', {
+                console.log('✅ KPI Data:', {
                     newReservations: thisWeekReservations.length,
                     checkIns: thisWeekCheckIns.length,
                     checkOuts: thisWeekCheckOuts.length,
-                    totalRevenue: thisWeekRevenue
-                });*/
+                    revenue: thisWeekRevenue
+                });
             } catch (err) {
-                console.error('Erreur lors de la récupération des KPIs:', err);
+               // console.error('Erreur lors de la récupération des KPIs:', err);
             } finally {
                 setLoading(false);
             }
@@ -157,11 +165,11 @@ const Dashboard = () => {
     // Formater le revenu
     const formatRevenue = (value) => {
         if (value >= 1000000) {
-            return `$${(value / 1000000).toFixed(1)}M`;
+            return `${(value / 1000000).toFixed(1)}M FCFA`;
         } else if (value >= 1000) {
-            return `$${(value / 1000).toFixed(1)}K`;
+            return `${(value / 1000).toFixed(1)}K FCFA`;
         }
-        return `$${value.toFixed(0)}`;
+        return `${value.toFixed(0)} FCFA`;
     };
 
     return (

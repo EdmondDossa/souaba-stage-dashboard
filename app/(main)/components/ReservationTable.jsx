@@ -13,7 +13,7 @@ const STATUS_MAP = {
     CHECKED_IN: { label: "Présent", color: "bg-[#29B06F] text-white rounded-[4px]" },
     CHECKED_OUT: { label: "Départ", color: "bg-[#EAEAEA] text-gray rounded-[4px]" },
     CANCELLED: { label: "Annulée", color: "bg-red-500 text-white rounded-[4px]" },
-    NO_SHOW: { label: "Absent", color: "bg-gray-400 text-white rounded-[4px]" }
+    NO_SHOW: { label: "Absent", color: "bg-gray-400 text-white rounded-[4px]" },
 };
 
 // Mapping des types de chambres
