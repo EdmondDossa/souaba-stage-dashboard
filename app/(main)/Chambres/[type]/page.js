@@ -17,10 +17,10 @@ const STATUS_MAP = {
 
 export default function CategoryPage() {
     const params = useParams();
-    const { categorie } = params;
+    const { type } = params;
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
-    const categoryName = decodeURIComponent(categorie);
+    const typeName = decodeURIComponent(type);
 
     useEffect(() => {
         const fetchCategoryRooms = async () => {
@@ -35,10 +35,10 @@ export default function CategoryPage() {
                     'Suite Présidentielle': 'SUITE'
                 };
                 
-                const categoryType = typeMap[categoryName];
+                const categoryType = typeMap[typeName];
                 
                 if (!categoryType) {
-                    console.warn('Type de catégorie non trouvé pour:', categoryName);
+                    console.warn('Type de catégorie non trouvé pour:', typeName);
                     setRooms([]);
                     return;
                 }
@@ -47,15 +47,15 @@ export default function CategoryPage() {
                 const roomsResponse = await axios.get('/hotel-room');
                 const allRooms = roomsResponse.data?.data || roomsResponse.data || [];
                 
-                console.log('Toutes les chambres:', allRooms);
-                console.log('Filtrer par type:', categoryType);
-                
+                // console.log('Toutes les chambres:', allRooms);
+                // console.log('Filtrer par type:', categoryType);
+                //
                 // Filtrer les chambres par type de catégorie
                 const filteredRooms = allRooms.filter(room => 
                     room.category?.type === categoryType
                 );
                 
-                console.log('Chambres filtrées:', filteredRooms);
+               // console.log('Chambres filtrées:', filteredRooms);
                 
                 // Mapper les chambres
                 const mappedRooms = filteredRooms.map(room => ({
@@ -65,6 +65,7 @@ export default function CategoryPage() {
                     floor: room.floor || 1,
                     status: STATUS_MAP[room.status] || room.status,
                     category: categoryName,
+                    type: typeName,
                     is_active: room.is_active,
                     notes: room.notes
                 }));
@@ -72,7 +73,7 @@ export default function CategoryPage() {
                 setRooms(mappedRooms);
                 
             } catch (err) {
-                console.error('Erreur lors de la récupération des chambres:', err);
+              //  console.error('Erreur lors de la récupération des chambres:', err);
                 setRooms([]);
             } finally {
                 setLoading(false);
@@ -80,14 +81,14 @@ export default function CategoryPage() {
         };
 
         fetchCategoryRooms();
-    }, [categorie, categoryName]);
+    }, [type, typeName]);
 
     if (loading) {
         return (
             <main className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                    <p className="text-gray-600">Chargement des chambres {categoryName}...</p>
+                    <p className="text-gray-600">Chargement des chambres de {typeName}...</p>
                 </div>
             </main>
         );
@@ -95,7 +96,7 @@ export default function CategoryPage() {
 
     return (
         <main className="min-h-screen bg-gray-50">
-            <RoomList initialRooms={rooms} category={categoryName} />
+            <RoomList initialRooms={rooms} category={typeName} />
         </main>
     );
 }
