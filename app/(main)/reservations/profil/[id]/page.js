@@ -83,11 +83,11 @@ function ProfileCard() {
             <h4 className="font-[Lato] text-black text-sm mb-4">Informations personnelles</h4>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-[#6E6E6E] text-xs text-[Lato] mb-1">Genre</p>
+                <p className="text-[#6E6E6E] text-xs  mb-1">Genre</p>
                 <p className="font-[Lato] text-[#0D0E0D] text-xs">{Profil.genre}</p>
               </div>
               <div>
-                <p className="text-[#6E6E6E] text-xs text-[Lato] mb-1">Nationalité</p>
+                <p className="text-[#6E6E6E] text-xs  mb-1">Nationalité</p>
                 <p className="font-[Lato] text-[#0D0E0D] text-xs">{Profil.nationalite}</p>
               </div>
             </div>
@@ -108,132 +108,131 @@ function ReservationInfo() {
   };
 
   return (
-    <div className="w-full bg-white rounded-xl p-6 shadow-sm grid grid-cols-2 gap-10">
-     <div className="w-full mr-5">
-         <div className="flex justify-between gap-3 mb-4">
-          <h3 className="text-[#0D0E0D] font-medium">Informations de réservation</h3>
-          <button className="text-muted-foreground hover:text-foreground">
-            <MoreHorizontal color="#6E6E6E" className="w-5 h-5" />
-          </button>
-        </div>
-        <div className="flex justify-between items-start">
-          <div>
-            <div className="flex items-center w-[100px] gap-1 px-2 py-1 bg-[#F8AA2480] text-[#0D0E0D] text-xs rounded">
-              <Check size={12} color ="#0D0E0D"/>
-              <span>Présent</span>
+    <div className="w-[140%] bg-white rounded-xl p-6 shadow-sm grid grid-cols-2 gap-10">
+        <div className={"flex w-full gap-10"}>
+            <div className="">
+                <div className="flex justify-between gap-3 mb-4">
+                    <h3 className="text-[#0D0E0D] font-medium">Informations de réservation</h3>
+                    <button className="text-muted-foreground hover:text-foreground">
+                        <MoreHorizontal color="#6E6E6E" className="w-5 h-5" />
+                    </button>
+                </div>
+                <div className="flex justify-between items-start">
+                    <div>
+                        <div className="flex items-center w-[100px] gap-1 px-2 py-1 bg-[#F8AA2480] text-[#0D0E0D] text-xs rounded">
+                            <Check size={12} color ="#0D0E0D"/>
+                            <span>Présent</span>
+                        </div>
+                        <h2 className="text-xl text-[#0F1113] font-[Lato] mt-3">Numéro de réservation : LG-B00109</h2>
+                        <p className="text-[#6E6E6E] text-xs mt-1">17 juin 2024, 9h46</p>
+                    </div>
+                </div>
+
+                <div className="space-y-5 mt-5">
+                    <div className="rows gap-4 flex justify-between">
+                        <div className="col">
+                            <span className="text-[#6E6E6E] text-xs ">Prix</span>
+                            <p className="text-[#0D0E0D]  text-xs">$150<span className="text-[#6E6E6E] text-xs">/night</span></p>
+                        </div>
+                    </div>
+                    <div className="rows gap-4 flex justify-between">
+                        <Field label="Invités" value="2 adultes" />
+                        <Field label="Mode de paiement" value="Cash" />
+                        <Field label="Réservation" value="En présentiel" />
+                    </div>
+                    <div className="rows gap-2 flex justify-between">
+                        <div className="col">
+                            <span className="text-[#6E6E6E] text-xs ">Check In</span>
+                            <p className="text-[#0D0E0D]  text-xs">June 19, 2024</p>
+                            <p className="text-[#6E6E6E]  text-xs">1.45 PM</p>
+                        </div>
+                        <div className="col">
+                            <span className="text-[#6E6E6E] text-xs ">Check Out</span>
+                            <p className="text-[#0D0E0D]  text-xs">June 22, 2024</p>
+                            <p className="text-[#6E6E6E]  text-xs">11.45 AM</p>
+                        </div>
+                        <Field label="Durée" value="3 nuits" />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 text-sm border-t mt-4 border-[#E7E7E7] pt-4">
+                    <div>
+                        <h3 className="font-[Lato] text-xs text-[#6E6E6E] mb-2">Commodités</h3>
+                        <ul className="space-y-1 text-gray-600">
+                            <li>
+                                <div className="flex items-center gap-2">
+                                    <Check size={12} color="#CCD97E"/>
+                                    <span className="text-xs  text-[#0D0E0D]"> Petit-déjeuner gratuit</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div className="flex items-center gap-2">
+                                    <Check size={12} color="#CCD97E"/>
+                                    <span className="text-xs  text-[#0D0E0D]">Wi-Fi gratuit</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div className="flex items-center gap-2">
+                                    <Check size={12} color="#CCD97E"/>
+                                    <span className="text-xs  text-[#0D0E0D]">Accès à la salle de sport et à la piscine</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="flex justify-end gap-3 mt-6">
+                    <button className="px-5 py-2 text-sm font-medium rounded-lg bg-[#29B06F] text-white"
+                            onClick={() => setShowInvoice(true)}
+                    >
+                        Payer
+                    </button>
+                    {showInvoice && (
+                        <FactureModal show={showInvoice} onClose={() => setShowInvoice(false)} data={selectedInvoiceData} />
+                    )}
+                    <button className="px-5 py-2 text-sm font-medium rounded-lg border-[#FFEEEE] bg-[#FFEEEE] text-[#0D0E0D]">
+                        Annuler la réservation
+                    </button>
+                </div>
             </div>
-            <h2 className="text-xl text-[#0F1113] font-[Lato] mt-3">Numéro de réservation : LG-B00109</h2>
-            <p className="text-[#6E6E6E] text-xs mt-1">17 juin 2024, 9h46</p>
-          </div>
-        </div>
+            <div className="">
+                {/* ================= ROOM DETAILS ================= */}
+                <div className="h-full w-full bg-[#F8F8F8] rounded-xl p-4 shadow-sm justify-end">
+                    <div className="flex justify-between">
+                        <p className="text-[#0D0E0D] text-sm">
+                            Informations sur la chambre
+                        </p>
+                        <button className="text-[#6E6E6E] text-xs text-medium">
+                            Voir les détails
+                        </button>
+                    </div>
+                    <Image src="/images/profil/profil_chambre.jpg" width={500} height={163} alt="room" className="rounded-lg" />
+                    <div className="flex items-center gap-4 mt-4 text-sm text-gray-600">
+                        <div className="flex justify-center items-center gap-1">
+                            <Maximize2 color="#A3A3A3" size={12} />
+                            <span className="text-[#0D0E0D] text-xs font-[Lato]">35 m²</span>
+                        </div>
+                        <div className="flex justify-center items-center gap-1">
+                            <Bed color="#A3A3A3" size={12} />
+                            <span className="text-[#0D0E0D] text-xs font-[Lato]">Très grand lit</span>
+                        </div>
+                        <div className="flex justify-center items-center gap-1">
+                            <User color="#A3A3A3" size={12} />
+                            <span className="text-[#0D0E0D] text-xs font-[Lato]">2 invités</span>
+                        </div>
+                    </div>
+                    <div className="border-t mt-4 border-[#E7E7E7] pt-4 flex justify-between">
+                        <p className="text-[#0D0E0D] text-sm font-[Lato]">
+                            Prix total
+                        </p>
+                        <p className="text-[#0D0E0D] text-sm font-[Lato]">
+                            $535.50
+                        </p>
 
-        <div className="space-y-5 mt-5">
-          <div className="rows gap-4 flex justify-between">
-            <div className="col">
-              <span className="text-[#6E6E6E] text-xs text-[Lato]">Prix</span>
-              <p className="text-[#0D0E0D] text-[Lato] text-xs">$150<span className="text-[#6E6E6E] text-xs text-[Lato]">/night</span></p>
-            </div>
-          </div>
-          <div className="rows gap-4 flex justify-between">
-            <Field label="Invités" value="2 adultes" />
-            <Field label="Mode de paiement" value="Cash" />
-            <Field label="Réservation" value="En présentiel" />
-          </div>
-          <div className="rows gap-2 flex justify-between">
-            <div className="col">
-                <span className="text-[#6E6E6E] text-xs text-[Lato]">Check In</span>
-                <p className="text-[#0D0E0D] text-[Lato] text-xs">June 19, 2024</p>
-                <p className="text-[#6E6E6E] text-[Lato] text-xs">1.45 PM</p>
-            </div>          
-            <div className="col">
-                <span className="text-[#6E6E6E] text-xs text-[Lato]">Check Out</span>
-                <p className="text-[#0D0E0D] text-[Lato] text-xs">June 22, 2024</p>
-                <p className="text-[#6E6E6E] text-[Lato] text-xs">11.45 AM</p>
-            </div>          
-            <Field label="Durée" value="3 nuits" />
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-2 gap-4 text-sm border-t mt-4 border-[#E7E7E7] pt-4">
-          <div>
-            <h3 className="font-[Lato] text-xs text-[#6E6E6E] mb-2">Commodités</h3>
-            <ul className="space-y-1 text-gray-600">
-              <li>
-                <div className="flex items-center gap-2">
-                  <Check size={12} color="#CCD97E"/>
-                  <span className="text-xs text-[Lato] text-[#0D0E0D]"> Petit-déjeuner gratuit</span>
+                    </div>
                 </div>
-              </li>
-              <li>
-                <div className="flex items-center gap-2">
-                  <Check size={12} color="#CCD97E"/>
-                  <span className="text-xs text-[Lato] text-[#0D0E0D]">Wi-Fi gratuit</span>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center gap-2">
-                  <Check size={12} color="#CCD97E"/>
-                  <span className="text-xs text-[Lato] text-[#0D0E0D]">Accès à la salle de sport et à la piscine</span>
-                </div>
-              </li>
-            </ul>
-          </div>
         </div>
-
-      <div className="flex justify-end gap-3 mt-6">
-        <button className="px-5 py-2 text-sm font-medium rounded-lg bg-[#29B06F] text-white"
-        onClick={() => setShowInvoice(true)}
-        >
-          Payer
-        </button>
-        {showInvoice && (
-          <FactureModal show={showInvoice} onClose={() => setShowInvoice(false)} data={selectedInvoiceData} />
-        )}
-        <button className="px-5 py-2 text-sm font-medium rounded-lg border-[#FFEEEE] bg-[#FFEEEE] text-[#0D0E0D]">
-          Annuler la réservation
-        </button>
-      </div> 
-
-      
-     </div>
-      <div className="">
-                {/* ================= ROOM DETAILS ================= */}    
-      <div className="h-full w-full bg-[#F8F8F8] rounded-xl p-4 shadow-sm col-span-2">
-        <div className="flex justify-between">
-          <p className="text-[#0D0E0D] text-sm text-[Lato]">
-            Informations sur la chambre
-          </p>
-          <button className="text-[#6E6E6E] text-xs text-medium">
-            Voir les détails
-          </button>
-        </div>
-        <Image src="/images/profil/profil_chambre.jpg" width={257} height={163} alt="room" className="rounded-lg" />
-        <div className="flex items-center gap-4 mt-4 text-sm text-gray-600">
-          <div className="flex justify-center items-center gap-1">
-            <Maximize2 color="#A3A3A3" size={12} />
-            <span className="text-[#0D0E0D] text-xs font-[Lato]">35 m²</span>
-          </div>
-          <div className="flex justify-center items-center gap-1">
-            <Bed color="#A3A3A3" size={12} />
-            <span className="text-[#0D0E0D] text-xs font-[Lato]">Très grand lit</span>
-          </div>
-          <div className="flex justify-center items-center gap-1">
-            <User color="#A3A3A3" size={12} />
-            <span className="text-[#0D0E0D] text-xs font-[Lato]">2 invités</span>
-          </div>
-        </div>
-        <div className="border-t mt-4 border-[#E7E7E7] pt-4 flex justify-between">
-          <p className="text-[#0D0E0D] text-sm font-[Lato]">
-            Prix total
-          </p>
-          <p className="text-[#0D0E0D] text-sm font-[Lato]">
-            $535.50
-          </p>
-
-        </div>
-      </div>
-        </div>
-
+    </div>
     </div>
   );
 }
@@ -241,8 +240,8 @@ function ReservationInfo() {
 function Field({ label, value }) {
   return (
     <div className="col">
-      <span className="text-[#6E6E6E] text-[Lato] text-xs">{label}</span>
-      <p className="text-[#0D0E0D] text-[Lato] text-xs">{value}</p>
+      <span className="text-[#6E6E6E]  text-xs">{label}</span>
+      <p className="text-[#0D0E0D]  text-xs">{value}</p>
     </div>
   );
 }

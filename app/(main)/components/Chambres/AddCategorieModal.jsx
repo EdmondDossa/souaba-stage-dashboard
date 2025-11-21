@@ -1,7 +1,9 @@
 'use client';
 import { useState } from 'react';
+import { useMutation, API_ROUTES } from '@/lib/api-routes';
 
-export default function AddCategoryModal({ category, onClose, onSave }) {
+export default function AddCategoryModal({ category, hotelId, onClose, onSave }) {
+    const { mutate, loading } = useMutation();
     const [formData, setFormData] = useState({
         type: category.type || 'Standard',
         name: category.name || '',
@@ -33,12 +35,49 @@ export default function AddCategoryModal({ category, onClose, onSave }) {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSave(category.id, {
-            ...formData,
-            photos: [...formData.photos, ...newPhotos],
-        });
+        
+        if (!hotelId) {
+            alert('Erreur: ID de l\'hôtel manquant');
+            return;
+        }
+        
+        try {
+            // Mapper le type vers l'enum de l'API
+            const typeMap = {
+                'Standard': 'STANDARD',
+                'Luxe': 'LUXE',
+                'Suite': 'SUITE',
+                'Supérieure': 'LUXE'
+            };
+
+            const apiData = {
+                hotel_id: hotelId,
+                name: formData.name || `Chambre ${formData.type}`,
+                type: typeMap[formData.type] || 'STANDARD',
+                number_of_rooms: parseInt(formData.roomCount) || 0,
+                number_of_bathrooms: parseInt(formData.bathrooms) || 1,
+                amenities: [],
+                price_per_night: parseFloat(formData.price) || 0,
+                discountType: 'NONE',
+                discountValue: 0,
+                capacity: parseInt(formData.capacity) || 1,
+                description: formData.description || ''
+            };
+
+            await mutate(API_ROUTES.ROOM_CATEGORIES.CREATE, {
+                method: 'POST',
+                data: apiData
+            });
+
+            alert('Catégorie créée avec succès !');
+            onSave && onSave();
+            onClose();
+        } catch (err) {
+            console.error('Erreur lors de la création:', err);
+            alert('Erreur lors de la création de la catégorie: ' + (err.response?.data?.message || err.message));
+        }
     };
 
     return (
@@ -269,9 +308,10 @@ export default function AddCategoryModal({ category, onClose, onSave }) {
                         <div className="flex justify-end">
                             <button
                                 type="submit"
-                                className="bg-primary hover:bg-primary text-white px-6 py-2 rounded-lg font-bold"
+                                disabled={loading}
+                                className="bg-primary hover:bg-primary text-white px-6 py-2 rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Enregistrer la catégorie
+                                {loading ? 'Enregistrement...' : 'Enregistrer la catégorie'}
                             </button>
                         </div>
                     </form>

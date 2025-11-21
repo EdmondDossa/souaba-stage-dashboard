@@ -1,6 +1,8 @@
 "use client"
 import { MoreHorizontal } from "lucide-react";
 
+// TODO: Implémenter un système de notation dans l'API
+// En attendant, ces données sont fictives pour la démonstration
 const ratings = [
     { label: "Installations", value: 4.4, percent: 88 },
     { label: "Propreté", value: 4.7, percent: 94 },
@@ -24,6 +26,7 @@ export const GlobalRating = () => {
                 </button>
             </div>
 
+            {/* Note : Données de démonstration - En attente d'implémentation API */}
             <div className="mb-6">
                 {Stars.map((star, index)=>(
                 <div key={index} className="flex gap-3 mb-1 space-x-1">

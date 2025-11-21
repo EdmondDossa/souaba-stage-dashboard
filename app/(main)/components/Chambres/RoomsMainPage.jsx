@@ -6,6 +6,8 @@ import AmenitiesModal from './AmenitiesModal';
 import EditCategoryModal from './EditCategorieModal';
 import AddCategoryModal from './AddCategorieModal';
 import DescriptionModal from './DescriptionModal';
+import getAxiosInstance from '@/lib/request';
+import { useHotelWithCategories } from '@/lib/api-routes';
 
 
 import { CheckIcon, Search, Edit } from "lucide-react";
@@ -22,6 +24,7 @@ const amenityIcons = {
 };
 
 export default function RoomsMainPage({ hotelData: initialHotelData, categories: initialCategories }) {
+    const { refetch } = useHotelWithCategories();
     const [hotelData, setHotelData] = useState(initialHotelData);
     const [selectedModal, setSelectedModal] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -32,6 +35,22 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
     const [categoryToAdd, setCategoryToAdd] = useState(null);
     const [categories, setCategories] = useState(initialCategories);
     const [showDescriptionHover, setShowDescriptionHover] = useState(false);
+
+    // Fonction pour rafraîchir les données
+    const handleRefresh = async () => {
+        if (refetch) {
+            await refetch();
+        }
+    };
+
+    // Synchroniser avec les props
+    useEffect(() => {
+        setHotelData(initialHotelData);
+    }, [initialHotelData]);
+
+    useEffect(() => {
+        setCategories(initialCategories);
+    }, [initialCategories]);
 
 
     // Filtres + tri
@@ -73,11 +92,42 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
         setSelectedModal('addCategory');
     };
 
-    const handleSaveCategory = (id, updatedData) => {
-        setCategories(prev =>
-            prev.map(cat => (cat.id === id ? { ...cat, ...updatedData } : cat))
-        );
-        setSelectedModal(null);
+    const handleSaveCategory = async (id, updatedData) => {
+        try {
+            // TODO: Appeler l'API pour mettre à jour la catégorie
+            // const axios = getAxiosInstance();
+            // await axios.put(`/hotel-room-categories/${id}`, updatedData);
+            
+            setCategories(prev =>
+                prev.map(cat => (cat.id === id ? { ...cat, ...updatedData } : cat))
+            );
+            setSelectedModal(null);
+        } catch (err) {
+            console.error('Erreur lors de la sauvegarde de la catégorie:', err);
+            alert('Erreur lors de la sauvegarde');
+        }
+    };
+
+    const handleSaveHotelData = async (field, data) => {
+        try {
+            if (!hotelData.hotel_id) {
+                console.error('Aucun hotel_id disponible');
+                return;
+            }
+
+            // TODO: Appeler l'API pour mettre à jour l'hôtel
+            // const axios = getAxiosInstance();
+            // await axios.put(`/hotels/${hotelData.hotel_id}`, { [field]: data });
+            
+            setHotelData(prev => ({
+                ...prev,
+                [field]: data
+            }));
+            setSelectedModal(null);
+        } catch (err) {
+            console.error('Erreur lors de la sauvegarde:', err);
+            alert('Erreur lors de la sauvegarde');
+        }
     };
 
     const router = useRouter();
@@ -283,7 +333,7 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                                         <div className="flex text-right gap-14 justify-between">
                                             <div>
                                                 <button
-                                                    onClick={() => router.push(`/Chambres/${encodeURIComponent(category.type)}`)}
+                                                    onClick={() => router.push(`/Chambres/${encodeURIComponent(category.name)}`)}
                                                     className="px-3 py-1 border font-bold border-orange-300 rounded text-sm hover:bg-gray-50">
                                                     Voir les chambres
                                                 </button>
@@ -374,13 +424,7 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                 <SecurityModal
                     security={hotelData.security}
                     onClose={() => setSelectedModal(null)}
-                    onSave={(data) => {
-                        setHotelData(prev => ({
-                            ...prev,
-                            security: data
-                        }));
-                        setSelectedModal(null);
-                    }}
+                    onSave={(data) => handleSaveHotelData('security', data)}
                 />
             )}
 
@@ -388,13 +432,7 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                 <AmenitiesModal
                     amenities={hotelData.amenities}
                     onClose={() => setSelectedModal(null)}
-                    onSave={(data) => {
-                        setHotelData(prev => ({
-                            ...prev,
-                            amenities: data
-                        }));
-                        setSelectedModal(null);
-                    }}
+                    onSave={(data) => handleSaveHotelData('amenities', data)}
                 />
             )}
 
@@ -402,14 +440,15 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                 <EditCategoryModal
                     category={categoryToEdit}
                     onClose={() => setSelectedModal(null)}
-                    onSave={handleSaveCategory}
+                    onSave={handleRefresh}
                 />
             )}
             {selectedModal === 'addCategory' && categoryToAdd && (
                 <AddCategoryModal
                     category={categoryToAdd}
+                    hotelId={hotelData?.hotel_id}
                     onClose={() => setSelectedModal(null)}
-                    onSave={handleSaveCategory}
+                    onSave={handleRefresh}
                 />
             )}
 
@@ -417,13 +456,7 @@ export default function RoomsMainPage({ hotelData: initialHotelData, categories:
                 <DescriptionModal
                     description={hotelData.description}
                     onClose={() => setSelectedModal(null)}
-                    onSave={(newDescription) => {
-                        setHotelData(prev => ({
-                            ...prev,
-                            description: newDescription
-                        }));
-                        setSelectedModal(null);
-                    }}
+                    onSave={(newDescription) => handleSaveHotelData('description', newDescription)}
                 />
             )}
         </div>

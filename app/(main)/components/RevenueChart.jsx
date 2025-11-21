@@ -3,55 +3,36 @@
 import { useState, useEffect } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { ChevronDown } from "lucide-react";
-
-// Données brutes
-const rawData = [
-    { month: "Nov 2027", value: 100000 },
-    { month: "Dec 2027", value: 280000 },
-    { month: "Jan 2028", value: 250000 },
-    { month: "Feb 2028", value: 315060 },
-    { month: "Mar 2028", value: 225000 },
-    { month: "Apr 2028", value: 390000 },
-    { month: "May 2028", value: 250000 },
-];
-
-const monthToNumber = {
-    Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
-    Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
-};
+import { useRevenueData } from "@/lib/api-routes";
 
 export const RevenueChart = () => {
+    const { data: allData, loading } = useRevenueData();
     const [data, setData] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [filterLabel, setFilterLabel] = useState("Les 6 derniers mois");
 
-    // Parser rawData en Date pour trier
-    const parsedData = rawData
-        .map(item => {
-            const [monthStr, yearStr] = item.month.split(" ");
-            return { ...item, date: new Date(parseInt(yearStr), monthToNumber[monthStr], 1) };
-        })
-        .sort((a, b) => a.date - b.date);
-
     const today = new Date();
 
+    // Mettre à jour les données filtrées quand allData change
     useEffect(() => {
-        setData(parsedData.slice(-6)); // par défaut 6 derniers mois
-    }, []);
+        if (allData && allData.length > 0) {
+            setData(allData.slice(-6)); // Par défaut, les 6 derniers mois
+        }
+    }, [allData]);
 
     const handleFilterSelect = (option) => {
         let filteredData;
         if(option.endsWith("mois")) {
             const n = parseInt(option);
-            filteredData = parsedData.slice(-n);
+            filteredData = allData.slice(-n);
             setFilterLabel(`${n} dernier${n>1?'s':''} mois`);
         } else if(option.endsWith("annee")) {
             const n = parseInt(option);
             const currentYear = today.getFullYear();
-            filteredData = parsedData.filter(d => d.date.getFullYear() >= currentYear - n + 1 && d.date.getFullYear() <= currentYear);
-            setFilterLabel(`${n} dernier${n>1?'s':''} annee${n>1?'s':''}`);
+            filteredData = allData.filter(d => d.date.getFullYear() >= currentYear - n + 1 && d.date.getFullYear() <= currentYear);
+            setFilterLabel(`${n} dernier${n>1?'s':''} année${n>1?'s':''}`);
         } else if(option === "semaine") {
-            filteredData = parsedData.slice(-1); // approximation dernière semaine sur dernier mois
+            filteredData = allData.slice(-1); // approximation dernière semaine sur dernier mois
             setFilterLabel("Dernière semaine");
         }
         setData(filteredData);
@@ -139,51 +120,60 @@ export const RevenueChart = () => {
                 </div>
             </div>
 
-            <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={data}>
-                        <defs>
-                            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor="#D5F6E5B8" stopOpacity={0.8} />
-                                <stop offset="72%" stopColor="#D5F6E5B8" stopOpacity={0.1} />
-                            </linearGradient>
-                        </defs>
-                        <CartesianGrid
-                            strokeDasharray="5 5"
-                            stroke="#E5E7EB"
-                            vertical={false}
-                        />
-                        <XAxis
-                            dataKey="month"
-                            axisLine={false}
-                            tickLine={false}
-                            tick={{ fill: '#6E6E6E', fontSize: 12 }}
-                        />
-                        <YAxis
-                            axisLine={false}
-                            tickLine={false}
-                            tick={{ fill: '#9CA3AF', fontSize: 12 }}
-                            tickFormatter={(value) => `$${value / 1000}K`}
-                        />
-                        <Tooltip
-                            content={<CustomTooltip />}
-                            cursor={{
-                                stroke: '#CCD97E',
-                                strokeWidth: 2,
-                                strokeDasharray: '5 5'
-                            }}
-                        />
-                        <Area
-                            type="natural"
-                            dataKey="value"
-                            stroke="#CCD97E"
-                            strokeWidth={3}
-                            fill="url(#colorRevenue)"
-                        />
-                    </AreaChart>
-                </ResponsiveContainer>
-            </div>
-
+            {loading ? (
+                <div className="h-64 flex items-center justify-center text-gray-500">
+                    Chargement des données de revenu...
+                </div>
+            ) : data.length === 0 ? (
+                <div className="h-64 flex items-center justify-center text-gray-500">
+                    Aucune donnée de revenu disponible
+                </div>
+            ) : (
+                <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={data}>
+                            <defs>
+                                <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#D5F6E5B8" stopOpacity={0.8} />
+                                    <stop offset="72%" stopColor="#D5F6E5B8" stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid
+                                strokeDasharray="5 5"
+                                stroke="#E5E7EB"
+                                vertical={false}
+                            />
+                            <XAxis
+                                dataKey="month"
+                                axisLine={false}
+                                tickLine={false}
+                                tick={{ fill: '#6E6E6E', fontSize: 12 }}
+                            />
+                            <YAxis
+                                axisLine={false}
+                                tickLine={false}
+                                tick={{ fill: '#9CA3AF', fontSize: 12 }}
+                                tickFormatter={(value) => `$${value / 1000}K`}
+                            />
+                            <Tooltip
+                                content={<CustomTooltip />}
+                                cursor={{
+                                    stroke: '#CCD97E',
+                                    strokeWidth: 2,
+                                    strokeDasharray: '5 5'
+                                }}
+                            />
+                            <Area
+                                type="natural"
+                                dataKey="value"
+                                stroke="#CCD97E"
+                                strokeWidth={3}
+                                fill="url(#colorRevenue)"
+                            />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </div>
+            )}
         </div>
     );
 };
