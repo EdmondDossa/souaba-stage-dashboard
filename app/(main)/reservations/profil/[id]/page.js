@@ -109,7 +109,6 @@ function ReservationInfo() {
 
   return (
     <div className="w-[140%] bg-white rounded-xl p-6 shadow-sm grid grid-cols-2 gap-10">
-        <div className={"flex w-full gap-10"}>
             <div className="">
                 <div className="flex justify-between gap-3 mb-4">
                     <h3 className="text-[#0D0E0D] font-medium">Informations de réservation</h3>
@@ -195,7 +194,7 @@ function ReservationInfo() {
                     </button>
                 </div>
             </div>
-            <div className="">
+            <div className="flex justify-end col-end">
                 {/* ================= ROOM DETAILS ================= */}
                 <div className="h-full w-full bg-[#F8F8F8] rounded-xl p-4 shadow-sm justify-end">
                     <div className="flex justify-between">
@@ -206,7 +205,9 @@ function ReservationInfo() {
                             Voir les détails
                         </button>
                     </div>
-                    <Image src="/images/profil/profil_chambre.jpg" width={500} height={163} alt="room" className="rounded-lg" />
+                    <div className="flex justify-center m-4">
+                      <Image src="/images/profil/profil_chambre.jpg" width={500} height={163} alt="room" className="rounded-lg" />
+                    </div>
                     <div className="flex items-center gap-4 mt-4 text-sm text-gray-600">
                         <div className="flex justify-center items-center gap-1">
                             <Maximize2 color="#A3A3A3" size={12} />
@@ -231,7 +232,6 @@ function ReservationInfo() {
 
                     </div>
                 </div>
-        </div>
     </div>
     </div>
   );
