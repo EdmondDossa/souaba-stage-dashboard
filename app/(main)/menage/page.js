@@ -5,124 +5,125 @@ import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 
 
 export default function HotelRoomsTable() {
-const [selectedRows, setSelectedRows] = useState([2, 3]);
-const [searchQuery, setSearchQuery] = useState("");
-const [floorFilter, setFloorFilter] = useState("Toutes les Etages");
-const [statusFilter, setStatusFilter] = useState("Tous les statuts ménages");
-const [priorityFilter, setPriorityFilter] = useState("Toutes les priorités");
 
-const [rooms, setRooms] = useState([
-{ id: 1, number: 'Room 101', type: 'Luxe', status: 'Propre', priority: 'Urgent', priorityColor: '', priorityDot: 'bg-red-500', floor: '1st', reservation: 'Présent', notes: 'Guest requested extra towels and pillows.' },
-{ id: 2, number: 'Room 102', type: 'Standard', status: 'Vérification', priority: 'Faible', priorityColor: 'text-gray-500', priorityDot: 'bg-gray-400', floor: '1st', reservation: 'Arrivée', notes: 'Ensure room is stocked with amenities.' },
-{ id: 3, number: 'Room 103', type: 'Suite', status: 'Sale', priority: 'Urgent', priorityColor: '', priorityDot: 'bg-red-500', floor: '2nd', reservation: 'Départ', notes: 'Deep clean due to extended stay.' },
-{ id: 4, number: 'Room 201', type: 'Standard', status: 'Propre', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '2nd', reservation: 'Présent', notes: 'Guest requested fresh linens.' },
-{ id: 5, number: 'Room 202', type: 'Standard', status: 'Sale', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '2nd', reservation: 'Arrivée', notes: 'Ensure bathroom amenities are replenished.' },
-{ id: 6, number: 'Room 203', type: 'Luxe', status: 'Vérification', priority: 'Faible', priorityColor: 'text-gray-500', priorityDot: 'bg-gray-400', floor: '2nd', reservation: 'Départ', notes: 'Check minibar supplies and restock if necessary.' },
-{ id: 7, number: 'Room 301', type: 'Suite', status: 'Sale',  priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '3rd', reservation: 'Présent', notes: 'Verify that all electronics are functioning properly.' },
-{ id: 8, number: 'Room 302', type: 'Supérieure', status: 'Propre', priority: 'Urgent', priorityColor: '', priorityDot: 'bg-red-500', floor: '3rd', reservation: 'Départ', notes: 'Guest reported a spill on the carpet.' },
-{ id: 9, number: 'Room 303', type: 'Supérieure', status: 'Vérification', priority: 'Faible', priorityColor: 'text-gray-500', priorityDot: 'bg-gray-400', floor: '3rd', reservation: 'Reserved', notes: 'Ensure all towels are replaced.' },
-{ id: 10, number: 'Room 304', type: 'Standard', status: 'Sale', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '3rd', reservation: 'Présent', notes: 'Check for any maintenance issues.' },
-{ id: 11, number: 'Room 305', type: 'Suite', status: 'Propre', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '3rd', reservation: 'Arrivée', notes: 'Verify that the mini-fridge is filled with refreshments.' },
-{ id: 12, number: 'Room 401', type: 'Supérieure', status: 'Vérification', priority: 'Faible', priorityColor: 'text-gray-500', priorityDot: 'bg-gray-400', floor: '4th', reservation: 'Départ', notes: 'Make sure the coffee & tea station is fully equipped.' },
-{ id: 13, number: 'Room 402', type: 'Standard', status: 'Sale', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '4th', reservation: 'Présent', notes: "Replenish the room's amenities." },
-]);
+    const [selectedRows, setSelectedRows] = useState([2, 3]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [floorFilter, setFloorFilter] = useState("Toutes les Etages");
+    const [statusFilter, setStatusFilter] = useState("Tous les statuts ménages");
+    const [priorityFilter, setPriorityFilter] = useState("Toutes les priorités");
 
-// Fonction pour changer le statut de ménage
-const handleStatusChange = (roomId, newStatus) => {
-setRooms(rooms.map(room => 
-    room.id === roomId ? { ...room, status: newStatus } : room
-));
-};
+    const [rooms, setRooms] = useState([
+    { id: 1, number: 'Room 101', type: 'Luxe', status: 'Propre', priority: 'Urgent', priorityColor: '', priorityDot: 'bg-red-500', floor: '1st', reservation: 'Présent', notes: 'Guest requested extra towels and pillows.' },
+    { id: 2, number: 'Room 102', type: 'Standard', status: 'Vérification', priority: 'Faible', priorityColor: 'text-gray-500', priorityDot: 'bg-gray-400', floor: '1st', reservation: 'Arrivée', notes: 'Ensure room is stocked with amenities.' },
+    { id: 3, number: 'Room 103', type: 'Suite', status: 'Sale', priority: 'Urgent', priorityColor: '', priorityDot: 'bg-red-500', floor: '2nd', reservation: 'Départ', notes: 'Deep clean due to extended stay.' },
+    { id: 4, number: 'Room 201', type: 'Standard', status: 'Propre', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '2nd', reservation: 'Présent', notes: 'Guest requested fresh linens.' },
+    { id: 5, number: 'Room 202', type: 'Standard', status: 'Sale', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '2nd', reservation: 'Arrivée', notes: 'Ensure bathroom amenities are replenished.' },
+    { id: 6, number: 'Room 203', type: 'Luxe', status: 'Vérification', priority: 'Faible', priorityColor: 'text-gray-500', priorityDot: 'bg-gray-400', floor: '2nd', reservation: 'Départ', notes: 'Check minibar supplies and restock if necessary.' },
+    { id: 7, number: 'Room 301', type: 'Suite', status: 'Sale',  priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '3rd', reservation: 'Présent', notes: 'Verify that all electronics are functioning properly.' },
+    { id: 8, number: 'Room 302', type: 'Supérieure', status: 'Propre', priority: 'Urgent', priorityColor: '', priorityDot: 'bg-red-500', floor: '3rd', reservation: 'Départ', notes: 'Guest reported a spill on the carpet.' },
+    { id: 9, number: 'Room 303', type: 'Supérieure', status: 'Vérification', priority: 'Faible', priorityColor: 'text-gray-500', priorityDot: 'bg-gray-400', floor: '3rd', reservation: 'Reserved', notes: 'Ensure all towels are replaced.' },
+    { id: 10, number: 'Room 304', type: 'Standard', status: 'Sale', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '3rd', reservation: 'Présent', notes: 'Check for any maintenance issues.' },
+    { id: 11, number: 'Room 305', type: 'Suite', status: 'Propre', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '3rd', reservation: 'Arrivée', notes: 'Verify that the mini-fridge is filled with refreshments.' },
+    { id: 12, number: 'Room 401', type: 'Supérieure', status: 'Vérification', priority: 'Faible', priorityColor: 'text-gray-500', priorityDot: 'bg-gray-400', floor: '4th', reservation: 'Départ', notes: 'Make sure the coffee & tea station is fully equipped.' },
+    { id: 13, number: 'Room 402', type: 'Standard', status: 'Sale', priority: 'Moyen', priorityColor: '', priorityDot: 'bg-yellow-500', floor: '4th', reservation: 'Présent', notes: "Replenish the room's amenities." },
+    ]);
 
-// Fonction pour changer la priorité
-const handlePriorityChange = (roomId, newPriority) => {
-let newPriorityDot = '';
-let newPriorityColor = '';
+    // Fonction pour changer le statut de ménage
+    const handleStatusChange = (roomId, newStatus) => {
+        setRooms(rooms.map(room => 
+            room.id === roomId ? { ...room, status: newStatus } : room
+        ));
+    };
 
-switch (newPriority) {
-    case 'Urgent':
-    newPriorityDot = 'bg-red-500';
-    newPriorityColor = '';
-    break;
-    case 'Moyen':
-    newPriorityDot = 'bg-yellow-500';
-    newPriorityColor = '';
-    break;
-    case 'Faible':
-    newPriorityDot = 'bg-gray-400';
-    newPriorityColor = 'text-gray-500';
-    break;
-}
+    // Fonction pour changer la priorité
+    const handlePriorityChange = (roomId, newPriority) => {
+        let newPriorityDot = '';
+        let newPriorityColor = '';
 
-setRooms(rooms.map(room => 
-    room.id === roomId 
-    ? { ...room, priority: newPriority, priorityDot: newPriorityDot, priorityColor: newPriorityColor } 
-    : room
-));
-};
+        switch (newPriority) {
+            case 'Urgent':
+            newPriorityDot = 'bg-red-500';
+            newPriorityColor = '';
+            break;
+            case 'Moyen':
+            newPriorityDot = 'bg-yellow-500';
+            newPriorityColor = '';
+            break;
+            case 'Faible':
+            newPriorityDot = 'bg-gray-400';
+            newPriorityColor = 'text-gray-500';
+            break;
+        }
 
-// Fonction de filtrage combinée
-const filteredRooms = rooms.filter((room) => {
-// Filtre par recherche
-const matchesSearch = 
-    searchQuery === "" ||
-    room.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    room.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    room.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    room.priority.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    room.floor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    room.reservation.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    room.notes.toLowerCase().includes(searchQuery.toLowerCase());
+        setRooms(rooms.map(room => 
+            room.id === roomId 
+            ? { ...room, priority: newPriority, priorityDot: newPriorityDot, priorityColor: newPriorityColor } 
+            : room
+        ));
+    };
 
-// Filtre par étage
-const matchesFloor = floorFilter === "Toutes les Etages" || room.floor === floorFilter;
+    // Fonction de filtrage combinée
+    const filteredRooms = rooms.filter((room) => {
+        // Filtre par recherche
+        const matchesSearch = 
+            searchQuery === "" ||
+            room.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            room.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            room.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            room.priority.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            room.floor.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            room.reservation.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            room.notes.toLowerCase().includes(searchQuery.toLowerCase());
 
-// Filtre par statut de ménage
-const matchesStatus = statusFilter === "Tous les statuts ménages" || room.status === statusFilter;
+        // Filtre par étage
+        const matchesFloor = floorFilter === "Toutes les Etages" || room.floor === floorFilter;
 
-// Filtre par priorité
-const matchesPriority = priorityFilter === "Toutes les priorités" || room.priority === priorityFilter;
+        // Filtre par statut de ménage
+        const matchesStatus = statusFilter === "Tous les statuts ménages" || room.status === statusFilter;
 
-return matchesSearch && matchesFloor && matchesStatus && matchesPriority;
-});
+        // Filtre par priorité
+        const matchesPriority = priorityFilter === "Toutes les priorités" || room.priority === priorityFilter;
 
-const getPriorityColor = (priority) => {
-switch (priority) {
-    case 'Faible':
-    return 'bg-[#EAFBF2] rounded-lg px-2 py-1';
-    case 'Moyen':
-    return 'bg-[#F3FBC7] rounded-lg px-2 py-1';
-    case 'Urgent':
-    return 'bg-[#FFEEEE] rounded-lg px-2 py-1';
-    default:
-    return 'bg-[#EAFBF2]';
-}
-};
+        return matchesSearch && matchesFloor && matchesStatus && matchesPriority;
+    });
 
-const getStatusColor = (status) => {
-switch (status) {
-    case 'Propre':
-    return 'bg-[#D5F6E5] rounded-lg px-2 py-1';
-    case 'Vérification':
-    return 'bg-[#E7F68E] rounded-lg px-2 py-1';
-    case 'Sale':
-    return 'bg-[#FFC7C7] rounded-lg px-2 py-1';
-    default:
-    return 'bg-[#EAFBF2]';
-}
-};
+    const getPriorityColor = (priority) => {
+        switch (priority) {
+            case 'Faible':
+            return 'bg-[#EAFBF2] rounded-lg px-2 py-1';
+            case 'Moyen':
+            return 'bg-[#F3FBC7] rounded-lg px-2 py-1';
+            case 'Urgent':
+            return 'bg-[#FFEEEE] rounded-lg px-2 py-1';
+            default:
+            return 'bg-[#EAFBF2]';
+        }
+    };
 
-const toggleRow = (id) => {
-setSelectedRows(prev => 
-    prev.includes(id) ? prev.filter(rowId => rowId !== id) : [...prev, id]
-);
-};
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'Propre':
+            return 'bg-[#D5F6E5] rounded-lg px-2 py-1';
+            case 'Vérification':
+            return 'bg-[#E7F68E] rounded-lg px-2 py-1';
+            case 'Sale':
+            return 'bg-[#FFC7C7] rounded-lg px-2 py-1';
+            default:
+            return 'bg-[#EAFBF2]';
+        }
+    };
 
-const toggleAll = () => {
-setSelectedRows(prev => 
-    prev.length === filteredRooms.length ? [] : filteredRooms.map(r => r.id)
-);
-};
+    const toggleRow = (id) => {
+        setSelectedRows(prev => 
+            prev.includes(id) ? prev.filter(rowId => rowId !== id) : [...prev, id]
+        );
+    };
+
+    const toggleAll = () => {
+        setSelectedRows(prev => 
+            prev.length === filteredRooms.length ? [] : filteredRooms.map(r => r.id)
+        );
+    };
 
 return (
 <div className="flex-1 bg-white border-white p-7 rounded min-h-screen mt-3">
@@ -198,7 +199,10 @@ return (
                 type="checkbox"
                 checked={filteredRooms.length > 0 && selectedRows.length === filteredRooms.length}
                 onChange={toggleAll}
-                className="w-5 h-5 rounded border-2 border-[#A3A3A3] bg-[#F8F8F8] appearance-none bg-white checked:border-[#A3A3A3] cursor-pointer"
+                className="w-5 h-5 rounded appearance-none border-2 border-[#A3A3A3] bg-[#F8F8F8] cursor-pointer transition-all
+                checked:bg-[#E7F68E] checked:border-[#E7F68E]
+                checked:after:content-['✓'] checked:after:absolute checked:after:left-[2px] checked:after:top-[-2px] 
+                checked:after:text-[#0D0E0D] checked:after:text-base checked:after:font-bold relative"
             />
             </th>
             <th className="p-3 font-medium bg-[#F5FDF9] ">
@@ -238,7 +242,7 @@ return (
             </div>
             </th>
             <th className="p-3 font-medium bg-[#F5FDF9] ">
-            <div className={"flex justify-start"}>
+            <div className={"flex justify-center"}>
                 Remarques
                 <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
             </div>
@@ -270,38 +274,38 @@ return (
                 
                 {/* Statut de ménage modifiable */}
                 <td className="px-6 py-4 text-start">
-                <div className={`inline-flex items-center gap-2 px-3 py-1 text-[#0D0E0D] rounded-md text-xs font-bold ${getStatusColor(room.status)}`}>
-                    <select
-                    value={room.status}
-                    onChange={(e) => handleStatusChange(room.id, e.target.value)}
-                    className="outline-none bg-transparent font-bold cursor-pointer"
-                    >
-                    <option value="Propre">Propre</option>
-                    <option value="Vérification">Vérification</option>
-                    <option value="Sale">Sale</option>
-                    </select>
-                </div>
+                    <div className={`inline-flex items-center gap-2 px-3 py-1 text-[#0D0E0D] rounded-md text-xs font-bold ${getStatusColor(room.status)}`}>
+                        <select
+                        value={room.status}
+                        onChange={(e) => handleStatusChange(room.id, e.target.value)}
+                        className="outline-none bg-transparent font-bold cursor-pointer"
+                        >
+                        <option value="Propre">Propre</option>
+                        <option value="Vérification">Vérification</option>
+                        <option value="Sale">Sale</option>
+                        </select>
+                    </div>
                 </td>
                 
                 {/* Priorité modifiable */}
                 <td className={`px-6 py-4`}>
-                <div className={`inline-flex ${getPriorityColor(room.priority)} items-center gap-2 text-[#0D0E0D] text-xs font-bold`}>
-                    <span className={`w-2 h-2 rounded-full ${room.priorityDot}`}></span>
-                    <select
-                    value={room.priority}
-                    onChange={(e) => handlePriorityChange(room.id, e.target.value)}
-                    className="outline-none bg-transparent font-bold cursor-pointer"
-                    >
-                    <option value="Urgent">Urgent</option>
-                    <option value="Moyen">Moyen</option>
-                    <option value="Faible">Faible</option>
-                    </select>
-                </div>
+                    <div className={`inline-flex ${getPriorityColor(room.priority)} items-center gap-2 text-[#0D0E0D] text-xs font-bold`}>
+                        <span className={`w-2 h-2 rounded-full ${room.priorityDot}`}></span>
+                        <select
+                        value={room.priority}
+                        onChange={(e) => handlePriorityChange(room.id, e.target.value)}
+                        className="outline-none bg-transparent font-bold cursor-pointer"
+                        >
+                        <option value="Urgent">Urgent</option>
+                        <option value="Moyen">Moyen</option>
+                        <option value="Faible">Faible</option>
+                        </select>
+                    </div>
                 </td>
                 
                 <td className="px-6 py-4 text-xs font-bold text-[#0D0E0D]">{room.floor}</td>
                 <td className="px-6 py-4 text-xs font-bold text-[#0D0E0D]">{room.reservation}</td>
-                <td className="px-6 py-4 text-xs font-bold text-[#0D0E0D] text-start">{room.notes}</td>
+                <td className="px-6 py-4 text-xs flex justify-center font-bold text-[#0D0E0D] text-start">{room.notes}</td>
             </tr>
             ))
         ) : (
