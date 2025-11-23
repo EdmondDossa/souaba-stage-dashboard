@@ -8,14 +8,13 @@ export default function FactureModal({ show, onClose, data }) {
     // Fonction pour fermer la modale si on clique sur l’arrière-plan
     const handleBackdropClick = (e) => {
         if (e.target === e.currentTarget) {
-        onClose(); // on ferme seulement si on clique *sur le fond*, pas sur le contenu
+        onClose(); // on ferme seulement si on clique sur le fond, pas sur le contenu
         }
     };
 
     return (
         <div className="flex gap-3 fixed rounded-lg inset-0 z-50 flex items-center justify-center bg-[#00000033] " onClick={handleBackdropClick}>
         <div className="bg-[#FFFFFF] rounded shadow-2xl max-w-md w-full relative overflow-hidden">
-            {/* Bouton de fermeture */}
             <button
             onClick={onClose}
             className="absolute top-5 right-5 text-[#FFFFFF]"
@@ -37,7 +36,7 @@ export default function FactureModal({ show, onClose, data }) {
             <div className="flex justify-end mb-8">
                 <div className="relative">
                     <img
-                        src="/logo_souaba.png"
+                        src="/images/logo-primary.png"
                         alt="Souaba"
                         className="h-10 mx-auto"
                     />
