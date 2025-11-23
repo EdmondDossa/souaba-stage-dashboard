@@ -64,19 +64,22 @@ function ProfileCard() {
       </div>
 
       <div className="mt-5 text-sm  border-t mt-4 border-[#E7E7E7] pt-4">
-        <div className="flex gap-2 items-center px-3 h-10 py-1.5 w-64">
-          <Phone size={16} className="bg-[#D5F6E5] p-1 w-8 h-8 rounded item-center "/>        
-          <p className="flex items-center text-xs font-[Lato] text-[#0D0E0D] gap-2"> 
+        <div className="flex gap-3 items-center px-3 h-10 w-64">
+          <div className="bg-[#D5F6E5] p-2 w-8 h-8 rounded flex items-center justify-center flex-shrink-0">
+            <Phone size={14} className="text-[#0D0E0D]"/>
+          </div>      
+          <p className="text-xs font-[Lato] text-[#0D0E0D]"> 
             {Profil.tel}
           </p>
         </div>
-        <div className="flex gap-2 items-center px-3 h-10 py-1.5 w-64">
-            <MailOpen size={16} className="bg-[#D5F6E5] p-1 w-8 h-8 rounded item-center "/>
-          <p className="flex items-center text-xs font-[Lato] text-[#0D0E0D] gap-2 mt-1"> 
+        <div className="flex gap-3 items-center px-3 h-10 w-64">
+          <div className="bg-[#D5F6E5] p-2 w-8 h-8 rounded flex items-center justify-center flex-shrink-0">
+            <MailOpen size={14} className="text-[#0D0E0D]"/>
+          </div>
+          <p className="text-xs font-[Lato] text-[#0D0E0D]"> 
             {Profil.mail}
           </p>
         </div>
-        
       </div>
 
           <div className="border-t mt-4 border-[#E7E7E7] pt-4">
@@ -109,7 +112,7 @@ function ReservationInfo() {
 
   return (
     <div className="w-[140%] bg-white rounded-xl p-6 shadow-sm grid grid-cols-2 gap-10">
-            <div className="">
+            <div>
                 <div className="flex justify-between gap-3 mb-4">
                     <h3 className="text-[#0D0E0D] font-medium">Informations de réservation</h3>
                     <button className="text-muted-foreground hover:text-foreground">
@@ -118,9 +121,9 @@ function ReservationInfo() {
                 </div>
                 <div className="flex justify-between items-start">
                     <div>
-                        <div className="flex items-center w-[100px] gap-1 px-2 py-1 bg-[#F8AA2480] text-[#0D0E0D] text-xs rounded">
+                        <div className="flex items-center w-fit gap-1 px-2 py-1 bg-[#F8AA2480] text-[#0D0E0D] text-xs rounded">
                             <Check size={12} color ="#0D0E0D"/>
-                            <span>Présent</span>
+                            <span>Arrivée</span>
                         </div>
                         <h2 className="text-xl text-[#0F1113] font-[Lato] mt-3">Numéro de réservation : LG-B00109</h2>
                         <p className="text-[#6E6E6E] text-xs mt-1">17 juin 2024, 9h46</p>
@@ -130,7 +133,7 @@ function ReservationInfo() {
                 <div className="space-y-5 mt-5">
                     <div className="rows gap-4 flex justify-between">
                         <div className="col">
-                            <span className="text-[#6E6E6E] text-xs ">Prix</span>
+                            <span className="text-[#6E6E6E] text-xs">Prix</span>
                             <p className="text-[#0D0E0D]  text-xs">$150<span className="text-[#6E6E6E] text-xs">/night</span></p>
                         </div>
                     </div>
@@ -262,8 +265,8 @@ function PriceRow({ label, value, bold }) {
 function HistorySection() {
 const [searchQuery, setSearchQuery] = useState("");
   const [dateRange, setDateRange] = useState({
-    start: "June 19, 2028",
-    end: "June 24, 2028"
+    start: "January 1, 2028",
+    end: "December 31, 2028"
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -296,9 +299,7 @@ const [searchQuery, setSearchQuery] = useState("");
 
   // Fonction pour convertir une date string en objet Date
   const parseDate = (dateStr) => {
-    // Extraire seulement la partie date avant le "—"
-    const datePart = dateStr.split('—')[0].trim();
-    return new Date(datePart);
+    return new Date(dateStr);
   };
 
   // Fonction de filtrage et recherche
@@ -330,7 +331,7 @@ const [searchQuery, setSearchQuery] = useState("");
   };
 
   return (
-    <div className="mt-10 bg-white rounded-xl p-6 overflow-hidden border-none shadow-sm">
+    <div className="mt-10 bg-white rounded-xl p-6 border-none shadow-sm">
       <div className="flex justify-between items-center mb-6">
         <h2 className="font-semibold text-gray-800 mb-4">Historique des réservations</h2>
         <div className="flex items-center gap-4">
@@ -356,7 +357,7 @@ const [searchQuery, setSearchQuery] = useState("");
             </button>
             
             {showDatePicker && (
-              <div className="absolute top-[100px] scroll-y mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-80">
+              <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-xl p-4 z-50 w-80 overflow-y-auto max-h-96">
                 <div className="mb-4">
                   <label className="block text-xs text-gray-600 mb-2">Date de début</label>
                   <input
@@ -397,8 +398,8 @@ const [searchQuery, setSearchQuery] = useState("");
                   <button
                     onClick={() => {
                       setDateRange({
-                        start: "June 19, 2028",
-                        end: "June 24, 2028"
+                        start: "January 1, 2028",
+                        end: "December 31, 2028"
                       });
                       setShowDatePicker(false);
                     }}
@@ -413,83 +414,85 @@ const [searchQuery, setSearchQuery] = useState("");
         </div>
       </div>
 
-      <table className="w-full text-sm text-center">
-        <thead className="bg-[#F5FDF9] border-b text-[#6E6E6E] text-center">
-          <tr className="border-b border-gray-100 text-xs">
-            <th className="p-3 font-medium bg-[#F5FDF9]">
-              <div className="flex justify-start">
-                <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
-                Image
-              </div>
-            </th>
-            <th className="p-3 font-medium bg-[#F5FDF9]">
-              <div className="flex justify-center">
-                <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
-                ID de réservation
-              </div>
-            </th>
-            <th className="p-3 font-medium bg-[#F5FDF9]">
-              <div className="flex justify-center">
-                <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
-                Date de réservation
-              </div>
-            </th>
-            <th className="p-3 font-medium bg-[#F5FDF9]">
-              <div className="flex justify-center">
-                <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
-                Check-In
-              </div>
-            </th>
-            <th className="p-3 font-medium bg-[#F5FDF9]">
-              <div className="flex justify-center">
-                <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
-                Check-Out
-              </div>
-            </th>
-            <th className="p-3 font-medium bg-[#F5FDF9]">
-              <div className="flex justify-center">
-                <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
-                Invités
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredReservations.map((res, index) => (
-              <tr key={res.id} className="border-b border-gray-100 py-10">
-                <td className="py-3 items-center">
-                  <img src={res.img} width={70} height={50} alt="Image miniature" className="rounded-md" />
-                </td>
-                <td className="p-3 text-[#0D0E0D] text-xs font-bold">
-                  {res.id}
-                </td>
-                <td className="p-3 text-[#0D0E0D] text-xs font-bold">
-                  {res.date}
-                  <span className="text-[#6E6E6E] text-xs grid">{res.heureDate}</span>
-                </td>
-                <td className="p-3 text-[#0D0E0D] text-xs font-bold items-center grid">
-                  {res.checkIn}
-                  <span className="text-[#6E6E6E] text-xs">{res.heureIn}</span>
-                </td>
-                <td className="p-3 text-[#0D0E0D] text-xs font-bold ">
-                  {res.checkOut}
-                  <span className="text-[#6E6E6E] text-xs grid">{res.heureOut}</span>
-                </td>
-                <td className="p-3 text-[#0D0E0D] text-xs font-bold">
-                  {res.guests}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-center">
+          <thead className="bg-[#F5FDF9] border-b text-[#6E6E6E] text-center">
+            <tr className="border-b border-gray-100 text-xs">
+              <th className="p-3 font-medium bg-[#F5FDF9]">
+                <div className="flex justify-start items-center">
+                  Image
+                  <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
+                </div>
+              </th>
+              <th className="p-3 font-medium bg-[#F5FDF9]">
+                <div className="flex justify-center items-center">
+                  ID de réservation
+                  <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
+                </div>
+              </th>
+              <th className="p-3 font-medium bg-[#F5FDF9]">
+                <div className="flex justify-center items-center">
+                  Date de réservation
+                  <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
+                </div>
+              </th>
+              <th className="p-3 font-medium bg-[#F5FDF9]">
+                <div className="flex justify-center items-center">
+                  Check-In
+                  <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
+                </div>
+              </th>
+              <th className="p-3 font-medium bg-[#F5FDF9]">
+                <div className="flex justify-center items-center">
+                  Check-Out
+                  <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
+                </div>
+              </th>
+              <th className="p-3 font-medium bg-[#F5FDF9]">
+                <div className="flex justify-center items-center">
+                  Invités
+                  <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredReservations.map((res, index) => (
+                <tr key={res.id} className="border-b border-gray-100 py-10">
+                  <td className="py-3 items-center">
+                    <img src={res.img} width={70} height={50} alt="Image miniature" className="rounded-md" />
+                  </td>
+                  <td className="p-3 text-[#0D0E0D] text-xs font-bold items-center">
+                    {res.id}
+                  </td>
+                  <td className="p-3 text-[#0D0E0D] text-xs font-bold items-center">
+                    {res.date}
+                    <span className="text-[#6E6E6E] text-xs grid">{res.heureDate}</span>
+                  </td>
+                  <td className="p-3 text-[#0D0E0D] text-xs font-bold items-center grid">
+                    {res.checkIn}
+                    <span className="text-[#6E6E6E] text-xs">{res.heureIn}</span>
+                  </td>
+                  <td className="p-3 text-[#0D0E0D] text-xs font-bold items-center">
+                    {res.checkOut}
+                    <span className="text-[#6E6E6E] text-xs grid">{res.heureOut}</span>
+                  </td>
+                  <td className="p-3 text-[#0D0E0D] text-xs font-bold">
+                    {res.guests}
+                  </td>
+                </tr>
+              ))
+            }
+            {filteredReservations.length === 0 && (
+              <tr>
+                <td colSpan={6} className="p-8 text-center text-gray-500 text-sm">
+                  Aucune réservation trouvée
                 </td>
               </tr>
-            ))
-          }
-          {filteredReservations.length === 0 && (
-            <tr>
-              <td colSpan={6} className="p-8 text-center text-gray-500 text-sm">
-                Aucune réservation trouvée
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
