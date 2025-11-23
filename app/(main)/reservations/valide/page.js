@@ -13,8 +13,8 @@ export default function ReservationPageValide ({ }) {
   const [statusFilter, setStatusFilter] = useState("Tous les statuts");
   const [searchQuery, setSearchQuery] = useState("");
   const [dateRange, setDateRange] = useState({
-    start: "June 19, 2028",
-    end: "June 24, 2028"
+    start: "January 1, 2028",
+    end: "December 31, 2028"
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -25,7 +25,7 @@ export default function ReservationPageValide ({ }) {
   const reservations = [
     { name: "Angus Copper", id: "LG-800108", type: "Deluxe 101", room: "Room 101", checkIn: "June 19, 2028", checkOut: "June 22, 2028", status: "Arrivée" },
     { name: "Catherine Lopp", id: "LG-800109", type: "Standard 202", room: "Room 151", checkIn: "June 19, 2028", checkOut: "June 21, 2028", status: "Départ" },
-    { name: "Edgar Irving", id: "LG-800110", type: "Suite 303", room: "Room 103", checkIn: "June 19, 2028", checkOut: "June 24, 2028", status: "Présent" },
+    { name: "Edgar Irving", id: "LG-800110", type: "Suite 303", room: "Room 103", checkIn: "June 19, 2028", checkOut: "December 31, 2028", status: "Présent" },
     { name: "Gertrude Bale", id: "LG-800111", type: "Standard 204", room: "Room 254", checkIn: "June 19, 2028", checkOut: "June 20, 2028", status: "Arrivée" },
     { name: "Ice B. Holand", id: "LG-800112", type: "Deluxe 105", room: "Room 204", checkIn: "June 19, 2028", checkOut: "June 23, 2028", status: "Présent" },
     { name: "Sarah Johnson", id: "LG-800113", type: "Standard 305", room: "Room 110", checkIn: "June 20, 2028", checkOut: "June 23, 2028", status: "Présent" },
@@ -127,7 +127,7 @@ export default function ReservationPageValide ({ }) {
             </select>
           </button>
           
-          {/* Date Range Picker */}
+          {/* Filtre par date */}
           <div className="relative"> 
             <button 
               onClick={() => setShowDatePicker(!showDatePicker)}
@@ -180,8 +180,8 @@ export default function ReservationPageValide ({ }) {
                   <button
                     onClick={() => {
                       setDateRange({
-                        start: "June 19, 2028",
-                        end: "June 24, 2028"
+                        start: "January 1, 2028",
+                        end: "December 31, 2028"
                       });
                       setShowDatePicker(false);
                     }}
@@ -194,6 +194,7 @@ export default function ReservationPageValide ({ }) {
             )}
           </div>
 
+          { /* Bouton d'ajout de réservation */}
           <button 
             onClick={() => setIsOpen(true)}
             className="flex items-center gap-2 bg-[#F8AA24] text-[#0D0E0D] rounded-lg px-3 py-1.5 text-xs">
