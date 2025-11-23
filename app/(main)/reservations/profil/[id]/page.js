@@ -199,7 +199,7 @@ function ReservationInfo() {
             </div>
             <div className="flex justify-end col-end">
                 {/* ================= ROOM DETAILS ================= */}
-                <div className="h-full w-full bg-[#F8F8F8] rounded-xl p-4 shadow-sm justify-end">
+                <div className="h-full w-fit bg-[#F8F8F8] rounded-xl p-4 shadow-sm justify-end">
                     <div className="flex justify-between">
                         <p className="text-[#0D0E0D] text-sm">
                             Informations sur la chambre
@@ -419,7 +419,7 @@ const [searchQuery, setSearchQuery] = useState("");
           <thead className="bg-[#F5FDF9] border-b text-[#6E6E6E] text-center">
             <tr className="border-b border-gray-100 text-xs">
               <th className="p-3 font-medium bg-[#F5FDF9]">
-                <div className="flex justify-start items-center">
+                <div className="flex justify-center items-center">
                   Image
                   <ChevronUpDownIcon className="text-[#6E6E6E] h-5 w-5" />
                 </div>
@@ -459,8 +459,10 @@ const [searchQuery, setSearchQuery] = useState("");
           <tbody>
             {filteredReservations.map((res, index) => (
                 <tr key={res.id} className="border-b border-gray-100 py-10">
-                  <td className="py-3 items-center">
-                    <img src={res.img} width={70} height={50} alt="Image miniature" className="rounded-md" />
+                  <td className="py-3">
+                    <div className="flex justify-center">
+                      <img src={res.img} width={70} height={50} alt="Image miniature" className="rounded-md"/>
+                    </div>
                   </td>
                   <td className="p-3 text-[#0D0E0D] text-xs font-bold items-center">
                     {res.id}

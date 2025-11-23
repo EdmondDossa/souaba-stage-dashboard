@@ -8,6 +8,8 @@ import ModalAdd from "./ModalAjout";
 export default function PersonnelsPage() {
 const [roleFilter, setRoleFilter] = useState("Tous les rôles");
 const [isOpen, setIsOpen] = useState(false);
+const [currentPage, setCurrentPage] = useState(1); //Page actuelle
+const itemsPerPage = 10; //Nombre d'éléments par page
 const [searchQuery, setSearchQuery] = useState("");
 
 const personnels = [
@@ -123,6 +125,50 @@ const matchesSearch =
 return matchesRole && matchesSearch;
 });
 
+//Calcul de la pagination
+  const totalPages = Math.ceil(filteredPersonnels.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentReservations = filteredPersonnels.slice(startIndex, endIndex);
+
+  //Fonctions de navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  //Générer les numéros de pages à afficher
+  const getPageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 5) {
+      // Si 5 pages ou moins, afficher toutes
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Sinon, afficher les pages avec "..."
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, "...", totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+      }
+    }
+    return pages;
+  };
+
 return (
 <div className="min-h-screen bg-[#FFFFFF] px-8 py-6">
     {/* Header actions */}
@@ -174,7 +220,7 @@ return (
     </div>
 
     {/* Table */}
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden border-none">
+    <div className="bg-white rounded-xl shadow-sm overflow-x-auto border-none">
     <table className="w-full text-sm text-center">
         <thead className="bg-[#F5FDF9] border-b text-[#6E6E6E] text-center">
         <tr className="border-b border-gray-100 text-xs">
@@ -211,8 +257,9 @@ return (
         </tr>
         </thead>
         <tbody>
-        {filteredPersonnels.length > 0 ? (
-            filteredPersonnels.map((p, i) => (
+        {
+        currentReservations.length > 0 ? (
+            currentReservations.map((p, i) => (
             <tr
                 key={i}
                 className="border-b border-gray-100 py-10 hover:bg-gray-50 transition"
@@ -249,27 +296,48 @@ return (
     </table>
     </div>
 
-    {/* Pagination */}
+    {/* Footer */}
     <div className="flex justify-between items-center p-4 text-l text-gray-500 bg-[#FFFFFF]">
-    <span className="text-[#6E6E6E] text-xs">
-        Showing 1-{filteredPersonnels.length} of {personnels.length}
-    </span>
-    <div className="flex gap-1 text-black justify-end">
-        <ChevronLeft className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center cursor-pointer hover:bg-gray-200 transition" />
-        {[1, 2, 3].map((num, i) => (
-        <button
-            key={i}
-            className={`px-3 py-1 m-1 text-xs rounded transition ${
-            num === 1
-                ? "bg-[#F8AA24] text-[#FFFFFF]"
-                : "bg-[#F8F8F8] text-gray-700 hover:bg-gray-200"
-            }`} 
+        <span className="text-[#6E6E6E] text-xs">
+        Showing {startIndex + 1}-{Math.min(endIndex, filteredPersonnels.length)} of {filteredPersonnels.length}
+        </span>
+        <div className="flex gap-1 text-black justify-end items-center">
+        {/* Bouton précédent */}
+        <button 
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+            className={`${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
         >
-            {num}
+            <ChevronLeft className="w-6 h-6 rounded bg-[#F8F8F8]" />
         </button>
+
+        {/* Numéros de pages */}
+        {getPageNumbers().map((num, i) => (
+            <button
+            key={i}
+            onClick={() => typeof num === 'number' && goToPage(num)}
+            disabled={num === "..."}
+            className={`px-3 py-1 m-1 text-xs rounded ${
+                num === currentPage
+                ? "bg-[#F8AA24] text-[#FFFFFF]"
+                : num === "..."
+                ? "bg-transparent text-[#000000] cursor-default"
+                : "bg-[#F8F8F8] text-[#000000] hover:bg-gray-200"
+            }`} 
+            >
+            {num}
+            </button>
         ))}
-        <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center cursor-pointer hover:bg-gray-200 transition" />
-    </div>
+
+        {/* Bouton suivant */}
+        <button 
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+            className={`${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+        >
+            <ChevronRight className="w-6 h-6 rounded bg-[#F8F8F8]" />
+        </button>           
+        </div>
     </div>
 </div>
 );

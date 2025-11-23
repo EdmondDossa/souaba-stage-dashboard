@@ -1,6 +1,6 @@
 "use client";
 import { Search, Filter, Calendar } from "lucide-react";
-import { CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight} from "lucide-react";
+import { CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, ChevronLeft} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import ModalConfirm from "./ModalConfirm";
@@ -8,6 +8,8 @@ import ModalConfirm from "./ModalConfirm";
 export default function ReservationPageAnnule () {
     const [active, setActive] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1); //Page actuelle
+    const itemsPerPage = 10; //Nombre d'éléments par page
     const [searchQuery, setSearchQuery] = useState("");
     const [dateRange, setDateRange] = useState({
         start: "January 1, 2028",
@@ -60,6 +62,50 @@ const parseDate = (dateStr) => {
     return matchesSearch && matchesDate;
   });
 
+  //Calcul de la pagination
+  const totalPages = Math.ceil(filteredReservations.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentReservations = filteredReservations.slice(startIndex, endIndex);
+
+  //Fonctions de navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  //Générer les numéros de pages à afficher
+  const getPageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 5) {
+      // Si 5 pages ou moins, afficher toutes
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Sinon, afficher les pages avec "..."
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, "...", totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+      }
+    }
+    return pages;
+  };
+
   // Fonction pour formater la date d'affichage
   const formatDateDisplay = (dateStr) => {
     const date = parseDate(dateStr);
@@ -99,7 +145,7 @@ const parseDate = (dateStr) => {
             </button>
             
             {showDatePicker && (
-              <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-80">
+              <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-xl p-4 z-50 w-80 max-h-96 overflow-y-auto">
                 <div className="mb-4">
                   <label className="block text-xs text-gray-600 mb-2">Date de début</label>
                   <input
@@ -197,7 +243,7 @@ const parseDate = (dateStr) => {
             </div>
         </div>
     </div>
-    <div className="border border-gray-100 rounded-lg overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm overflow-x-auto border-none">
         <table className="min-w-full text-sm text-center text-gray-700">
             <thead className="bg-[#F5FDF9] text-[#6E6E6E] text-center">
             <tr className="border-b border-gray-100 text-xs">
@@ -241,8 +287,8 @@ const parseDate = (dateStr) => {
             </thead>
             <tbody>
                 {
-                    filteredReservations.length > 0 ? (
-                    filteredReservations.map((item, id) => (
+                  currentReservations.length > 0 ? (
+                    currentReservations.map((item, id) => (
                     <tr 
                         key={id}
                         className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
@@ -269,25 +315,48 @@ const parseDate = (dateStr) => {
         </table>
     </div>
     
-    {/* Pagination */}
+    {/* Footer */}
         <div className="flex justify-between items-center p-4 text-l text-gray-500 bg-[#FFFFFF]">
-            <span className="text-[#6E6E6E] text-xs">Showing 1-12 of 385</span>
-            <div className="flex gap-1 text-black justify-end">
-                {[1, 2, 3, "...", 8].map((num, i) => (
-                <button
-                key={i}
-                className={`px-3 py-1 m-1 text-xs rounded ${
-                    num === 1
-                    ? "bg-[#F8AA24] text-[#FFFFFF]"
-                    : "bg-[#F8F8F8] text-gray-700"
-                }`} 
+          <span className="text-[#6E6E6E] text-xs">
+            Showing {startIndex + 1}-{Math.min(endIndex, filteredReservations.length)} of {filteredReservations.length}
+          </span>
+          <div className="flex gap-1 text-black justify-end items-center">
+            {/* Bouton précédent */}
+            <button 
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+              className={`${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
             >
-                {num}
-                </button>
-            ))}            
-            <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center"/>
-        </div>
+              <ChevronLeft className="w-6 h-6 rounded bg-[#F8F8F8]" />
+            </button>
 
+            {/* Numéros de pages */}
+            {getPageNumbers().map((num, i) => (
+              <button
+                key={i}
+                onClick={() => typeof num === 'number' && goToPage(num)}
+                disabled={num === "..."}
+                className={`px-3 py-1 m-1 text-xs rounded ${
+                  num === currentPage
+                    ? "bg-[#F8AA24] text-[#FFFFFF]"
+                    : num === "..."
+                    ? "bg-transparent text-[#000000] cursor-default"
+                    : "bg-[#F8F8F8] text-[#000000] hover:bg-gray-200"
+                }`} 
+              >
+                {num}
+              </button>
+            ))}
+
+            {/* Bouton suivant */}
+            <button 
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+              className={`${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+            >
+              <ChevronRight className="w-6 h-6 rounded bg-[#F8F8F8]" />
+            </button>           
+          </div>
         </div>
     </div>
     )

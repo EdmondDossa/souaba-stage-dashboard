@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, Filter} from "lucide-react";
+import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, Filter, ChevronLeft} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import AddReservationModal from "./AddReservationModal";
 import UpdateReservationModal from "./UpdateReservation";
@@ -12,6 +12,8 @@ export default function ReservationPageValide ({ }) {
   const [isOpen, setIsOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState("Tous les statuts");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); //Page actuelle
+  const itemsPerPage = 10; //Nombre d'éléments par page
   const [dateRange, setDateRange] = useState({
     start: "January 1, 2028",
     end: "December 31, 2028"
@@ -72,6 +74,50 @@ export default function ReservationPageValide ({ }) {
     
     return matchesStatus && matchesSearch && matchesDate;
   });
+
+  //Calcul de la pagination
+  const totalPages = Math.ceil(filteredReservations.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentReservations = filteredReservations.slice(startIndex, endIndex);
+
+  //Fonctions de navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  //Générer les numéros de pages à afficher
+  const getPageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 5) {
+      // Si 5 pages ou moins, afficher toutes
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Sinon, afficher les pages avec "..."
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, "...", totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+      }
+    }
+    return pages;
+  };
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -139,7 +185,7 @@ export default function ReservationPageValide ({ }) {
             </button>
             
             {showDatePicker && (
-              <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-80">
+              <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-xl p-4 z-50 w-80 max-h-96 overflow-y-auto">
                 <div className="mb-4">
                   <label className="block text-xs text-gray-600 mb-2">Date de début</label>
                   <input
@@ -208,7 +254,7 @@ export default function ReservationPageValide ({ }) {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden border-none">
+      <div className="bg-white rounded-xl shadow-sm overflow-x-auto border-none">
         <table className="w-full text-sm text-center">
           <thead className="bg-[#F5FDF9] border-b text-[#6E6E6E] text-center">
             <tr className="border-b border-gray-100 text-xs">
@@ -257,8 +303,9 @@ export default function ReservationPageValide ({ }) {
             </tr>
           </thead>
           <tbody>
-            {filteredReservations.length > 0 ? (
-              filteredReservations.map((res) => (
+            {
+            currentReservations.length > 0 ? (
+              currentReservations.map((res) => (
                 <tr key={res.id} className="border-b border-gray-100 py-10">
                   <td className="p-3 text-[#0D0E0D] text-xs font-bold">{res.name}</td>
                   <td className=" text-[#0D0E0D] text-xs font-bold">{res.id}</td>
@@ -278,10 +325,10 @@ export default function ReservationPageValide ({ }) {
                   </td>
                   <td className="p-3 text-right flex justify-center gap-2">   
                     <button className="p-1.5 rounded-md bg-[#F8F8F8]">
-                      <Eye size={16}/>
+                      <Eye size={16} color="#6E6E6E"/>
                     </button>
                     <button className="p-1.5 rounded-md bg-[#F8F8F8]">
-                      <Edit size={16} />
+                      <Edit size={16} color="#6E6E6E"/>
                     </button>
 
                     <button className="flex items-center gap-1 bg-[#248EF8] text-white text-xs px-1 rounded hover:bg-blue-600" onClick={() => router.push(`/reservations/profil/${res.id}`)}>
@@ -302,23 +349,45 @@ export default function ReservationPageValide ({ }) {
 
         {/* Footer */}
         <div className="flex justify-between items-center p-4 text-l text-gray-500 bg-[#FFFFFF]">
-          <span className="text-[#6E6E6E] text-xs">Showing 1-{filteredReservations.length} of {reservations.length}</span>
-          <div className="flex gap-1 text-black justify-end">
-            {[1, 2, 3, "...", 8].map((num, i) => (
+          <span className="text-[#6E6E6E] text-xs">
+            Showing {startIndex + 1}-{Math.min(endIndex, filteredReservations.length)} of {filteredReservations.length}
+          </span>
+          <div className="flex gap-1 text-black justify-end items-center">
+            {/* Bouton précédent */}
+            <button 
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+              className={`${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+            >
+              <ChevronLeft className="w-6 h-6 rounded bg-[#F8F8F8]" />
+            </button>
+
+            {/* Numéros de pages */}
+            {getPageNumbers().map((num, i) => (
               <button
                 key={i}
+                onClick={() => typeof num === 'number' && goToPage(num)}
+                disabled={num === "..."}
                 className={`px-3 py-1 m-1 text-xs rounded ${
-                  num === 1
-                    ? "bg-[#F8AA24] text-[#000000]"
-                    : "bg-[#F8F8F8] text-[#000000]"
+                  num === currentPage
+                    ? "bg-[#F8AA24] text-[#FFFFFF]"
+                    : num === "..."
+                    ? "bg-transparent text-[#000000] cursor-default"
+                    : "bg-[#F8F8F8] text-[#000000] hover:bg-gray-200"
                 }`} 
               >
                 {num}
               </button>
             ))}
-            <button className="">
-              <ChevronRight className="w-6 h-6 rounded mt-1 bg-[#F8F8F8] justify-center" />
-            </button>            
+
+            {/* Bouton suivant */}
+            <button 
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+              className={`${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-200'}`}
+            >
+              <ChevronRight className="w-6 h-6 rounded bg-[#F8F8F8]" />
+            </button>           
           </div>
         </div>
       </div>
