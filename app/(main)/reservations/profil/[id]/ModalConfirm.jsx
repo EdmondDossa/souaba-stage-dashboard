@@ -30,7 +30,7 @@ export default function ModalConfirm({ onClose, show, onConfirm }) {
             <div className="bg-[#FFFFFF] rounded-xl shadow-xl w-[80%] max-w-5xl p-20 relative transform transition-all duration-300 scale-100 animate-in zoom-in">
                 <button
                     onClick={onClose}
-                    className="absolute top-5 right-5 hover:scale-110 transition-transform z-10"
+                    className="absolute top-6 right-6 hover:scale-110 transition-transform z-10"
                 >
                     <X size={22} color="white" className="bg-red-500 rounded-2xl p-1" />
                 </button>
@@ -41,7 +41,7 @@ export default function ModalConfirm({ onClose, show, onConfirm }) {
                         type="email" 
                         name="email" 
                         placeholder="john@gmail.com" 
-                        className="w-full text-[#0D0E0D] border-[#E6E6E6] bg-[#E6E6E6] rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#F8AA24]" 
+                        className="w-full text-[#0D0E0D] border-[#E6E6E6] bg-[#EAEAEA33] rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#F8AA24]" 
                         required
                     />
                     <button 
