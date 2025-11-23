@@ -6,7 +6,7 @@ import Image from "next/image";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { MoreHorizontal, Phone, MailOpen, Check, Maximize2, Bed, User, Search, CalendarDays, ChevronDown } from "lucide-react";
 import { useParams } from "next/navigation";
-import FactureModal from "./FactureModal";
+import FactureModal from "../../../components/FactureModal";
 
 export default function ReservationPage() {
   //recuperation de l'id envoye a cette page
