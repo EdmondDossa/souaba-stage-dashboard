@@ -6,82 +6,83 @@ import { Download, FileText, SlidersHorizontal, DownloadIcon } from "lucide-reac
 import FactureModal from "./FactureModal";
 
 export default function ReservationList() {
-const [statusFilter, setStatusFilter] = useState("Tous les statuts");
-const [showInvoice, setShowInvoice] = useState(false);
-const [searchQuery, setSearchQuery] = useState("");
-const [dateRange, setDateRange] = useState({
-start: "June 19, 2028",
-end: "June 24, 2028"
-});
-const [showDatePicker, setShowDatePicker] = useState(false);
-const [selectedInvoiceData, setSelectedInvoiceData] = useState(null);
 
-const reservations = [
-{ name: "Angus Copper", id: "LG-B00108", room: "Room 101", price: "700 000F", nights: 3, total: "2 100 000F", status: "Présent", checkIn: "June 19, 2028", checkOut: "June 22, 2028" },
-{ name: "Catherine Lopp", id: "LG-B00109", room: "Room 202", price: "500 000F", nights: 2, total: "1 000 000F", status: "Départ", checkIn: "June 19, 2028", checkOut: "June 21, 2028" },
-{ name: "Edgar Irving", id: "LG-B00110", room: "Room 303", price: "600 000F", nights: 5, total: "3 000 000F", status: "Présent", checkIn: "June 19, 2028", checkOut: "June 24, 2028" },
-{ name: "Gertrude Bale", id: "LG-B00111", room: "Room 204", price: "800 000F", nights: 1, total: "800 000F", status: "Départ", checkIn: "June 19, 2028", checkOut: "June 20, 2028" },
-{ name: "Ice B. Holand", id: "LG-B00112", room: "Room 105", price: "900 000F", nights: 5, total: "4 500 000F", status: "Présent", checkIn: "June 19, 2028", checkOut: "June 24, 2028" },
-{ name: "Sarah Johnson", id: "LG-B00113", room: "Room 305", price: "700 000F", nights: 2, total: "1 400 000F", status: "Présent", checkIn: "June 20, 2028", checkOut: "June 22, 2028" },
-{ name: "Kevin Lee", id: "LG-B00114", room: "Room 306", price: "800 000F", nights: 3, total: "2 400 000F", status: "Départ", checkIn: "June 20, 2028", checkOut: "June 23, 2028" },
-{ name: "Laura Martin", id: "LG-B00115", room: "Room 107", price: "500 000F", nights: 1, total: "500 000F", status: "Présent", checkIn: "June 21, 2028", checkOut: "June 22, 2028" },
-{ name: "Robert King", id: "LG-B00116", room: "Room 208", price: "700 000F", nights: 2, total: "1 400 000F", status: "Départ", checkIn: "June 22, 2028", checkOut: "June 24, 2028" },
-{ name: "Catherine Lopp", id: "LG-B00118", room: "Room 110", price: "900 000F", nights: 1, total: "900 000F", status: "Présent", checkIn: "June 23, 2028", checkOut: "June 24, 2028" },
-];
+    const [statusFilter, setStatusFilter] = useState("Tous les statuts");
+    const [showInvoice, setShowInvoice] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [dateRange, setDateRange] = useState({
+        start: "January 1, 2028",
+        end: "December 31, 2028"
+    });
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [selectedInvoiceData, setSelectedInvoiceData] = useState(null);
 
-// Fonction pour convertir une date string en objet Date
-const parseDate = (dateStr) => {
-return new Date(dateStr);
-};
+    const reservations = [
+        { name: "Angus Copper", id: "LG-B00108", room: "Room 101", price: "700 000F", nights: 3, total: "2 100 000F", status: "Présent", checkIn: "June 19, 2028", checkOut: "June 22, 2028" },
+        { name: "Catherine Lopp", id: "LG-B00109", room: "Room 202", price: "500 000F", nights: 2, total: "1 000 000F", status: "Départ", checkIn: "June 19, 2028", checkOut: "June 21, 2028" },
+        { name: "Edgar Irving", id: "LG-B00110", room: "Room 303", price: "600 000F", nights: 5, total: "3 000 000F", status: "Présent", checkIn: "June 19, 2028", checkOut: "June 24, 2028" },
+        { name: "Gertrude Bale", id: "LG-B00111", room: "Room 204", price: "800 000F", nights: 1, total: "800 000F", status: "Départ", checkIn: "June 19, 2028", checkOut: "June 20, 2028" },
+        { name: "Ice B. Holand", id: "LG-B00112", room: "Room 105", price: "900 000F", nights: 5, total: "4 500 000F", status: "Présent", checkIn: "June 19, 2028", checkOut: "June 24, 2028" },
+        { name: "Sarah Johnson", id: "LG-B00113", room: "Room 305", price: "700 000F", nights: 2, total: "1 400 000F", status: "Présent", checkIn: "June 20, 2028", checkOut: "June 22, 2028" },
+        { name: "Kevin Lee", id: "LG-B00114", room: "Room 306", price: "800 000F", nights: 3, total: "2 400 000F", status: "Départ", checkIn: "June 20, 2028", checkOut: "June 23, 2028" },
+        { name: "Laura Martin", id: "LG-B00115", room: "Room 107", price: "500 000F", nights: 1, total: "500 000F", status: "Présent", checkIn: "June 21, 2028", checkOut: "June 22, 2028" },
+        { name: "Robert King", id: "LG-B00116", room: "Room 208", price: "700 000F", nights: 2, total: "1 400 000F", status: "Départ", checkIn: "June 22, 2028", checkOut: "June 24, 2028" },
+        { name: "Catherine Lopp", id: "LG-B00118", room: "Room 110", price: "900 000F", nights: 1, total: "900 000F", status: "Présent", checkIn: "June 23, 2028", checkOut: "June 24, 2028" },
+    ];
 
-// Fonction de filtrage combinée
-const filteredReservations = reservations.filter((reservation) => {
-// Filtre par statut
-const matchesStatus = statusFilter === "Tous les statuts" || reservation.status === statusFilter;
+    // Fonction pour convertir une date string en objet Date
+    const parseDate = (dateStr) => {
+        return new Date(dateStr);
+    };
 
-// Filtre par recherche (nom, id, room, price, total)
-const matchesSearch = 
-    searchQuery === "" ||
-    reservation.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    reservation.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    reservation.room.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    reservation.price.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    reservation.total.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    reservation.status.toLowerCase().includes(searchQuery.toLowerCase());
+    // Fonction de filtrage combinée
+    const filteredReservations = reservations.filter((reservation) => {
+    // Filtre par statut
+    const matchesStatus = statusFilter === "Tous les statuts" || reservation.status === statusFilter;
 
-// Filtre par date
-const checkInDate = parseDate(reservation.checkIn);
-const checkOutDate = parseDate(reservation.checkOut);
-const startDate = parseDate(dateRange.start);
-const endDate = parseDate(dateRange.end);
+    // Filtre par recherche (nom, id, room, price, total)
+    const matchesSearch = 
+        searchQuery === "" ||
+        reservation.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        reservation.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        reservation.room.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        reservation.price.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        reservation.total.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        reservation.status.toLowerCase().includes(searchQuery.toLowerCase());
 
-// La réservation doit avoir un chevauchement avec la période sélectionnée
-const matchesDate = 
-    (checkInDate >= startDate && checkInDate <= endDate) ||
-    (checkOutDate >= startDate && checkOutDate <= endDate) ||
-    (checkInDate <= startDate && checkOutDate >= endDate);
+        // Filtre par date
+        const checkInDate = parseDate(reservation.checkIn);
+        const checkOutDate = parseDate(reservation.checkOut);
+        const startDate = parseDate(dateRange.start);
+        const endDate = parseDate(dateRange.end);
 
-return matchesStatus && matchesSearch && matchesDate;
-});
+    // La réservation doit avoir un chevauchement avec la période sélectionnée
+        const matchesDate = 
+            (checkInDate >= startDate && checkInDate <= endDate) ||
+            (checkOutDate >= startDate && checkOutDate <= endDate) ||
+            (checkInDate <= startDate && checkOutDate >= endDate);
 
-const getStatusColor = (status) =>
-status === "Présent"
-    ? "bg-[#D5F6E5] text-[#0D0E0D] border-[#D5F6E5]"
-    : "bg-[#E7E7E7] text-[#0D0E0D] border-[#E7E7E7]";
+        return matchesStatus && matchesSearch && matchesDate;
+    });
 
-// Fonction pour formater la date d'affichage
-const formatDateDisplay = (dateStr) => {
-const date = parseDate(dateStr);
-const day = date.getDate();
-const month = date.toLocaleDateString('fr-FR', { month: 'long' });
-const year = date.getFullYear();
-return `${day} ${month} ${year}`;
-};
+    const getStatusColor = (status) =>
+        status === "Présent"
+            ? "bg-[#D5F6E5] text-[#0D0E0D] border-[#D5F6E5]"
+            : "bg-[#E7E7E7] text-[#0D0E0D] border-[#E7E7E7]";
 
-const handleInvoiceClick = (reservation) => {
-setSelectedInvoiceData(reservation);
-setShowInvoice(true);
-};
+        // Fonction pour formater la date d'affichage
+        const formatDateDisplay = (dateStr) => {
+        const date = parseDate(dateStr);
+        const day = date.getDate();
+        const month = date.toLocaleDateString('fr-FR', { month: 'long' });
+        const year = date.getFullYear();
+        return `${day} ${month} ${year}`;
+    };
+
+    const handleInvoiceClick = (reservation) => {
+    setSelectedInvoiceData(reservation);
+    setShowInvoice(true);
+    };
 
 return (
 <div className="flex-1 bg-white border-white p-7 rounded min-h-screen mt-3">
@@ -141,8 +142,8 @@ return (
                 <button
                 onClick={() => {
                     setDateRange({
-                    start: "June 19, 2028",
-                    end: "June 24, 2028"
+                        start: "January 1, 2028",
+                        end: "December 31, 2028"
                     });
                     setShowDatePicker(false);
                 }}
@@ -253,18 +254,18 @@ return (
                 <td className="p-6 text-[#0D0E0D] text-xs font-bold">{r.nights} nuits</td>
                 <td className="p-6 text-[#0D0E0D] text-xs font-bold">{r.total}</td>
                 <td className="p-6 text-[#0D0E0D] text-xs font-bold">
-                <span className={`px-2 py-0.5 text-xs rounded-md border flex gap-2 w-23 ${getStatusColor(r.status)}`}>
-                    {r.status === "Présent" ? <span className="px-2 py-0.5 rounded-md border bg-[#CCD97E] border-[#CCD97E]"></span> : <span className="px-2 py-0.5 rounded-md border bg-[#865D5D] border-[#865D5D]"></span>}
-                    {r.status}
-                </span>
+                    <span className={`px-2 py-0.5 text-xs rounded-md border flex gap-2 w-23 ${getStatusColor(r.status)}`}>
+                        {r.status === "Présent" ? <span className="px-2 py-0.5 rounded-md border bg-[#CCD97E] border-[#CCD97E]"></span> : <span className="px-2 py-0.5 rounded-md border bg-[#865D5D] border-[#865D5D]"></span>}
+                        {r.status}
+                    </span>
                 </td>
                 <td className="px-4 py-3 flex justify-center">
-                <button 
-                    className="flex items-center font-medium gap-1 text-xs bg-[#F8AA24] text-[#0D0E0D] px-2.5 py-2 rounded-md hover:bg-[#e09a1a] transition" 
-                    onClick={() => handleInvoiceClick(r)}
-                >
-                    <DownloadIcon size={12} color="#0D0E0D" /> Facture
-                </button>
+                    <button 
+                        className="flex items-center font-medium gap-1 text-xs bg-[#F8AA24] text-[#0D0E0D] px-2.5 py-2 rounded-md hover:bg-[#e09a1a] transition" 
+                        onClick={() => handleInvoiceClick(r)}
+                    >
+                        <DownloadIcon size={12} color="#0D0E0D" /> Facture
+                    </button>
                 </td>
             </tr>
             ))
