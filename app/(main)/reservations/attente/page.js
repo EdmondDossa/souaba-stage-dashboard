@@ -1,5 +1,5 @@
 "use client";
-import { Search, Filter, Calendar } from "lucide-react";
+import { Search, Filter, Calendar, DatabaseBackupIcon } from "lucide-react";
 import { CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
@@ -8,6 +8,12 @@ import ModalConfirm from "./ModalConfirm";
 export default function ReservationsPendingEnable() {
 const [active, setActive] = useState(true);
 const [isOpen, setIsOpen] = useState(false);
+const [searchQuery, setSearchQuery] = useState("");
+const [dateRange, setDateRange] = useState({
+    start: "January 1, 2028",
+    end: "December 31, 2028"
+  });
+const [showDatePicker, setShowDatePicker] = useState(false);
 
 const data = [
     { name: "Angus Copper", id: "LG-800108", type: "Deluxe 101", room: "Room 101", checkIn: "June 19, 2028", checkOut: "June 22, 2028", status: "Arrivée" },
@@ -24,6 +30,44 @@ const data = [
     { name: "Martin Curtis", id: "LG-800119", type: "Standard 209", room: "Room 109", checkIn: "June 22, 2028", checkOut: "June 27, 2028", status: "Arrivée" },
 ];
 
+// Fonction pour convertir une date string en objet Date
+const parseDate = (dateStr) => {
+    return new Date(dateStr);
+};
+
+// Fonction de filtrage et recherche
+  const filteredReservations = data.filter((res) => {    
+    // Filtre par recherche (nom, id, type, room, statut)
+    const matchesSearch = 
+      searchQuery === "" ||
+      res.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.room.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    // Filtre par date
+    const checkInDate = parseDate(res.checkIn);
+    const checkOutDate = parseDate(res.checkOut);
+    const startDate = parseDate(dateRange.start);
+    const endDate = parseDate(dateRange.end);
+    
+    // La réservation doit avoir un chevauchement avec la période sélectionnée
+    const matchesDate = 
+      (checkInDate >= startDate && checkInDate <= endDate) ||
+      (checkOutDate >= startDate && checkOutDate <= endDate) ||
+      (checkInDate <= startDate && checkOutDate >= endDate);
+    
+    return matchesSearch && matchesDate;
+  });
+
+  // Fonction pour formater la date d'affichage
+  const formatDateDisplay = (dateStr) => {
+    const date = parseDate(dateStr);
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+  };
+
+
+
 return (
     <div className="flex flex-col flex-1 bg-white p-8 rounded-lg shadow-sm overflow-hidden">
 
@@ -39,46 +83,119 @@ return (
                     type="text"
                     placeholder="Rechercher un invité, un statut, etc."
                     className="w-full text-xs text-[#A3A3A3] outline-none"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                 />
             </div>
 
             <div className="flex items-center gap-3">
-            {/* Filtre statuts */}
-            <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-sm text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
-                <Filter className="text-[#6E6E6E] h-5 w-5"/>
-                <span>Tous les statuts</span> 
-                <ChevronDown/>  
+            {/* Filtre par date */}
+          <div className="relative"> 
+            <button 
+              onClick={() => setShowDatePicker(!showDatePicker)}
+              className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-xs text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]"
+            >
+              <CalendarDays size={16} />
+              {formatDateDisplay(dateRange.start)} - {formatDateDisplay(dateRange.end)}
+              <ChevronDown/>
             </button>
-
-            {/* Sélecteur de date */}
-            <button className="flex items-center gap-2 border rounded-md px-3 py-1.5 text-sm text-[#0D0E0D] font-medium bg-[#F8F8F8] border-[#F8F8F8]">
-                <CalendarDays size={16} className="text-[#6E6E6E]"/>
-                19 <span className="text-[#0D0E0D]"> - </span> 24 Juin 2028
-                <ChevronDown/>
-            </button>
+            
+            {showDatePicker && (
+              <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-80">
+                <div className="mb-4">
+                  <label className="block text-xs text-gray-600 mb-2">Date de début</label>
+                  <input
+                    type="date"
+                    value={new Date(dateRange.start).toISOString().split('T')[0]}
+                    onChange={(e) => {
+                      const newDate = new Date(e.target.value);
+                      setDateRange({
+                        ...dateRange,
+                        start: newDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                      });
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-xs outline-none focus:ring-2 focus:ring-[#F8AA24]"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-xs text-gray-600 mb-2">Date de fin</label>
+                  <input
+                    type="date"
+                    value={new Date(dateRange.end).toISOString().split('T')[0]}
+                    onChange={(e) => {
+                      const newDate = new Date(e.target.value);
+                      setDateRange({
+                        ...dateRange,
+                        end: newDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                      });
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-xs outline-none focus:ring-2 focus:ring-[#F8AA24]"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setShowDatePicker(false)}
+                    className="flex-1 px-3 py-2 bg-[#F8AA24] text-white rounded-md text-xs font-medium hover:bg-[#e09a1a]"
+                  >
+                    Appliquer
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDateRange({
+                        start: "January 1, 2028",
+                        end: "December 31, 2028"
+                      });
+                      setShowDatePicker(false);
+                    }}
+                    className="flex-1 px-3 py-2 bg-gray-200 text-gray-700 rounded-md text-xs font-medium hover:bg-gray-300"
+                  >
+                    Réinitialiser
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
             {/* Toggle activé/désactivé */}
-                <div className="rows items-center gap-2 ml-2">
-                    <div className="flex justify-start items-center gap-5">
-                        <span className="text-sm text-[#000000]">Désactivé</span>                    
-                        <span className="text-sm text-[#000000]">Activé</span>
-                    </div>
-                    <div
-                        className="relative  h-5 bg-[#EAEAEA] rounded-full cursor-pointer flex justify-center"
-                        onClick={() => setActive(!active)}
-                    >
-                        <div
-                            className={`absolute top-[2px] left-[2px] w-4 h-4 rounded-full transition-all ${
-                                active ? "bg-[#6E6E6E]" : "translate-x-28 bg-[#8EA6F6]"
-                            }`}
+                <div className="flex items-center gap-5">
+                    <span className="text-sm text-[#000000]">Activé</span>
+                    {/* Toggle Switch */}
+                    <div className="relative">
+                        <input
+                            type="checkbox"
+                            id="mainToggle"
+                            checked={active}
+                            onClick={() => setActive(!active)}
+                            onChange={() => {}}
+                            className="sr-only peer"
+                        />
+                        <label
+                            htmlFor="mainToggle"
+                            className={`relative inline-block w-[60px] h-[10px] bg-[#ccc] rounded-full cursor-pointer transition-all duration-300 
+                            peer-checked:bg-gradient-to-r peer-checked:from-[#8ea6f6] peer-checked:to-white
+                            peer-focus:ring-4 peer-focus:ring-[#667eea4d]
+                            after:content-[''] after:absolute after:top-[-5px] after:right-[-5px] after:w-5 after:h-5 
+                            after:bg-white after:rounded-full after:transition-all after:duration-300 after:shadow-[0_2px_8px_rgba(0,0,0,0.2)]
+                            peer-checked:after:translate-x-[-50px] peer-checked:after:bg-[#8ea6f6]`}
                             onClick={() => setIsOpen(true)}
-                        ></div>
-                        {/* Composant de la modale */}
-                            {isOpen && (
-                                <ModalConfirm isOpen={isOpen} onClose={() => setIsOpen(false)}/>
-                            )}
+                        ></label>
                     </div>
+                    <span className="text-sm text-[#000000]">Désactivé</span>
                 </div>
+                {/* Composant de la modale */}
+                {isOpen && (
+                    <ModalConfirm 
+                    isOpen={isOpen} 
+                        onClose={() => {
+                            setIsOpen(false);
+                            setActive(false); //Revient à l'état désactivé si on annule
+                        }}
+                        onSave={() => {
+                            setActive(true); //Active le toggle si on continue
+                            setIsOpen(false);
+                        }}
+                    />
+                )}
             </div>
         </div>
     </div>
@@ -127,7 +244,9 @@ return (
             </tr>
         </thead>
         <tbody>
-            {data.map((item, idx) => (
+            {
+            filteredReservations.length > 0 ? (
+                filteredReservations.map((item, idx) => (
             <tr
                 key={idx}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
@@ -148,7 +267,15 @@ return (
                 </button>
                 </td>
             </tr>
-            ))}
+            ))    
+            ) : (
+                <tr>
+                    <td colSpan="6" className="p-8 text-center text-gray-500 text-sm font-bold">
+                        Aucune réservation trouvée.
+                    </td>
+                </tr>
+            )
+            }
         </tbody>
         </table>
     </div>
