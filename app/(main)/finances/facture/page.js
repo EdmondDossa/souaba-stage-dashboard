@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, Filter, ChevronLeft} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { Download, FileText, SlidersHorizontal, DownloadIcon } from "lucide-react";
-import FactureModal from "./FactureModal";
+import FactureModal from "../../components/FactureModal";
 
 export default function ReservationList() {
 

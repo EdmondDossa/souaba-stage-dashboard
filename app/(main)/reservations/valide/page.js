@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, Filter, ChevronLeft} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
-import AddReservationModal from "./AddReservationModal";
-import UpdateReservationModal from "./UpdateReservation";
+import AddReservationModal from "../../components/AddReservationModal";
+import UpdateReservationModal from "../../components/UpdateReservation";
 import { useRouter } from "next/navigation";
 
 export default function ReservationPageValide ({ }) {

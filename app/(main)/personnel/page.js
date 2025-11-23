@@ -3,7 +3,7 @@
 import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, ChevronLeft, Filter, SlidersHorizontal} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import ModalAdd from "./ModalAjout";
+import ModalAdd from "../components/ModalAjout";
 
 export default function PersonnelsPage() {
 const [roleFilter, setRoleFilter] = useState("Tous les rôles");

@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, Filter, ChevronLeft} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { Download, Wallet, DollarSign, CircleDollarSign } from "lucide-react";
-import Card from "./Card";
-import FactureModal from "./FactureModal";
+import Card from "../../components/Card";
+import FactureModal from "../../components/FactureModal";
 
 export default function ReservationList() {
 

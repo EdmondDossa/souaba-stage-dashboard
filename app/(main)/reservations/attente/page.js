@@ -3,7 +3,7 @@ import { Search, Filter, Calendar, DatabaseBackupIcon } from "lucide-react";
 import { CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, ChevronLeft} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import ModalConfirm from "./ModalConfirm";
+import ModalConfirm from "../../components/ModalConfirm";
 
 export default function ReservationsPendingEnable() {
 const [active, setActive] = useState(true);
