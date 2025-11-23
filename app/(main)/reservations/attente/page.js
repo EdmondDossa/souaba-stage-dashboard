@@ -204,45 +204,48 @@ return (
           </div>
 
             {/* Toggle activé/désactivé */}
-                <div className="flex items-center gap-5">
-                    <span className="text-sm text-[#000000]">Activé</span>
-                    {/* Toggle Switch */}
-                    <div className="relative">
-                        <input
-                            type="checkbox"
-                            id="mainToggle"
-                            checked={active}
-                            onClick={() => setActive(!active)}
-                            onChange={() => {}}
-                            className="sr-only peer"
-                        />
-                        <label
-                            htmlFor="mainToggle"
-                            className={`relative inline-block w-[60px] h-[10px] bg-[#ccc] rounded-full cursor-pointer transition-all duration-300 
-                            peer-checked:bg-gradient-to-r peer-checked:from-[#8ea6f6] peer-checked:to-white
-                            peer-focus:ring-4 peer-focus:ring-[#667eea4d]
-                            after:content-[''] after:absolute after:top-[-5px] after:right-[-5px] after:w-5 after:h-5 
-                            after:bg-white after:rounded-full after:transition-all after:duration-300 after:shadow-[0_2px_8px_rgba(0,0,0,0.2)]
-                            peer-checked:after:translate-x-[-50px] peer-checked:after:bg-[#8ea6f6]`}
-                            onClick={() => setIsOpen(true)}
-                        ></label>
-                    </div>
-                    <span className="text-sm text-[#000000]">Désactivé</span>
-                </div>
-                {/* Composant de la modale */}
-                {isOpen && (
-                    <ModalConfirm 
-                    isOpen={isOpen} 
-                        onClose={() => {
-                            setIsOpen(false);
-                            setActive(false); //Revient à l'état désactivé si on annule
-                        }}
-                        onSave={() => {
-                            setActive(true); //Active le toggle si on continue
-                            setIsOpen(false);
-                        }}
+            <div className="flex items-center gap-5">
+                <span className="text-sm text-[#000000]">Activé</span>
+                {/* Toggle Switch */}
+                <div className="relative">
+                    <input
+                        type="checkbox"
+                        id="mainToggle"
+                        checked={active}
+                        onChange={() => {}}
+                        className="sr-only peer"
                     />
-                )}
+                    <label
+                        htmlFor="mainToggle"
+                        className={`relative inline-block w-[60px] h-[10px] bg-[#ccc] rounded-full cursor-pointer transition-all duration-300 
+                        peer-checked:bg-gradient-to-r peer-checked:from-[#8ea6f6] peer-checked:to-white
+                        peer-focus:ring-4 peer-focus:ring-[#667eea4d]
+                        after:content-[''] after:absolute after:top-[-5px] after:right-[-5px] after:w-5 after:h-5 
+                        after:bg-white after:rounded-full after:transition-all after:duration-300 after:shadow-[0_2px_8px_rgba(0,0,0,0.2)]
+                        peer-checked:after:translate-x-[-50px] peer-checked:after:bg-[#8ea6f6]`}
+                        onClick={(e) => {
+                            e.preventDefault(); //Empêche le comportement par défaut
+                            setIsOpen(true); //Ouvre la modale
+                        }}
+                    ></label>
+                </div>
+                <span className="text-sm text-[#000000]">Desactivé</span>
+            </div>
+
+            {/* Composant de la modale */}
+            {isOpen && (
+                <ModalConfirm 
+                    isOpen={isOpen} 
+                    onClose={() => {
+                        setIsOpen(false);
+                        // ✅ Ne change pas l'état, garde l'état actuel
+                    }}
+                    onSave={() => {
+                        setActive(!active); // ✅ Inverse l'état du toggle
+                        setIsOpen(false);
+                    }}
+                />
+            )}
             </div>
         </div>
     </div>

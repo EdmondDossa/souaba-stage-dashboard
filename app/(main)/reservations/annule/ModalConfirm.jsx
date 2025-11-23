@@ -3,10 +3,7 @@ import { useState } from "react";
 export default function ModalConfirm ({isOpen, onClose, onSave}) {
     const handleSave = () => {
         if (onSave) 
-            onSave(); 
-
-            //il garde l'etat du bouton continuer 
-            onClose();
+            onSave(); //Change l’état du toggle
     };
 
     // Fonction pour fermer la modale si on clique sur l’arrière-plan
@@ -19,7 +16,7 @@ export default function ModalConfirm ({isOpen, onClose, onSave}) {
     if (!isOpen) return null;
 
     return (
-            <div className="flex gap-3 fixed rounded-lg inset-0 z-50 flex items-center justify-center bg-[#00000033]">
+            <div className="flex gap-3 fixed rounded-lg inset-0 z-50 flex items-center justify-center bg-[#00000033]" onClick={handleBackdropClick}>
                 <div className="bg-[#FFFFFF] rounded-xl shadow-xl w-[30%] p-15 relative">
                     <p className="text-[#000000] font-semibold text-xs">
                         En activant le bouton, vous gardez le contrôle en validant chaque réservation vous-même. En le désactivant, les réservations sont validées instantanément.
