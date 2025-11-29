@@ -33,6 +33,8 @@ export function AuthProvider({ children }) {
       const { data } = await http.post("/auth/login", credentials);
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("refresh_token", data.refresh_token);
+      // Keep a cookie so middleware can guard protected routes on the server
+      document.cookie = `access_token=${data.access_token}; path=/; samesite=lax`;
       setLogged(true);
       return { success: true };
     } catch (error) {
@@ -68,6 +70,7 @@ export function AuthProvider({ children }) {
       await http.post("/auth/logout");
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
+      document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       setLogged(false);
     } catch (error) {}
   }
