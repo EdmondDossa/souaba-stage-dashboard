@@ -9,18 +9,22 @@ const PUBLIC_PATHS = [
   "/register-confirmation-otp",
   "/reset-password",
   "/set-profile-info",
-  "/_next",
-  "/api",
-  "/favicon.ico",
-  "/images",
-  "/public",
-  "/_static"
 ];
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;
 
-  // Allow public routes and assets
+  // Skip middleware for Next internal assets and static files
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/favicon.ico") ||
+    pathname.startsWith("/images") ||
+    pathname.includes(".")
+  ) {
+    return NextResponse.next();
+  }
+
+  // Allow auth/public pages
   if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
     return NextResponse.next();
   }
@@ -37,5 +41,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: "/:path*",
 };
