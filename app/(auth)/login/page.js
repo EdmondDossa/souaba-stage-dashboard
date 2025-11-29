@@ -50,9 +50,9 @@ const LoginPage = () => {
   }, [isLogged, router]);
 
   return (
-    <section className="flex">
-        <ConnexionHero />
-        <AuthWrapper>
+    <section className="flex justify-center items-center lg:justify-start">
+      <ConnexionHero />
+      <div className="h-screen overflow-y-auto scrollbar-hide flex items-center justify-center">
         <AuthForm
           formTitle="Se Connecter"
           btnTitle="Se connecter"
@@ -60,7 +60,9 @@ const LoginPage = () => {
           alternativeOptionMessage="Vous n'avez pas de compte ?"
           alternativeOptionLink="/register"
           isLoading={isLoading}
+          showTopImage={true}
           formError={formError}
+          withSocialLoginSection={true}
           onSubmit={handleSubmit}
         >
           <InputRow type="email" label="Email" name="email" required={true} />
@@ -73,12 +75,12 @@ const LoginPage = () => {
 
           <Link
             href="/forgot-password"
-            className="text-primary text-sm text-end block font-bold decoration-1 underline mb-5 -mt-3 hover:decoration-2 hover:decoration-dotted transition"
+            className="text-primary text-sm text-end block font-bold decoration-1 underline mb-5 mt-5 hover:decoration-2 hover:decoration-dotted transition"
           >
             Mot de passe oublié ?
           </Link>
         </AuthForm>
-      </AuthWrapper>
+      </div>
     </section>
   );
 

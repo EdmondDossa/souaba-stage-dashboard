@@ -24,7 +24,7 @@ import useAuthContext from "@/context/auth";
 const AddEstablishment = () => {
   const http = getAxiosInstance();
   const router = useRouter();
-  const  {user} = useAuthContext();
+  const  {user} = useAuthContext() ?? {};
   
   const stepsDefinitions = useMemo(() => [
     {

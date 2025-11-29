@@ -27,7 +27,7 @@ const PasswordForgot = () => {
       e.target["email"].value = "";
     } catch (error) {
       setFormError(
-        "L'email n'a pas pu être envoyé. Veuilllez réessayé plus tard."
+        "L'email n'a pas pu être envoyé. Veuillez réessayer plus tard."
       );
     } finally {
       setLoading(false);

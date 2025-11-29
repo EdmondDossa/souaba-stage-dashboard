@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Star, MapPin, Heart } from 'lucide-react';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ import {
   PropertyGallery 
 } from '../../../components/ui/common';
 
-const AppartementDetails = () => {
+const AppartementDetailsContent = () => {
   const searchParams = useSearchParams();
   const propertyId = searchParams.get('id');
 
@@ -264,4 +264,10 @@ const AppartementDetails = () => {
   );
 };
 
-export default AppartementDetails;
+export default function AppartementDetails() {
+  return (
+    <Suspense fallback={<div className="p-6 text-gray-600">Chargement...</div>}>
+      <AppartementDetailsContent />
+    </Suspense>
+  );
+}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import AuthForm from "../components/AuthForm";
 import OtpInput from "@/components/ui/common/OtpInput";
 import getAxiosInstance from "@/lib/request";
@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import { formatTime } from "@/utils";
 
-const RegisterConfirmationOtp = () => {
+const RegisterConfirmationOtpContent = () => {
   const http = getAxiosInstance();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -39,7 +39,7 @@ const RegisterConfirmationOtp = () => {
         setFormError(
           "Le code que vous avez saisi est invalide ou a déjà expiré."
         );
-      else setFormError("Une erreur est survenue pendant l&apos;activation.");
+      else setFormError("Une erreur est survenue pendant l'activation.");
     } finally {
       setLoading(false);
     }
@@ -56,7 +56,7 @@ const RegisterConfirmationOtp = () => {
       makeDecount();
     } catch (error) {
       if(error.status === 403) setFormError("Ce compte est déjà activé. Vous pouvez vous connecter.")
-      else setFormError("Le code n&apos;a pas pu être envoyé. Veuillez réessayer.");
+      else setFormError("Le code n'a pas pu être envoyé. Veuillez réessayer.");
       setTimeRemaining("");
     } finally {
       setLoading(false);
@@ -133,6 +133,14 @@ const RegisterConfirmationOtp = () => {
         </button>
       </div>
     </AuthForm>
+  );
+};
+
+const RegisterConfirmationOtp = () => {
+  return (
+    <Suspense fallback={<div>Chargement...</div>}>
+      <RegisterConfirmationOtpContent />
+    </Suspense>
   );
 };
 
