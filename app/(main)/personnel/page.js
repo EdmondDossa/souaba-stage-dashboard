@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Search, CalendarDays, Plus, Eye, Edit , ChevronUp, ChevronDown, ChevronRight, ChevronLeft, Filter, SlidersHorizontal} from "lucide-react";
 import {ChevronUpDownIcon, FunnelIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
@@ -268,7 +269,7 @@ return (
                 <div
                     className={`${p.color} w-15 h-15 rounded-full flex items-center justify-center text-white font-semibold`}
                 >
-                    <img src={p.pathImg} alt="image_personnel" height="50" width="50" className="relative"/>
+                    <Image src={p.pathImg} alt="image_personnel" height={50} width={50} className="relative"/>
                 </div>
                 {p.name}
                 </td>

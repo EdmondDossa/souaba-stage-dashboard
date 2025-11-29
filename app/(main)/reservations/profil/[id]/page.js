@@ -461,7 +461,7 @@ const [searchQuery, setSearchQuery] = useState("");
                 <tr key={res.id} className="border-b border-gray-100 py-10">
                   <td className="py-3">
                     <div className="flex justify-center">
-                      <img src={res.img} width={70} height={50} alt="Image miniature" className="rounded-md"/>
+                      <Image src={res.img} width={70} height={50} alt="Image miniature" className="rounded-md"/>
                     </div>
                   </td>
                   <td className="p-3 text-[#0D0E0D] text-xs font-bold items-center">

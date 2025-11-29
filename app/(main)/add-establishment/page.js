@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { Button } from "@/components/ui/common";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -26,7 +26,7 @@ const AddEstablishment = () => {
   const router = useRouter();
   const  {user} = useAuthContext();
   
-  const stepsDefinitions = [
+  const stepsDefinitions = useMemo(() => [
     {
       name: "Hébergement",
       component: Hebergement,
@@ -59,7 +59,7 @@ const AddEstablishment = () => {
       name: "Pièce d'identité",
       component: IdentityCard,
     },
-  ];
+  ], []);
 
   const searchParams = useSearchParams();
   const forTestingPurpose = searchParams.get("env") === "test";
@@ -88,8 +88,8 @@ const AddEstablishment = () => {
   ).data;
 
   useEffect(()=>{
-    if(!user.profile && !forTestingPurpose) router.push("/set-profile-info");
-  },[]);
+    if(!user?.profile && !forTestingPurpose) router.push("/set-profile-info");
+  },[forTestingPurpose, router, user]);
 
   useEffect(() => {
     if (!hebergementType) return;
@@ -102,7 +102,7 @@ const AddEstablishment = () => {
         )
       );
     }
-  }, [hebergementType]);
+  }, [hebergementType, stepsDefinitions]);
 
   function handleFormDataUpdate(data) {
     let formDataCopy = Array.from(stepFormValues);

@@ -112,7 +112,7 @@ export default function CategoryPage() {
                         Aucune chambre trouvée
                     </h2>
                     <p className="text-gray-600">
-                        Il n'y a pas de chambres {shortName} pour le moment.
+                        Il n&apos;y a pas de chambres {shortName} pour le moment.
                     </p>
                 </div>
             </main>

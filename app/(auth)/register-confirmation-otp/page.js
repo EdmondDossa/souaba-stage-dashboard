@@ -39,7 +39,7 @@ const RegisterConfirmationOtp = () => {
         setFormError(
           "Le code que vous avez saisi est invalide ou a déjà expiré."
         );
-      else setFormError("Une erreur est survenue pendant l'activation.");
+      else setFormError("Une erreur est survenue pendant l&apos;activation.");
     } finally {
       setLoading(false);
     }
@@ -56,7 +56,7 @@ const RegisterConfirmationOtp = () => {
       makeDecount();
     } catch (error) {
       if(error.status === 403) setFormError("Ce compte est déjà activé. Vous pouvez vous connecter.")
-      else setFormError("Le code n'a pas pu être envoyé. Veuillez réessayer.");
+      else setFormError("Le code n&apos;a pas pu être envoyé. Veuillez réessayer.");
       setTimeRemaining("");
     } finally {
       setLoading(false);
@@ -72,7 +72,7 @@ const RegisterConfirmationOtp = () => {
       }, 2500);
     }
     return () => clearTimeout(timerId);
-  }, [accountActivate]);
+  }, [accountActivate, router]);
 
   function makeDecount() {
     let timerId = null;
@@ -115,7 +115,7 @@ const RegisterConfirmationOtp = () => {
       )}
       <div className="mx-auto w-[90%] text-center">
         <p className="text-[15px] mx-auto text-center w-4/5">
-          Veuillez entrer le code que nous venons d'envoyer par e-mail au{" "}
+          Veuillez entrer le code que nous venons d&apos;envoyer par e-mail au{" "}
           <strong className="font-montserrat-bold"> {email} </strong>
         </p>
       </div>
@@ -123,7 +123,7 @@ const RegisterConfirmationOtp = () => {
         <OtpInput otpLength={6} otpValue={otpCode} setOtpValue={setOtpCode} />
       </div>
       <div className="mb-5 mt-4 text-sm text-center">
-        <p>Vous n'avez pas reçu d'OTP ?</p>
+        <p>Vous n&apos;avez pas reçu d&apos;OTP ?</p>
         <button
           onClick={resendOtpCode}
           disabled={Boolean(timeRemaining)}
