@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 const PUBLIC_PATHS = [
+  "/",
   "/login",
   "/register",
   "/forgot-password",

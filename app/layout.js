@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import Providers from "./providers";
 
 export const metadata = {
   title: "Souaba",
@@ -9,7 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light" className="font-Montserrat">
       <body>
-        { children }
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

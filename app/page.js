@@ -1,12 +1,12 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { InputRow } from "@/components/ui/common/index";
 import Link from "next/link";
-import AuthForm from "../components/AuthForm";
+import AuthForm from "@/app/(auth)/components/AuthForm";
 import { useRouter } from "next/navigation";
 import useAuthContext from "@/context/auth";
-import ConnexionHero from "../components/ConnexionHero";
-import AuthWrapper from "../components/AuthWrapper";
+import ConnexionHero from "@/app/(auth)/components/ConnexionHero";
 import { isEmail } from "@/utils/validator";
 
 const LoginPage = () => {
@@ -46,7 +46,7 @@ const LoginPage = () => {
   }
 
   useEffect(() => {
-    if (isLogged) router.replace("/");
+    if (isLogged) router.replace("/dashboard");
   }, [isLogged, router]);
 
   return (
